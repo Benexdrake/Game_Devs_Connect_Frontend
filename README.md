@@ -2,8 +2,8 @@
 # GD - Connect
 # GDC
 --------------------------------
-Like Twitter for Game Developer, Logih with Discord
-Post Requests or Comment a Request.
+### Like Twitter for Game Developer, Login with Discord
+### Post Requests or Comment a Request.
 
 User => Login Discord OAUTH2 => Seite gesperrt wenn nicht eingeloggt, Login Button in der Mitte
 
