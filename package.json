@@ -1,0 +1,19 @@
+{
+  "name": "game_dev_connects",
+  "version": "1.0.0",
+  "description": "-------------------------------- ### Like Twitter for Game Developer, Login with Discord ### Post Requests or Comment a Request.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benexdrake/Game_Dev_Connects.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Benexdrake/Game_Dev_Connects/issues"
+  },
+  "homepage": "https://github.com/Benexdrake/Game_Dev_Connects#readme"
+}
