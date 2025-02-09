@@ -1,31 +1,36 @@
+import LoginOutButton from "@/components/login_btn";
 import { addProject, deleteProject, getProjectById, updateProject } from "@/services/project_services";
 import { addRequest, deleteRequest, getRequestById, getRequests, updateRequest } from "@/services/request_services";
 import { addUser, deleteUser, getUserById, getUsers, updateUser } from "@/services/user_services";
+import axios from "axios";
 
 export default function Home() 
 {
 
   return (
     <>
-
+      <LoginOutButton/>
     </>
   );
 }
 
-export async function getServerSideProps()
+export async function getServerSideProps(context:any)
 {
-  // const user = {
-  //   id: "1",
-  //   username: "string111",
-  //   avatar: "string",
-  //   accountType: "string",
-  //   banner: "string",
-  //   discordUrl: "string",
-  //   xUrl: "string",
-  //   websiteUrl: "string",
-  //   email: "string",
-  //   projectId: "string"
-  // }
+  const user = {
+    id: "1",
+    username: "string111",
+    avatar: "string",
+    accountType: "string",
+    banner: "string",
+    discordUrl: "string",
+    xUrl: "string",
+    websiteUrl: "string",
+    email: "string",
+    projectId: "string"
+  }
+  
+
+  await axios.get('http://localhost:3000/api/user');
 
   // console.log('GET USERS:',await getUsers());
   // console.log('GET USER:',await getUserById('string'));
