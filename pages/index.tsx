@@ -16,21 +16,21 @@ export default function Home()
 
 export async function getServerSideProps(context:any)
 {
-  const user = {
-    id: "1",
-    username: "string111",
-    avatar: "string",
-    accountType: "string",
-    banner: "string",
-    discordUrl: "string",
-    xUrl: "string",
-    websiteUrl: "string",
-    email: "string",
-    projectId: "string"
-  }
+  // const user = {
+  //   id: "1",
+  //   username: "string111",
+  //   avatar: "string",
+  //   accountType: "string",
+  //   banner: "string",
+  //   discordUrl: "string",
+  //   xUrl: "string",
+  //   websiteUrl: "string",
+  //   email: "string",
+  //   projectId: "string"
+  // }
   
 
-  await axios.get('http://localhost:3000/api/user');
+  // await axios.get('http://localhost:3000/api/user?key=77a8547f-707e-445c-96a0-c1066f7496e4');
 
   // console.log('GET USERS:',await getUsers());
   // console.log('GET USER:',await getUserById('string'));

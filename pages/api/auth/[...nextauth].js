@@ -1,4 +1,4 @@
-import getUser from "@/lib/get_user";
+import { getDiscordUser } from "@/services/discord_service";
 import NextAuth from "next-auth/next";
 import Providers from 'next-auth/providers/discord'
 
@@ -25,8 +25,8 @@ export const authOptions =
         return token
       },
       async session({ session, token }) {
-          const user = await getUser(token.accessToken);
-          session.user = user;
+          await getDiscordUser(token.accessToken);
+          
           return session;
         },
     }
