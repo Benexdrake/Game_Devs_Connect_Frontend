@@ -1,5 +1,7 @@
 import LoginOutButton from "@/components/login_btn";
 import axios from "axios";
+import { GetServerSidePropsContext } from "next";
+
 
 export default function Home() 
 {
@@ -11,8 +13,9 @@ export default function Home()
   );
 }
 
-export async function getServerSideProps(context:any)
+export async function getServerSideProps(context:GetServerSidePropsContext)
 {
+
     return {
         props: {
 
