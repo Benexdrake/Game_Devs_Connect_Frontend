@@ -16,21 +16,12 @@ export default function MainLayout(props:any)
                 <Navbar/>
             </nav>
             <main className={styles.child}>
-                { session ? 
-                    (
-                        <div>{children}</div>
-                    ) 
-                    :
-                    (
-                        <p>Not loged In <LoginOutButton/></p>
-                    )}
+                { session ? ( <div>{children}</div> ) : ( <p>Please Log in...</p> )}
             </main>
             <nav className={styles.sidebar}>
                 <CategoryBar/>
                 <Footer/>
             </nav>
-
-
         </div>
     )
 }
