@@ -19,14 +19,16 @@ export const authOptions =
       jwt({ token, account, user }) 
       {
         if (account) {
-          token.accessToken = account.access_token
-          token.id = user?.id
+          token.accessToken = account.access_token;
+          token.id = user?.id;
         }
         return token
       },
       async session({ session, token }) {
-          await getDiscordUser(token.accessToken);
-          
+          const user = await getDiscordUser(token.accessToken);
+
+          session.user = user;
+
           return session;
         },
     }
