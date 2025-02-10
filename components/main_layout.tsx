@@ -3,7 +3,6 @@ import Navbar from './navbar'
 import CategoryBar from './categorybar'
 import Footer from './footer'
 import { useSession } from 'next-auth/react'
-import LoginOutButton from './login_btn'
 
 export default function MainLayout(props:any)
 {

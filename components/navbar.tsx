@@ -1,11 +1,7 @@
 import styles from '@/styles/modules/navbar.module.css'
-import { useSession, getSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import LoginOutButton from './login_btn';
 import Link from 'next/link';
-import axios from 'axios';
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/pages/api/auth/[...nextauth]"
-import { GetServerSidePropsContext } from 'next';
 import { User } from '@/types/user';
 
 export default function Navbar(props:any)
