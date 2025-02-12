@@ -62,6 +62,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Remove .git
+        run: rm -rf .git
+
         # Deploy Files to Server with sftp
       - name: Deploy Files
         uses: wlixcc/SFTP-Deploy-Action@v1.2.5
