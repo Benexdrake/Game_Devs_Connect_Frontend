@@ -95,7 +95,7 @@ jobs:
           port: ${{env.PORT}}
           script: |
             sudo rm -rf /var/www/Frontend
-            sudo mv ${{env.DEPLOY_PATH}} /var/www/
+            sudo mv ${{env.DEPLOY_PATH}} /var/www/Frontend
             cd /var/www/Frontend
             echo '${{secrets.SERVER_ENV}}' > .env
             npm install
