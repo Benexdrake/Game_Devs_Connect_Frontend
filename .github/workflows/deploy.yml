@@ -64,6 +64,16 @@ jobs:
 
       - name: Remove .git
         run: rm -rf .git
+      
+      - name: Remove old build from Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{env.PORT}}
+          script: |
+            rm -rf ${{env.DEPLOY_PATH}}
 
         # Deploy Files to Server with sftp
       - name: Deploy Files
@@ -76,7 +86,7 @@ jobs:
             remote_path: ${{env.DEPLOY_PATH}}
 
         # Connecting to Server over SSH and cd to path for App, install dependencies and then restart service
-      - name: Install Dependencies on Server
+      - name: Install Dependencies, Build and Start
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -88,7 +98,6 @@ jobs:
             echo ${{secrets.SERVER_ENV}} > .env
             npm i
             npm run build
-            find . -mindepth 1 -not -name ".next" -not -name "package.json" -exec rm -rf {} \;
             ls -la
   #  npm ci
   #  pm2 delete '${{env.APP_NAME}}'
