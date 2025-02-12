@@ -95,6 +95,7 @@ jobs:
           port: ${{env.PORT}}
           script: |
             cd ${{env.DEPLOY_PATH}}
+            npm i
             npm run build
             cd .next
   #  npm ci
