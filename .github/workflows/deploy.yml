@@ -1,9 +1,9 @@
 name: Main
 on:
   push:
-    # branches: [main]
-    # paths-ignore: 
-    #   - .github/**
+    branches: [main]
+    paths-ignore: 
+      - .github/**
   workflow_dispatch:
 env:
   NODE_VERSION: 20
@@ -12,68 +12,55 @@ env:
   PORT: 22
 
 jobs:
-  test-stage:
+  # test-stage:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Get Code
+  #   - uses: actions/checkout@v4
+      
+  # build-stage:
+  #   needs: test-stage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v4
+
+  #   - name: Cache Dependencies
+  #     uses: actions/cache@v4
+  #     with:
+  #       path: ~/.npm
+  #       key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+  #   - name: Install NodeJs
+  #     uses: actions/setup-node@v4
+  #     with:
+  #       node-version: ${{env.NODE_VERSION}}
+      
+  #   - name: Install Dependencies
+  #     run: npm ci
+
+  #   - name: Create .env
+  #     run: echo ${{secrets.SERVER_ENV}} > .env
+
+  #     # Build the Project with npm run build
+  #   - name: Build Project
+  #     run: npm run build
+
+  #   - name: Remove Node Modules
+  #     run: rm -rf node_modules
+
+  #     # Upload Files for other Jobs to download
+  #   - name: Upload Artifacts
+  #     uses: actions/upload-artifact@v4
+  #     with:
+  #       name: build-files
+  #       path: ./*
+      
+  deploy-build-start:
+    # needs: build-stage
     runs-on: ubuntu-latest
     steps:
-      # Get Code
-    - uses: actions/checkout@v4
-      
-  build-stage:
-    needs: test-stage
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Cache Dependencies
-      uses: actions/cache@v4
-      with:
-        path: ~/.npm
-        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-
-    - name: Install NodeJs
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{env.NODE_VERSION}}
-      
-    - name: Install Dependencies
-      run: npm ci
-
-    - name: Create .env
-      run: echo ${{secrets.SERVER_ENV}} > .env
-
-      # Build the Project with npm run build
-    - name: Build Project
-      run: npm run build
-
-    - name: Remove Node Modules
-      run: rm -rf node_modules
-
-      # Upload Files for other Jobs to download
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-files
-        path: ./*
-      
-  deploy-stage:
-    needs: build-stage
-    runs-on: ubuntu-latest
-    steps:
-        # Download Files
-      - name: Get build Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-files
-
-      - name: Delete Files from Server
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{env.PORT}}
-          script: |
-            rm -rf ${{env.DEPLOY_PATH}}
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
         # Deploy Files to Server with sftp
       - name: Deploy Files
@@ -95,9 +82,11 @@ jobs:
           port: ${{env.PORT}}
           script: |
             cd ${{env.DEPLOY_PATH}}
+            echo ${{secrets.SERVER_ENV}} > .env
             npm i
             npm run build
-            cd .next
+            find . -mindepth 1 -not -name ".next" -not -name "package.json" -exec rm -rf {} \;
+            ls -la
   #  npm ci
   #  pm2 delete '${{env.APP_NAME}}'
   #  pm2 start npm --name '${{env.APP_NAME}}' -- start
