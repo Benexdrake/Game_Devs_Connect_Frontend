@@ -96,7 +96,7 @@ jobs:
           script: |
             cd ${{env.DEPLOY_PATH}}
             echo '${{secrets.SERVER_ENV}}' > .env
-            npm i
+            npm install
             npm run build
            
             pm2 delete '${{env.APP_NAME}}'
