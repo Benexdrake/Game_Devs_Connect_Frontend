@@ -1,0 +1,93 @@
+name: Main
+on:
+  push:
+    # branches: [main]
+    # paths-ignore: 
+    #   - .github/**
+  workflow_dispatch:
+env:
+  NODE_VERSION: 20
+  APP_NAME: 'Portfolio'
+  DEPLOY_PATH: '/home/ubuntu/Frontend'
+  PORT: 22
+
+jobs:
+  test-stage:
+    runs-on: ubuntu-latest
+    steps:
+      # Get Code
+    - uses: actions/checkout@v4
+      
+  build-stage:
+    needs: test-stage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Cache Dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm
+        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+    - name: Install NodeJs
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{env.NODE_VERSION}}
+      
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Create .env
+      run: echo ${{secrets.ENV}} > .env
+
+      # Build the Project with npm run build
+    - name: Build Project
+      run: npm run build
+
+      # Upload Files for other Jobs to download
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-files
+        path: |
+          .next
+          package.json
+          package-lock.json
+          .env
+      
+  deploy-stage:
+    needs: build-stage
+    runs-on: ubuntu-latest
+    steps:
+        # Download Files
+      - name: Get build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-files
+
+        # Deploy Files to Server with sftp
+      - name: Deploy Files
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.5
+        with:
+            username: ${{ secrets.SERVER_USERNAME }}
+            server: ${{ secrets.SERVER_IP }}
+            ssh_private_key: ${{ secrets.SERVER_SSH_KEY }} 
+            local_path: './'
+            remote_path: ${{env.DEPLOY_PATH}}
+
+        # Connecting to Server over SSH and cd to path for App, install dependencies and then restart service
+      - name: Install Dependencies on Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{env.PORT}}
+          script: |
+            cd ${{env.DEPLOY_PATH}}
+            npm ci
+            pm2 delete '${{env.APP_NAME}}'
+            pm2 start npm --name '${{env.APP_NAME}}' -- start
+            pm2 save
+    
