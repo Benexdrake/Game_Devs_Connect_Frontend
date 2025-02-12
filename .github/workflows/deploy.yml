@@ -95,7 +95,7 @@ jobs:
           port: ${{env.PORT}}
           script: |
             cd ${{env.DEPLOY_PATH}}
-            echo ${{secrets.SERVER_ENV}} > .env
+            echo '${{secrets.SERVER_ENV}}' > .env
             npm i
             npm run build
             ls -la
