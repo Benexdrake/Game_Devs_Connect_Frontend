@@ -1,6 +1,5 @@
-import styles from '@/styles/modules/navbar.module.css'
-import { useSession } from "next-auth/react"
-import LoginOutButton from './login_btn';
+import styles from '@/styles/modules/nav/navbar.module.css'
+import { useSession, signIn, signOut } from "next-auth/react";
 import Link from 'next/link';
 import { User } from '@/types/user';
 
@@ -25,6 +24,7 @@ export default function Navbar(props:any)
                             <img className={styles.avatar} src={user.avatar} alt="User Avatar"/>
                         </div>
                     )}
+                {/* <div onClick={() => signIn()}>Login</div> */}
                 </div>
         </div>
     )
