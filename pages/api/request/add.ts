@@ -3,12 +3,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {
-    const {key} = req.query
-    if(!key || key !== process.env.API_KEY) res.status(401).send('Missing or false key')
+    const {request, session} = req.body;
 
-    const request = req.body;
+    if(!session)
+        res.status(400).send('No Access')
 
     const result = await addRequest(request)
 
-    res.status(200).json(result);
+    res.status(200).json(request);
 }
