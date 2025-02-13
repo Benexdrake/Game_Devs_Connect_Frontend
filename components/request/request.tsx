@@ -34,8 +34,10 @@ export default function RequestBlock(props:any)
                 <div style={{width:'100%', paddingLeft:'8px'}}>
                 <div style={{display:'flex', justifyContent:'space-between', paddingBottom:'8px'}}>
                     <p>{user?.username}</p>
+                    <p>{request?.title}</p>
                     <p>{new Date(data?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
                 </div>
+                
                 <div className={styles.content}><p>{request?.description}</p></div>
                 </div>
             </div>
