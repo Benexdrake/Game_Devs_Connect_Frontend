@@ -1,3 +1,4 @@
+import { Request } from "@/types/request";
 import axios from "axios";
 
 const url = process.env.url+'/request/';
@@ -12,12 +13,12 @@ export const getRequestById = async (id:string) =>
     return await axios.get(`${url}${id}`).then(x => x.data)
 }
 
-export const addRequest = async (request:any) =>
-{
+export const addRequest = async (request:Request) =>
+{   
     return await axios.post(`${url}add`, request).then(x => x.data)
 }
 
-export const updateRequest = async (request:any) =>
+export const updateRequest = async (request:Request) =>
 {
     return await axios.put(`${url}update`,request).then(x => x.data)
 }
