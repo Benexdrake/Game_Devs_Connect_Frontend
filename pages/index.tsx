@@ -1,4 +1,5 @@
 import LoginOutButton from "@/components/login_btn";
+import PostRequest from "@/components/request/post_request";
 import RequestBlock from "@/components/request/request";
 import { Request } from "@/types/request";
 import axios from "axios";
@@ -14,8 +15,11 @@ export default function Home(props:any)
     <>
       {session ?
       (
-        <div style={{display:'grid', gap:'8px'}}>
-        { requestIds && requestIds.map((r:string) => {return <RequestBlock key={crypto.randomUUID()} id={r} apiUrl={url} />})}
+        <div>
+          <PostRequest/>
+          <div style={{display:'grid', gap:'8px'}}>
+          { requestIds && requestIds.map((r:string) => {return <RequestBlock key={crypto.randomUUID()} id={r} apiUrl={url} />})}
+          </div>
         </div>
       )
       :
@@ -28,7 +32,7 @@ export default function Home(props:any)
 
 export async function getServerSideProps(context:GetServerSidePropsContext)
 {
-  const requestIds = await axios.get('http://localhost:3000/api/request?key='+process.env.API_KEY).then(x => x.data.map((r:Request) => r.id))
+  const requestIds = await axios.get('http://localhost:3000/api/request?key='+process.env.API_KEY).then(x => x.data);
   
   return {
     props: {
