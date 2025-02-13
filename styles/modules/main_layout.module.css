@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(3,1fr);
     height: 100vh;
-    width: 1200px;
+    width: 800px;
     margin: auto;
 }
 
@@ -12,6 +12,6 @@
 }
 
 .child {
-    width: 1000px;
+    width: 600px;
     /* background-color: var(--color2); */
 }

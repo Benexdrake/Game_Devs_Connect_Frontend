@@ -7,4 +7,5 @@ export type Request =
     created:string;
     projectId:string;
     userId:string;
+    tags:string[];
 }

@@ -26,10 +26,12 @@
     display: flex;
     justify-content: space-around;
     padding: 8px;
+    align-items: center;
 }
 
 .navbar i {
     color: var(--color1);
+    font-size: 1.2rem;
 }
 
 .navbar div {
@@ -38,4 +40,18 @@
 
 .title {
 
+}
+
+.tags {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 8px;
+}
+
+.tag {
+    padding: 4px;
+    background-color: var(--color4);
+    color: var(--color1);
+    border-radius: 4px;
 }
