@@ -1,9 +1,9 @@
 name: Main
 on:
   push:
-    branches: [main]
-    paths-ignore: 
-      - .github/**
+    # branches: [main]
+    # paths-ignore: 
+    #   - .github/**
   workflow_dispatch:
 env:
   NODE_VERSION: 20
