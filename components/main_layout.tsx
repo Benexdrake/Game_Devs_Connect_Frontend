@@ -1,7 +1,7 @@
 import styles from '@/styles/modules/main_layout.module.css'
-import Navbar from './navbar'
-import CategoryBar from './categorybar'
-import Footer from './footer'
+import Navbar from './nav/navbar'
+import CategoryBar from './nav/categorybar'
+import Footer from './nav/footer'
 import { useSession } from 'next-auth/react'
 
 export default function MainLayout(props:any)

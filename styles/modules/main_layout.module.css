@@ -13,5 +13,5 @@
 
 .child {
     width: 1000px;
-    background-color: var(--color2);
+    /* background-color: var(--color2); */
 }
