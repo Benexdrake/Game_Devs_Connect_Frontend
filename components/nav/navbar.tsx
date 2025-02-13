@@ -16,16 +16,15 @@ export default function Navbar(props:any)
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-magnifying-glass"></i></li></Link>
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-envelope"></i></li></Link>
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-ellipsis"></i></li></Link>
-                </ul>
-                <div className={styles.user_field}>
-                { session &&
+                    { session &&
                     (
-                        <div className={styles.user_field_items}>
-                            <img className={styles.avatar} src={user.avatar} alt="User Avatar"/>
-                        </div>
+                        <Link href='/'>
+                            <li className={styles.nav_button}>
+                                <img className={styles.avatar} src={user.avatar} alt="User Avatar"/>
+                            </li>
+                        </Link>
                     )}
-                {/* <div onClick={() => signIn()}>Login</div> */}
-                </div>
+                </ul>
         </div>
     )
 }
