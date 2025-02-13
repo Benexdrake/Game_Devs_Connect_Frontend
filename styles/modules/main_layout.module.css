@@ -8,9 +8,10 @@
 
 .sidebar {
     max-height: 100vh;
+    width: fit-content;
 }
 
 .child {
-    width: 800px;
+    width: 1000px;
     background-color: var(--color2);
 }
