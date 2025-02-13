@@ -9,6 +9,12 @@ export default function PostRequest()
     const {data:session} = useSession();
     let file;
     let request_content = '';
+    let title = '';
+
+    const onTitleHandler = (e:any) =>
+    {
+        title = e.target.value;
+    }
 
     const onFileHandler = (e:any) =>
     {
@@ -23,11 +29,10 @@ export default function PostRequest()
 
     const onSubmitHandler = async () =>
     {
-        const request:Request = {id:'',title:'',description:request_content,created:new Date().toLocaleDateString(), userId:(session?.user as User).id, fileUrl:'', projectId:''}
+        const request:Request = {id:crypto.randomUUID(),title, description:request_content,created:new Date().toUTCString(), userId:(session?.user as User).id, fileUrl:'-', projectId:'-'}
         console.log(request);
         const result = await axios.post('http://localhost:3000/api/request/add',{request,session})
         console.log(result);
-        
     }
 
     return (
@@ -35,7 +40,7 @@ export default function PostRequest()
         {session && (
 
             <div className={styles.main}>
-            <input type="text" id="request_title" />
+            <input type="text" id="request_title" onChange={onTitleHandler}/>
             <textarea id="new_request" onChange={onTextChangeHandler}></textarea>
             <input type="file" id="request_file" onChange={onFileHandler}/>
             <button onClick={() => onSubmitHandler()}>SEND</button>
