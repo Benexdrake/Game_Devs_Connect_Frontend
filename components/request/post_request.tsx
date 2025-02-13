@@ -3,47 +3,81 @@ import { Request } from '@/types/request';
 import { User } from '@/types/user';
 import axios from 'axios';
 import { useSession } from 'next-auth/react'
+import SelectTags from '../select_tags';
+import { useState } from 'react';
 
 export default function PostRequest()
 {
     const {data:session} = useSession();
-    let file;
-    let request_content = '';
-    let title = '';
 
-    const onTitleHandler = (e:any) =>
+    const [request, setRequest] = useState<Request>({id:'',title:'', description:'', created:'',userId:'',fileUrl:'',projectId:'',tags:[]});
+
+    const setTagsHandler = (tags:string[]) =>
     {
-        title = e.target.value;
+        request.tags = tags;
     }
 
-    const onFileHandler = (e:any) =>
-    {
-        if(e.target.files)
-            file = e.target.files[0]
-    }
 
-    const onTextChangeHandler = (e:any) =>
+    const onSubmitHandler = async (e:any) =>
     {
-        request_content = e.target.value;
-    }
+        // e.preventDefault();
 
-    const onSubmitHandler = async () =>
-    {
-        const request:Request = {id:crypto.randomUUID(),title, description:request_content,created:new Date().toUTCString(), userId:(session?.user as User).id, fileUrl:'-', projectId:'-'}
+        console.log(e.target[3]);
+        
+
+        const user =session?.user as User
+        if(!user) return;
+        
+        const title = e.target[0].value;
+        const description = e.target[1].value;
+        if(title === '' || description === '') return;
+        
+        const created = new Date().toUTCString();
+        const userId = user.id;
+        const projectId = '';
+
+        
+        request.id = user.id+'-'+new Date().toUTCString().replaceAll(' ', '-');
+        request.title = title;
+        request.description = description;
+        request.created = created;
+        request.userId = userId;
+        request.fileUrl = '';
+        request.projectId = projectId;
+
+        // const request:Request = 
+        // {
+        //     id:,
+        //     title,
+        //     description,
+        //     created,
+        //     userId,
+        //     fileUrl:'',
+        //     projectId,
+        //     tags:["3D", "2D", "Animation"]
+        // }
         console.log(request);
-        const result = await axios.post('http://localhost:3000/api/request/add',{request,session})
-        console.log(result);
+        
+        // const result = await axios.post('http://localhost:3000/api/request/add',{request,session})
+        // console.log(result);
+
+
     }
+
 
     return (
         <div>
         {session && (
 
             <div className={styles.main}>
-            <input type="text" id="request_title" onChange={onTitleHandler}/>
-            <textarea id="new_request" onChange={onTextChangeHandler}></textarea>
-            <input type="file" id="request_file" onChange={onFileHandler}/>
-            <button onClick={() => onSubmitHandler()}>SEND</button>
+                <form action="" onSubmit={onSubmitHandler}>
+                    <input type="text" id="request_title"/>
+                    <textarea id="new_request" />
+                    <input type="file" id="request_file"/>
+                    <SelectTags setTagsHandler={setTagsHandler}/>
+                    <input type="submit" value="Submit"/>
+                </form>
+            {/* <button onClick={() => onSubmitHandler()}>SEND</button> */}
             </div>
         )}
         </div>
