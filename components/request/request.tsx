@@ -1,6 +1,6 @@
 import styles from '@/styles/modules/request/request.module.css'
-import { Request } from '@/types/request';
-import { User } from '@/types/user';
+import { RequestType } from '@/types/request';
+import { UserType } from '@/types/user';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -9,8 +9,8 @@ export default function RequestBlock(props:any)
     const {id, apiUrl} = props;
     const [data, setData] = useState<any>()
 
-    const request = data?.request as Request;
-    const user = data?.user as User;
+    const request = data?.request as RequestType;
+    const user = data?.user as UserType;
     const title = data?.title;
 
     const getRequest = async () =>

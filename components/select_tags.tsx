@@ -1,11 +1,15 @@
 import styles from '@/styles/modules/select_tags.module.css'
+import { TagType } from '@/types/tag';
 import { useState } from 'react'
+import Tag from './tag';
 export default function SelectTags(props:any)
 {
     const [open, setOpen] = useState(false)
-    const [tags, setTags] = useState<string[]>([])
+    const [tags, setTags] = useState<TagType[]>([])
 
     const {setTagsHandler} = props;
+
+    const loadedTags:TagType[] = [{name:'2D'}, {name:'Sprites'}, {name:'3D'}, {name:'Animation'}]
 
 
     const onSelectOpenTagsClickHandler = () =>
@@ -13,18 +17,17 @@ export default function SelectTags(props:any)
         setOpen(!open);
     }
 
-    const onSelectTagsHandler = (tag:string) =>
+    const onSelectTagsHandler = (tag:TagType) =>
     {
-        const t = tags.find(x => x === tag);
+        const t = tags.find(x => x.name === tag.name);
         if(t)
-            setTags(tags.filter(t => t !== tag))
+            setTags(tags.filter(t => t.name !== tag.name))
         else
             setTags([...tags,tag])
     }
 
     setTagsHandler(tags);
     
-
     return (
         <>
             <div className={styles.tags} onClick={() => onSelectOpenTagsClickHandler()}>
@@ -33,30 +36,9 @@ export default function SelectTags(props:any)
                     <i className="fa-solid fa-chevron-down"></i>
                 </span>
             </div>
-            {open && (
-
-                <ul className={styles.list_items}>
-                <li className={styles.item} onClick={() => onSelectTagsHandler('Animation')}>
-                    <span className={styles.checkbox}>
-                        <i className={"fa-solid fa-check "+ styles.check_icon}></i>
-                    </span>
-                    <span className={styles.item_text}>Animation</span>
-                </li>
-                <li className={styles.item} onClick={() => onSelectTagsHandler('Model')}>
-                    <span className={styles.checkbox}>
-                        <i className={"fa-solid fa-check "+ styles.check_icon}></i>
-                    </span>
-                    <span className={styles.item_text}>Model</span>
-                </li>
-                <li className={styles.item} onClick={() => onSelectTagsHandler('2D')}>
-                    <span className={styles.checkbox}>
-                        <i className={"fa-solid fa-check "+ styles.check_icon}></i>
-                    </span>
-                    <span className={styles.item_text}>2D</span>
-                </li>
-            
-            </ul>
-            )}
+                <ul className={styles.list_items} style={{display:open?'block':'none'}}>
+                    {loadedTags.map(tag => <Tag styles={styles} tag={tag} onSelectTagsHandler={onSelectTagsHandler}/>)}
+                </ul>
         </>
     )
 }

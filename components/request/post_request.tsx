@@ -1,31 +1,30 @@
 import styles from '@/styles/modules/request/post_request.module.css'
-import { Request } from '@/types/request';
-import { User } from '@/types/user';
+import { RequestType } from '@/types/request';
+import { UserType } from '@/types/user';
 import axios from 'axios';
 import { useSession } from 'next-auth/react'
 import SelectTags from '../select_tags';
 import { useState } from 'react';
+import { TagType } from '@/types/tag';
+import { RequestTagsType } from '@/types/request_tags';
 
 export default function PostRequest()
 {
     const {data:session} = useSession();
 
-    const [request, setRequest] = useState<Request>({id:'',title:'', description:'', created:'',userId:'',fileUrl:'',projectId:'',tags:[]});
+    let request:RequestType = {id:'',title:'', description:'', created:'',userId:'',fileUrl:'',projectId:''};
+    let tags:TagType[] = []
 
-    const setTagsHandler = (tags:string[]) =>
+    const setTagsHandler = (_tags:TagType[]) =>
     {
-        request.tags = tags;
+        tags = _tags;
     }
 
 
     const onSubmitHandler = async (e:any) =>
     {
-        // e.preventDefault();
-
-        console.log(e.target[3]);
-        
-
-        const user =session?.user as User
+        e.preventDefault();
+        const user =session?.user as UserType
         if(!user) return;
         
         const title = e.target[0].value;
@@ -45,22 +44,11 @@ export default function PostRequest()
         request.fileUrl = '';
         request.projectId = projectId;
 
-        // const request:Request = 
-        // {
-        //     id:,
-        //     title,
-        //     description,
-        //     created,
-        //     userId,
-        //     fileUrl:'',
-        //     projectId,
-        //     tags:["3D", "2D", "Animation"]
-        // }
-        console.log(request);
-        
-        // const result = await axios.post('http://localhost:3000/api/request/add',{request,session})
-        // console.log(result);
 
+        const requestTags:RequestTagsType = {request,tags}
+
+        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session})
+        console.log(result);
 
     }
 
@@ -68,7 +56,6 @@ export default function PostRequest()
     return (
         <div>
         {session && (
-
             <div className={styles.main}>
                 <form action="" onSubmit={onSubmitHandler}>
                     <input type="text" id="request_title"/>
@@ -77,7 +64,6 @@ export default function PostRequest()
                     <SelectTags setTagsHandler={setTagsHandler}/>
                     <input type="submit" value="Submit"/>
                 </form>
-            {/* <button onClick={() => onSubmitHandler()}>SEND</button> */}
             </div>
         )}
         </div>

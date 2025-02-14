@@ -1,4 +1,4 @@
-export type Request =
+export type RequestType =
 {
     id:string;
     title:string;
@@ -7,5 +7,4 @@ export type Request =
     created:string;
     projectId:string;
     userId:string;
-    tags:string[];
 }

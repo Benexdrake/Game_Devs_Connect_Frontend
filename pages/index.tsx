@@ -1,7 +1,7 @@
 import LoginOutButton from "@/components/login_btn";
 import PostRequest from "@/components/request/post_request";
 import RequestBlock from "@/components/request/request";
-import { Request } from "@/types/request";
+import { RequestType } from "@/types/request";
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";

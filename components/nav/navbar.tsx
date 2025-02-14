@@ -1,12 +1,12 @@
 import styles from '@/styles/modules/nav/navbar.module.css'
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from 'next/link';
-import { User } from '@/types/user';
+import { UserType } from '@/types/user';
 
 export default function Navbar(props:any)
 {       
     const {data:session} = useSession();
-    const user = session?.user as User;
+    const user = session?.user as UserType;
     return (
         <div className={styles.main}>
             <div className={styles.logo}><i className="fa-brands fa-fantasy-flight-games"></i></div>
