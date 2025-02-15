@@ -1,21 +1,24 @@
 import styles from '@/styles/modules/request/request.module.css'
 import { RequestType } from '@/types/request';
+import { TagType } from '@/types/tag';
 import { UserType } from '@/types/user';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export default function RequestBlock(props:any)
 {
-    const {id, apiUrl} = props;
+    const {id} = props;
     const [data, setData] = useState<any>()
 
     const request = data?.request as RequestType;
     const user = data?.user as UserType;
     const title = data?.title;
+    const tags = data?.tags;
+    
 
     const getRequest = async () =>
     {
-        const result = await axios.get(`${apiUrl}api/request/${id}`).then(x => x.data)
+        const result = await axios.get(`http://localhost:3000/api/request/${id}`).then(x => x.data)
         if(result.status)
             setData(result.data);
     }
@@ -42,10 +45,10 @@ export default function RequestBlock(props:any)
                 </div>
             </div>
             <div className={styles.tags}>
-                    <span className={styles.tag}>3D</span>
-                    <span className={styles.tag}>2D</span>
-                    <span className={styles.tag}>Model</span>
-                    <span className={styles.tag}>Animation</span>
+                {tags && tags.map((tag:TagType) => (
+                    <span className={styles.tag}>{tag.name}</span>
+                ))}
+                    
                 </div>
             <div className={styles.navbar}>
             <p>{new Date(data?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>

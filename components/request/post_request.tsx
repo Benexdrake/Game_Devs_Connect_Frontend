@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { TagType } from '@/types/tag';
 import { RequestTagsType } from '@/types/request_tags';
 
-export default function PostRequest()
+export default function PostRequest(props:any)
 {
     const {data:session} = useSession();
 
@@ -48,8 +48,6 @@ export default function PostRequest()
         const requestTags:RequestTagsType = {request,tags}
 
         const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session})
-        console.log(result);
-
     }
 
 
