@@ -2,6 +2,11 @@ import axios from "axios";
 
 const url = process.env.url+'/project/';
 
+export const getProjects = async () =>
+{
+    return await axios.get(url).then(x => x.data)
+}
+
 export const getProjectById = async (id:string) =>
 {
     return await axios.get(`${url}${id}`).then(x => x.data)

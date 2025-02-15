@@ -8,8 +8,18 @@ export async function getDiscordUser(token:string)
         headers: { Authorization: `Bearer ${token}` }
     };
     const d = await axios.get('https://discord.com/api/users/@me', config).then(x => { return x.data})
+    
 
-    const user:UserType = {id:d.id, username:d.global_name, avatar:`https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}`, accountType:'discord', banner:"", discordUrl:'', xUrl:'', websiteUrl:'', email:'', projectId:''}
+    let avatar = 'discordblue.png'
+    
+    if(d.avatar)
+        avatar = `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}`;
+    
+    let username = d.global_name;
+    if(!username)
+        username = d.username;
+
+    const user:UserType = {id:d.id, username, avatar, accountType:'discord', banner:"", discordUrl:'', xUrl:'', websiteUrl:'', email:'', projectId:''}
     
     await addUser(user);
     const userDB= await getUserById(user.id)

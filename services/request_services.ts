@@ -6,7 +6,7 @@ const url = process.env.url+'/request/';
 
 export const getRequests = async () =>
 {
-    return await axios.get(`${url}all`).then(x => x.data)
+    return await axios.get(`${url}`).then(x => x.data)
 }
 
 export const getRequestById = async (id:string) =>
