@@ -1,15 +1,32 @@
 import styles from '@/styles/modules/select_tags.module.css'
 import { TagType } from '@/types/tag';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Tag from './tag';
+import axios from 'axios';
+
 export default function SelectTags(props:any)
 {
+    
+
     const [open, setOpen] = useState(false)
     const [tags, setTags] = useState<TagType[]>([])
 
+    const [loadedTags, setLoadedTags] = useState<TagType[]>([])
+
     const {setTagsHandler} = props;
 
-    const loadedTags:TagType[] = [{name:'2D'}, {name:'Sprites'}, {name:'3D'}, {name:'Animation'}]
+    useEffect(() =>
+    {
+        const getTags = async () =>
+        {
+            const t = await axios.get('http://localhost:3000/api/tag').then(x => x.data.data)
+            
+            setLoadedTags(t);
+        }
+
+        getTags();
+
+    },[])
 
 
     const onSelectOpenTagsClickHandler = () =>
@@ -37,7 +54,7 @@ export default function SelectTags(props:any)
                 </span>
             </div>
                 <ul className={styles.list_items} style={{display:open?'block':'none'}}>
-                    {loadedTags.map(tag => <Tag styles={styles} tag={tag} onSelectTagsHandler={onSelectTagsHandler}/>)}
+                    {loadedTags && loadedTags.map((tag:TagType) => <Tag styles={styles} tag={tag} onSelectTagsHandler={onSelectTagsHandler}/>)}
                 </ul>
         </>
     )
