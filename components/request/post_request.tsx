@@ -4,13 +4,15 @@ import { UserType } from '@/types/user';
 import axios from 'axios';
 import { useSession } from 'next-auth/react'
 import SelectTags from '../select_tags';
-import { useState } from 'react';
 import { TagType } from '@/types/tag';
 import { RequestTagsType } from '@/types/request_tags';
+import { useRouter } from 'next/router';
 
 export default function PostRequest(props:any)
 {
     const {data:session} = useSession();
+    const router = useRouter();
+    const {setOpen} = props;
 
     let request:RequestType = {id:'',title:'', description:'', created:'',userId:'',fileUrl:'',projectId:''};
     let tags:TagType[] = []
@@ -48,21 +50,25 @@ export default function PostRequest(props:any)
         const requestTags:RequestTagsType = {request,tags}
 
         const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session})
+
+
+        setOpen((prev:boolean) => !prev)
+        router.reload();
     }
 
 
     return (
         <div>
         {session && (
-            <div className={styles.main}>
-                <form action="" onSubmit={onSubmitHandler}>
-                    <input type="text" id="request_title"/>
-                    <textarea id="new_request" />
-                    <input type="file" id="request_file"/>
-                    <SelectTags setTagsHandler={setTagsHandler}/>
-                    <input type="submit" value="Submit"/>
+                <form action="" onSubmit={onSubmitHandler} className={styles.main}>
+                    <input type="text" id="request_title" placeholder='Title' className={styles.title}/>
+                    <textarea id="new_request" className={styles.description}/>
+                    <div style={{display:'flex', justifyContent:'space-between'}}>
+                        <SelectTags setTagsHandler={setTagsHandler}/>
+                        <input type="file" id="request_file" className={styles.file}/>
+                    </div>
+                    <input type="submit" value="Submit" className={styles.submit}/>
                 </form>
-            </div>
         )}
         </div>
     )
