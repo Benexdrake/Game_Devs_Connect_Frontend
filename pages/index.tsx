@@ -1,7 +1,5 @@
 import LoginOutButton from "@/components/login_btn";
-import PostRequest from "@/components/request/post_request";
 import RequestBlock from "@/components/request/request";
-import { RequestType } from "@/types/request";
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
@@ -17,8 +15,6 @@ export default function Home(props:any)
       {session ?
       (
         <div>
-          <LoginOutButton/>
-          <PostRequest/>
           <div style={{display:'grid', gap:'8px'}}>
           { requestIds && requestIds.map((r:string) => {return <RequestBlock key={crypto.randomUUID()} id={r}/>})}
           </div>
