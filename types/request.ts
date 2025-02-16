@@ -1,6 +1,6 @@
 export type RequestType =
 {
-    id:string;
+    id:number;
     title:string;
     description:string;
     fileUrl:string;

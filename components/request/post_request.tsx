@@ -14,7 +14,7 @@ export default function PostRequest(props:any)
     const router = useRouter();
     const {setOpen} = props;
 
-    let request:RequestType = {id:'',title:'', description:'', created:'',userId:'',fileUrl:'',projectId:''};
+    let request:RequestType = {id:0,title:'', description:'', created:'',userId:'',fileUrl:'',projectId:''};
     let tags:TagType[] = []
 
     const setTagsHandler = (_tags:TagType[]) =>
@@ -43,7 +43,6 @@ export default function PostRequest(props:any)
         const projectId = '';
 
         
-        request.id = user.id+'-'+new Date().toUTCString().replaceAll(' ', '-');
         request.title = title;
         request.description = description;
         request.created = created;
@@ -63,9 +62,9 @@ export default function PostRequest(props:any)
         formData.append('file', file)
         
 
-        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session})
-        const res = await axios.post(`http://localhost:3000/api/file/${user.id}/${request.id}`, formData, {headers: { 'Content-Type': 'multipart/form-data' }})
-
+        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session}).then(x => x.data)
+        
+        const res = await axios.post(`http://localhost:3000/api/file/${user.id}/${result.data}`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
 
         setOpen((prev:boolean) => !prev)
         router.reload();
