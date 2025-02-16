@@ -53,9 +53,9 @@ export default function SelectTags(props:any)
                     <i className="fa-solid fa-chevron-down"></i>
                 </span>
             </div>
-                <ul className={styles.list_items} style={{display:open?'block':'none'}}>
-                    {loadedTags && loadedTags.map((tag:TagType) => <Tag styles={styles} tag={tag} onSelectTagsHandler={onSelectTagsHandler}/>)}
-                </ul>
+            <ul className={styles.list_items} style={{display:open?'block':'none'}}>
+                {loadedTags && loadedTags.map((tag:TagType) => <Tag styles={styles} tag={tag} onSelectTagsHandler={onSelectTagsHandler}/>)}
+            </ul>
         </>
     )
 }

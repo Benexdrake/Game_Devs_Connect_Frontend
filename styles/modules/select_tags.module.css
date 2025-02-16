@@ -18,24 +18,18 @@
     color: var(--color3)
 }
 
-.select_btn {
-
-}
-
-.arrow_dwn {
-
-}
-
 .list_items {
     background-color: var(--color4);
     width: 150px;
     position: fixed;
+    top: 200px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
     margin-top: 8px;
     border-radius: 8px;
     padding: 8px;
     list-style: none;
     display: grid;
+    z-index: 10;
 }
 
 .item {
