@@ -26,6 +26,11 @@ export default function PostRequest(props:any)
     const onSubmitHandler = async (e:any) =>
     {
         e.preventDefault();
+
+        const files = e.target[2].files as FileList;
+
+        // return;
+        
         const user =session?.user as UserType
         if(!user) return;
         
@@ -46,10 +51,20 @@ export default function PostRequest(props:any)
         request.fileUrl = '';
         request.projectId = projectId;
 
+        if(files.length > 0)
+            request.fileUrl = files[0].name;
+        
+
 
         const requestTags:RequestTagsType = {request,tags}
+        const file = files[0]
+        
+        const formData = new FormData();
+        formData.append('file', file)
+        
 
         const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session})
+        const res = await axios.post(`http://localhost:3000/api/file/${user.id}/${request.id}`, formData, {headers: { 'Content-Type': 'multipart/form-data' }})
 
 
         setOpen((prev:boolean) => !prev)
@@ -60,15 +75,19 @@ export default function PostRequest(props:any)
     return (
         <div>
         {session && (
+            <>
+                <div className={styles.background} onClick={() => setOpen((prev:boolean) => !prev)}></div>
                 <form action="" onSubmit={onSubmitHandler} className={styles.main}>
                     <input type="text" id="request_title" placeholder='Title' className={styles.title}/>
                     <textarea id="new_request" className={styles.description}/>
                     <div style={{display:'flex', justifyContent:'space-between'}}>
                         <SelectTags setTagsHandler={setTagsHandler}/>
+                        <SelectTags setTagsHandler={setTagsHandler}/>
                         <input type="file" id="request_file" className={styles.file}/>
                     </div>
                     <input type="submit" value="Submit" className={styles.submit}/>
                 </form>
+            </>
         )}
         </div>
     )
