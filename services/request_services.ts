@@ -16,8 +16,6 @@ export const getRequestById = async (id:string) =>
 
 export const addRequest = async (request:RequestTagsType) =>
 {   
-    console.log(request);
-    
     return await axios.post(`${url}add`, request).then(x => x.data)
 }
 

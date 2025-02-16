@@ -7,8 +7,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
     if(!session)
         res.status(400).send('No Access')
-
+    
     const result = await addRequest(requestTags)
 
-    res.status(200).json(requestTags);
+    res.status(200).json(result);
 }

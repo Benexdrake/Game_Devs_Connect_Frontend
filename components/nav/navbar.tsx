@@ -48,9 +48,7 @@ export default function Navbar(props:any)
                     </div>
                 )}
                 {openNewPost && (
-                    <div className={styles.new_request + '  post-background'} onClick={onClickHander}>
-                        <PostRequest setOpen={setOpenNewPost}/>
-                    </div>
+                    <PostRequest setOpen={setOpenNewPost}/>
                 )}
 
         </div>
