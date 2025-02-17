@@ -64,7 +64,8 @@ export default function PostRequest(props:any)
 
         const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session}).then(x => x.data)
         
-        const res = await axios.post(`http://localhost:3000/api/file/${user.id}/${result.data}`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
+        if(request.fileUrl)
+            await axios.post(`http://localhost:3000/api/file/${user.id}/${result.data}`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
 
         setOpen((prev:boolean) => !prev)
         router.reload();
