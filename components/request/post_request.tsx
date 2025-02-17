@@ -56,16 +56,18 @@ export default function PostRequest(props:any)
 
 
         const requestTags:RequestTagsType = {request,tags}
+        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session}).then(x => x.data)
+        
         const file = files[0]
         
         const formData = new FormData();
         formData.append('file', file)
+        formData.append('path', `${userId}/${result.data}`)
         
 
-        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session}).then(x => x.data)
         
         if(request.fileUrl)
-            await axios.post(`http://localhost:3000/api/file/${user.id}/${result.data}`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
+            await axios.post(`http://localhost:3000/api/file/`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
 
         setOpen((prev:boolean) => !prev)
         router.reload();
