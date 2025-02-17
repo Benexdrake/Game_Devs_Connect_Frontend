@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {IncomingForm} from "formidable";
 import AWS from 'aws-sdk';
 import fs from 'fs';
-import PersistentFile from "formidable/PersistentFile";
 
 export const config = {
     api: {
@@ -12,14 +11,6 @@ export const config = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> 
 {
-    const path = req.query.path;
-
-    if(!path)
-        return;
-
-    const id = path[0]
-    const requestId = path[1]
-
     if (req.method !== 'POST') 
     {
         // Return error 
@@ -27,11 +18,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     
     try {
-        const data: { files: any } = await new Promise((resolve, reject) => {
+        const data: { files: any, path:any } = await new Promise((resolve, reject) => {
             const form = new IncomingForm();
             form.parse(req, (err: any, fields: any, files: any) => {
                 if (err) reject({err});
-                resolve({files});
+                resolve({files, path:fields.path});
             });
         });
 
@@ -45,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             
             const params = {
                 Bucket: process.env.AWS_BUCKET_NAME as string,
-                Key: `${id}/${requestId}/${filename}`,
+                Key: `${data.path[0]}/${filename}`,
                 Body: fs.createReadStream(filepath),
               };
 
