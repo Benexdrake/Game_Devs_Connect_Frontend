@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CommentType } from '@/types/comment';
+import { useSession } from 'next-auth/react';
+import { UserType } from '@/types/user';
 
 export default function NewComment(props:any)
 {
@@ -12,33 +14,46 @@ export default function NewComment(props:any)
 
     const router = useRouter();
 
+    const {data:session} = useSession();
+    
+
     const onSubmitHandler = async (e:any) =>
     {
         e.preventDefault();
 
         const mainPath = `${requestUserId}/${requestId}/${userId}`
 
-        const message = e.target[0]. value;
+       
         const file = e.target[1].files[0]
 
-        let filename = file?.name || '';
+      
 
-        const comment:CommentType = {id:0, message:e.target[0].value,filename:file?.name || '', parentId:requestId, deleted:false}
+        const comment:CommentType = {
+            id:0,
+            message:e.target[0].value,
+            filename:file?.name || '',
+            filePath:mainPath,
+            ownerId:(session?.user as UserType).id,
+            parentId:requestId, 
+            deleted:false
+        }
 
-        // // Senden des Comments an die API
-        const result = await axios.post('').then(x => x.data)
         
-        // if(file)
-        // {
-        //     const formData = new FormData();
-        //     formData.append('file', file)
-        //     formData.append('path', `${mainPath}/${result.data}`)
-        //     await axios.post(`http://localhost:3000/api/file`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
-        // }
-        // Senden der Datei an S3
+        
+        // // Senden des Comments an die API
+        const result = await axios.post('http://localhost:3000/api/comment/add', {comment, session}).then(x => x.data)
+        console.log(result);
+        
+        if(file)
+        {
+            const formData = new FormData();
+            formData.append('file', file)
+            formData.append('path', `${mainPath}/${result.data}`)
+            
+            await axios.post(`http://localhost:3000/api/file`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
+        }
 
-        // Seite Reload
-        // router.reload();
+        router.reload();
     }
 
     const onChangeTextHandler = (e:any) =>

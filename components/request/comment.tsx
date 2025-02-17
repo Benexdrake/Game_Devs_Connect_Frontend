@@ -7,6 +7,7 @@ export default function Comment(props:any)
 {
     const {id} = props;
     const [comment, setComment] = useState<CommentType>();
+    
 
     useEffect(() => 
     {
@@ -20,9 +21,20 @@ export default function Comment(props:any)
 
     }, [])
 
+    console.log(comment?.ownerId);
+    
+
     return (
         <div className={styles.main}>
-            {comment?.message}
+            <p className={styles.message}>
+                {comment?.message}
+            </p>
+            <p>{comment?.filename}</p>
+            {comment?.filename && (
+                <a href={`https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/`}>
+                    <div className={styles.download}><i className="fa-solid fa-cloud-arrow-down"></i></div>
+                </a>
+            )}
         </div>
     )
 }
