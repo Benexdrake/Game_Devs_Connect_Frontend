@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 export default function RequestBlock(props:any)
 {
-    const {id} = props;
+    const {id, setStatus} = props;
     const [data, setData] = useState<any>()
 
     const request = data?.request;
@@ -29,6 +29,10 @@ export default function RequestBlock(props:any)
     {
         getRequest();
     },[])
+
+    if(setStatus)
+        setStatus(data)
+    
 
     return (
         <>
