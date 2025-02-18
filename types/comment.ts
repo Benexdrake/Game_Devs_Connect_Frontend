@@ -5,5 +5,6 @@ export type CommentType =
     fileid:number;
     parentId:number;
     ownerId:string;
+    created:string;
     deleted:boolean;
 }
