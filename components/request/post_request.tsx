@@ -14,7 +14,7 @@ export default function PostRequest(props:any)
     const router = useRouter();
     const {setOpen} = props;
 
-    let request:RequestType = {id:0,title:'', description:'', created:'',userId:'',fileUrl:'',projectId:''};
+    let request:RequestType = {id:0,title:'', description:'', created:'',ownerId:'',fileid:0,projectId:''};
     let tags:TagType[] = []
 
     const setTagsHandler = (_tags:TagType[]) =>
@@ -27,9 +27,9 @@ export default function PostRequest(props:any)
     {
         e.preventDefault();
 
-        const files = e.target[2].files as FileList;
+        if(!session) return;
 
-        // return;
+        const files = e.target[2].files as FileList;
         
         const user =session?.user as UserType
         if(!user) return;
@@ -41,33 +41,32 @@ export default function PostRequest(props:any)
         const created = new Date().toUTCString();
         const userId = user.id;
         const projectId = '';
+        
 
         
         request.title = title;
         request.description = description;
         request.created = created;
-        request.userId = userId;
-        request.fileUrl = '';
+        request.ownerId = userId;
+        request.fileid=0;
         request.projectId = projectId;
 
-        if(files.length > 0)
-            request.fileUrl = files[0].name;
         
 
 
         const requestTags:RequestTagsType = {request,tags}
         const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session}).then(x => x.data)
         
-        const file = files[0]
+        // const file = files[0]
         
-        const formData = new FormData();
-        formData.append('file', file)
-        formData.append('path', `${userId}/${result.data}`)
+        // const formData = new FormData();
+        // formData.append('file', file)
+        // formData.append('path', `${userId}/${result.data}`)
         
 
         
-        if(request.fileUrl)
-            await axios.post(`http://localhost:3000/api/file/`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
+        // if(request.fileUrl)
+        //     await axios.post(`http://localhost:3000/api/file/`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
 
         setOpen((prev:boolean) => !prev)
         router.reload();

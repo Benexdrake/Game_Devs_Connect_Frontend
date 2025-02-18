@@ -1,8 +1,6 @@
 import styles from '@/styles/modules/request/request.module.css'
-import { RequestType } from '@/types/request';
 import { TagType } from '@/types/tag';
 import { UserType } from '@/types/user';
-import AWS from 'aws-sdk';
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
