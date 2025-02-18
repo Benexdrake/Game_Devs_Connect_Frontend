@@ -39,7 +39,7 @@ export const authOptions = {
       return session;
     },
   },
-  secret: '123456' // VERY IMPORTANT! Set a secret in your environment variables
+  secret: process.env.NEXTAUTH_SECRET // VERY IMPORTANT! Set a secret in your environment variables
   // ... other options if needed (e.g., pages, events)
 };
 
