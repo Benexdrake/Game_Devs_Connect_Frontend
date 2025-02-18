@@ -9,7 +9,6 @@ export default function Comment(props:any)
     const {id} = props;
     const [comment, setComment] = useState<CommentType>();
     const [file, setFile] = useState<FileType>();
-    
 
     useEffect(() => 
     {
@@ -24,16 +23,12 @@ export default function Comment(props:any)
                 if(fileResult === 0) return;
                 
                 setFile(fileResult.data);
-            }
-            
+            }  
         }
 
         getComment();
 
     }, [])
-
-    console.log(comment?.ownerId);
-    
 
     return (
         <div className={styles.main}>
