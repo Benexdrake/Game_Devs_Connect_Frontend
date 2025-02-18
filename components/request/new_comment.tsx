@@ -30,6 +30,7 @@ export default function NewComment(props:any)
             fileid:0, 
             ownerId:(session.user as UserType).id,
             parentId:requestId, 
+            created: new Date().toUTCString(),
             deleted:false
         } 
 
@@ -37,7 +38,7 @@ export default function NewComment(props:any)
         {
             const formData = new FormData();
             formData.append('file', e.target[1].files[0])
-            formData.append('ownerId', (session.user as UserType).id)
+            formData.append('ownerId', `Comment/${(session.user as UserType).id}`)
             
             const fileId = await axios.post(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
             comment.fileid = fileId;

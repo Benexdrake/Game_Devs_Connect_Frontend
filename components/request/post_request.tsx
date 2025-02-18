@@ -14,7 +14,7 @@ export default function PostRequest(props:any)
     const router = useRouter();
     const {setOpen} = props;
 
-    let request:RequestType = {id:0,title:'', description:'', created:'',ownerId:'',fileid:0,projectId:''};
+    
     let tags:TagType[] = []
 
     const setTagsHandler = (_tags:TagType[]) =>
@@ -28,8 +28,6 @@ export default function PostRequest(props:any)
         e.preventDefault();
 
         if(!session) return;
-
-        const files = e.target[2].files as FileList;
         
         const user =session?.user as UserType
         if(!user) return;
@@ -39,39 +37,30 @@ export default function PostRequest(props:any)
         if(title === '' || description === '') return;
         
         const created = new Date().toUTCString();
-        const userId = user.id;
-        const projectId = '';
+        const ownerId = user.id;
+
+        let request:RequestType = {id:0,title, description, created, ownerId, fileid:0, projectId:''};
+
+
+        if(e.target[2].files.length > 0)
+        {
+            const formData = new FormData();
+            formData.append('file', e.target[2].files[0])
+            formData.append('ownerId', (session.user as UserType).id)
+
+            const fileId = await axios.post(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data);
+            request.fileid = fileId;
+        }
         
-
-        
-        request.title = title;
-        request.description = description;
-        request.created = created;
-        request.ownerId = userId;
-        request.fileid=0;
-        request.projectId = projectId;
-
-        
-
-
         const requestTags:RequestTagsType = {request,tags}
-        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags,session}).then(x => x.data)
+        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags, session}).then(x => x.data)
         
-        // const file = files[0]
+        console.log(result);
         
-        // const formData = new FormData();
-        // formData.append('file', file)
-        // formData.append('path', `${userId}/${result.data}`)
-        
-
-        
-        // if(request.fileUrl)
-        //     await axios.post(`http://localhost:3000/api/file/`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data) 
-
         setOpen((prev:boolean) => !prev)
+        
         router.reload();
     }
-
 
     return (
         <div>
@@ -82,7 +71,6 @@ export default function PostRequest(props:any)
                     <input type="text" id="request_title" placeholder='Title' className={styles.title}/>
                     <textarea id="new_request" className={styles.description}/>
                     <div style={{display:'flex', justifyContent:'space-between'}}>
-                        <SelectTags setTagsHandler={setTagsHandler}/>
                         <SelectTags setTagsHandler={setTagsHandler}/>
                         <input type="file" id="request_file" className={styles.file}/>
                     </div>
