@@ -3,8 +3,8 @@ export type RequestType =
     id:number;
     title:string;
     description:string;
-    fileUrl:string;
+    fileid:number;
     created:string;
     projectId:string;
-    userId:string;
+    ownerId:string;
 }
