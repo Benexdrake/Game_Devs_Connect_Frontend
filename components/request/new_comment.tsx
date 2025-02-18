@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { CommentType } from '@/types/comment';
 import { useSession } from 'next-auth/react';
 import { UserType } from '@/types/user';
+import { FileType } from '@/types/file';
 
 export default function NewComment(props:any)
 {
@@ -21,21 +22,25 @@ export default function NewComment(props:any)
     {
         e.preventDefault();
 
-        const mainPath = `${requestUserId}/${requestId}/${userId}`
-
+        if(!session) return;
        
-        const file = e.target[1].files[0]
-
-      
-
         const comment:CommentType = {
             id:0,
             message:e.target[0].value,
-            filename:file?.name || '',
-            filePath:mainPath,
-            ownerId:(session?.user as UserType).id,
+            fileid:0, 
+            ownerId:(session.user as UserType).id,
             parentId:requestId, 
             deleted:false
+        } 
+
+        if(e.target[1].files)
+        {
+            const formData = new FormData();
+            formData.append('file', e.target[1].files[0])
+            formData.append('ownerId', (session.user as UserType).id)
+            
+            const fileId = await axios.post(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
+            comment.fileid = fileId;
         }
 
         
@@ -44,15 +49,6 @@ export default function NewComment(props:any)
         const result = await axios.post('http://localhost:3000/api/comment/add', {comment, session}).then(x => x.data)
         console.log(result);
         
-        if(file)
-        {
-            const formData = new FormData();
-            formData.append('file', file)
-            formData.append('path', `${mainPath}/${result.data}`)
-            
-            await axios.post(`http://localhost:3000/api/file`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
-        }
-
         router.reload();
     }
 
