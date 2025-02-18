@@ -16,6 +16,7 @@
 
 .content {
     background-color: var(--color1);
+    color: var(--color4);
     padding: 8px;
     border-radius: 8px;
 }
@@ -39,7 +40,11 @@
 }
 
 .title {
+    color: var(--color4);
+}
 
+.username {
+    color: var(--color4);
 }
 
 .tags {

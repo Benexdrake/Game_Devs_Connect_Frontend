@@ -30,7 +30,7 @@ export default function Home(props:any)
 
 export async function getServerSideProps(context:GetServerSidePropsContext)
 {
-  const requestIds = await axios.get('http://localhost:3000/api/request?key='+process.env.API_KEY).then(x => x.data);
+  const requestIds = await axios.get('http://localhost:3000/api/request').then(x => x.data);
 
   return {
     props: {
