@@ -29,8 +29,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const file:FileType = {id:0, name:f.originalFilename, size:f.size, ownerId:data.ownerId}
     
-    console.log(file);
-    
     // Post over Service to API returns id
     const fileResponse = await addFile(file)
 
