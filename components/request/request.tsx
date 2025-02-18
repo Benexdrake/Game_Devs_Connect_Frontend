@@ -1,4 +1,6 @@
 import styles from '@/styles/modules/request/request.module.css'
+import { FileType } from '@/types/file';
+import { RequestType } from '@/types/request';
 import { TagType } from '@/types/tag';
 import { UserType } from '@/types/user';
 import axios from 'axios';
@@ -9,6 +11,7 @@ export default function RequestBlock(props:any)
 {
     const {id, setStatus} = props;
     const [data, setData] = useState<any>()
+    const [file, setFile] = useState<FileType>();
 
     const request = data?.request;
     const user = data?.user as UserType;
@@ -20,7 +23,16 @@ export default function RequestBlock(props:any)
     {
         const result = await axios.get(`http://localhost:3000/api/request/${id}`).then(x => x.data)
         if(result.status)
+        {
             setData(result.data);
+            const fileResult = await axios.get(`http://localhost:3000/api/file/${result.data.request.fileId}`).then(x => x.data)
+            if(fileResult === 0) return;
+            
+            setFile(fileResult.data);
+        }
+
+        
+        
     }
 
     useEffect(() =>
@@ -42,11 +54,11 @@ export default function RequestBlock(props:any)
                                 <img className={styles.avatar} src={user?.avatar} alt="" />
                                 <div style={{width:'100%', paddingLeft:'8px'}}>
                                 <div style={{display:'flex', justifyContent:'space-between'}}>
-                                    <p>{user?.username}</p>
+                                    <p className={styles.username}>{user?.username}</p>
                                     {title && (<p>{title}</p>)}
                                 </div>
                                 <div style={{textAlign:'center', paddingBottom:'8px'}}>
-                                    <p>{request?.title}</p>
+                                    <p className={styles.title}>{request?.title}</p>
                                 </div>    
                                 <div className={styles.content}><p>{request?.description}</p></div>
                                 </div>
@@ -63,9 +75,9 @@ export default function RequestBlock(props:any)
                             <div><i className="fa-solid fa-share"></i> 1</div>
                             <div><i className="fa-solid fa-heart"></i> 5</div>
                             <div><i className="fa-solid fa-chart-simple"></i> 100</div>
-                            {request?.fileurl && (
-                                <a href={`https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${user.id}/${request.id}/${request.fileurl}`}>
-                                    <div className={styles.download}><i className="fa-solid fa-cloud-arrow-down"></i></div>
+                            {file && (
+                                <a href={`https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${file.id}/${file.name}`}>
+                                    <div className={styles.download}><i className="fa-solid fa-cloud-arrow-down"></i> {(file.size / 1024 / 1024).toFixed(2)}MB</div>
                                 </a>
                             )}
                         </div>
