@@ -48,7 +48,6 @@ export default function NewComment(props:any)
         
         // // Senden des Comments an die API
         const result = await axios.post('http://localhost:3000/api/comment/add', {comment, session}).then(x => x.data)
-        console.log(result);
         
         router.reload();
     }

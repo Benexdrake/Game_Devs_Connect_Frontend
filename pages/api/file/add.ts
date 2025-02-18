@@ -18,7 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data: { files: any, ownerId:any} = await new Promise((resolve, reject) => {
         const form = new IncomingForm();
         form.parse(req, (err: any, fields: any, files: any) => {
-            console.log('FIELDS',fields);
             
             if (err) reject({err});
             resolve({files, ownerId:fields.ownerId[0]});
