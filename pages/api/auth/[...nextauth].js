@@ -1,53 +1,47 @@
 import { getDiscordUser } from "@/services/backend/discord_service";
 import NextAuth from "next-auth/next";
 import Providers from 'next-auth/providers/discord'
+import DiscordProvider from "next-auth/providers/discord"
 
 const scopes = ['identify'].join(' ')
 
-export const authOptions =
-{
+export const authOptions = {
   providers: [
-      Providers({
-          clientId: process.env.DISCORD_ID+'',
-          clientSecret: process.env.DISCORD_SECRET+'',
-          authorization: {params:{scope: scopes}},
-          token: "https://discord.com/api/oauth2/token",
-          userinfo: "https://discord.com/api/users/@me",
-      })
+    DiscordProvider({ // Use the dedicated Discord provider
+      clientId: process.env.DISCORD_ID, // No need for the +''
+      clientSecret: process.env.DISCORD_SECRET, // No need for the +''
+      authorization: { params: { scope: scopes } }, // Use environment variable for scopes
+    }),
   ],
   callbacks: {
-      jwt({ token, account, user }) 
-      {
-        if (account) {
-          token.accessToken = account.access_token;
-          token.id = user?.id;
-        }
-        return token
-      },
-      async session({ session, token }) {
-          const user = await getDiscordUser(token.accessToken);
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token; // Include refresh token!
+        token.expiresAt = account.expires_at * 1000; // Expiration in milliseconds
 
-          session.user = user;
+        // Optional: Include user ID
+        token.id = user?.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Fetch user data using the access token (or user ID if available)
+      try {
+        const user = await getDiscordUser(token.accessToken); // Your function to fetch user data
+        session.user = user; // Update the session with the Discord user object
+        session.accessToken = token.accessToken; // Add the access token to the session
+      } catch (error) {
+        console.error("Error fetching Discord user:", error);
+        // Handle error, e.g., set session.user to null or a default value
+        session.user = null;
+      }
+      return session;
+    },
+  },
+  secret: '123456' // VERY IMPORTANT! Set a secret in your environment variables
+  // ... other options if needed (e.g., pages, events)
+};
 
-          return session;
-        },
-    }
-}
 
 export default NextAuth(authOptions);
-
-// import NextAuth from "next-auth"
-// import GithubProvider from "next-auth/providers/github"
-
-// export const authOptions = {
-//   // Configure one or more authentication providers
-//   providers: [
-//     GithubProvider({
-//       clientId: process.env.GITHUB_ID as string,
-//       clientSecret: process.env.GITHUB_SECRET as string,
-//     }),
-//     // ...add more providers here
-//   ],
-// }
-
-// export default NextAuth(authOptions)
