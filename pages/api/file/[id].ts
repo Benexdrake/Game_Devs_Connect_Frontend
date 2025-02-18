@@ -1,4 +1,4 @@
-import { getFileById } from "@/services/file_service";
+import { getFileById } from "@/services/backend/file_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> 

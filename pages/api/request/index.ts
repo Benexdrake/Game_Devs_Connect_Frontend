@@ -1,4 +1,4 @@
-import { getRequests } from "@/services/request_services";
+import { getRequests } from "@/services/backend/request_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)

@@ -1,7 +1,7 @@
 import Comments from "@/components/request/comments";
 import NewComment from "@/components/request/new_comment";
 import RequestBlock from "@/components/request/request";
-import { getRequestById } from "@/services/request_services";
+import { getRequestById } from "@/services/backend/request_services";
 import { UserType } from "@/types/user";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";

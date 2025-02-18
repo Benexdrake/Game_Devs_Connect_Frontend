@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom"
-import * as user_service from '@/services/user_services'
+import * as user_service from '@/services/backend/user_services'
 
 describe("User Service", () =>
 {

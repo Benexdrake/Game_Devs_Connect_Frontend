@@ -1,4 +1,4 @@
-import { getDiscordUser } from "@/services/discord_service";
+import { getDiscordUser } from "@/services/backend/discord_service";
 import NextAuth from "next-auth/next";
 import Providers from 'next-auth/providers/discord'
 

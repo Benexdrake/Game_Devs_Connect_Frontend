@@ -1,4 +1,4 @@
-import { addUser } from "@/services/user_services";
+import { addUser } from "@/services/backend/user_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)

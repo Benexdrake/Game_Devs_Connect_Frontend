@@ -1,5 +1,5 @@
 import { addFileS3 } from "@/lib/aws";
-import { addFile, deleteFile } from "@/services/file_service";
+import { addFile, deleteFile } from "@/services/backend/file_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 import {IncomingForm} from "formidable";
 import PersistentFile from "formidable/PersistentFile";

@@ -1,4 +1,4 @@
-import { addComment } from "@/services/comment_service";
+import { addComment } from "@/services/backend/comment_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
