@@ -28,7 +28,7 @@ export default function Home(props:any)
   );
 }
 
-export async function getServerSideProps(context:GetServerSidePropsContext)
+export async function getStaticProps()
 {
   const requestIds = await axios.get('http://localhost:3000/api/request').then(x => x.data);
 
