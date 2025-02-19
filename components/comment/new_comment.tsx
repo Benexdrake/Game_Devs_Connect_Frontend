@@ -9,7 +9,7 @@ import { FileType } from '@/types/file';
 
 export default function NewComment(props:any)
 {
-    const {requestUserId, requestId, userId} = props
+    const { requestId } = props
 
     const [textHeight, setTextHeight] = useState(35);
 
@@ -34,7 +34,7 @@ export default function NewComment(props:any)
             deleted:false
         } 
 
-        if(e.target[1].files)
+        if(e.target[1].files.length > 0)
         {
             const formData = new FormData();
             formData.append('file', e.target[1].files[0])

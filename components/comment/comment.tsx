@@ -16,14 +16,17 @@ export default function Comment(props:any)
         {
             const result = await axios.get('http://localhost:3000/api/comment/'+id).then(x => x.data);
             
-            if(result.status)
-                {
-                setComment(result.data);
-                const fileResult = await axios.get(`http://localhost:3000/api/file/${result.data.request.fileId}`).then(x => x.data)
-                if(fileResult === 0) return;
-                
-                setFile(fileResult.data);
-            }  
+            if(!result.status) return;
+
+            setComment(result.data);
+
+            if(!result.data.request) return;
+
+            const fileResult = await axios.get(`http://localhost:3000/api/file/${result.data.request.fileId}`).then(x => x.data)
+            
+            if(fileResult === 0) return;
+            
+            setFile(fileResult.data);
         }
 
         getComment();
