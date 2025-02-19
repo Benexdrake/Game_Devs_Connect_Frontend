@@ -1,20 +1,19 @@
 import { getRequestById } from "@/services/backend/request_services";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]";
+import { secureCheck } from "@/lib/api";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {
     const id = req.query.id
 
-    const session = await getServerSession(req,res,authOptions);
+    const secure = await secureCheck(req,res)
 
-
-    // Backdoor for Postman Documentation
-    if(session || `${req.headers.authorization}` === `Bearer ${authOptions.secret}`)
+    if(!secure)
     {
-        const result = await getRequestById(id as string)
-        res.status(200).json(result);
-    }
-    res.status(500).send('Go away!!!')
+        res.status(500).send('Go away!!!')
+        return;
+    } 
+
+    const result = await getRequestById(id as string)
+    res.status(200).json(result);
 }

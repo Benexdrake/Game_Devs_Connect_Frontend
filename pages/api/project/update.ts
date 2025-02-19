@@ -1,10 +1,16 @@
+import { secureCheck } from "@/lib/api";
 import { updateProject } from "@/services/backend/project_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {
-    const {key} = req.query
-    if(!key || key !== process.env.API_KEY) res.status(401).send('Missing or false key')
+    const secure = await secureCheck(req,res)
+
+    if(!secure)
+    {
+        res.status(500).send('Go away!!!')
+        return;
+    }
 
     const project = req.body;
 

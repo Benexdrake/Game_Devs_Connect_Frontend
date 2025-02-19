@@ -3,7 +3,17 @@ export default function Request()
 
     return (
         <div>
-            Later redirect to home...
+            U will never see this...
         </div>
     )
+}
+
+export function getServerSideProps()
+{
+    return {
+        redirect: {
+            destination: '/',
+            permanent: false
+        }
+    }
 }

@@ -1,7 +1,6 @@
-import Comments from "@/components/request/comments";
-import NewComment from "@/components/request/new_comment";
+import Comments from "@/components/comment/comments";
+import NewComment from "@/components/comment/new_comment";
 import RequestBlock from "@/components/request/request";
-import { getRequestById } from "@/services/backend/request_services";
 import { UserType } from "@/types/user";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
@@ -10,7 +9,7 @@ import { useState } from "react";
 export default function Request(props:any)
 {
 
-    const {id, userId} = props;
+    const {id} = props;
 
     const [status, setStatus] = useState(false)
 
@@ -23,8 +22,8 @@ export default function Request(props:any)
                 <RequestBlock id={id} setStatus={setStatus}/>
                 { status && (
                     <>
-                        <NewComment requestId={id} userId={(session.user as UserType).id} requestUserId={userId}/>
-                        <Comments parentId={id} userId={(session.user as UserType).id} requestUserId={userId}/>
+                        <NewComment requestId={id} userId={(session.user as UserType).id}/>
+                        <Comments parentId={id} userId={(session.user as UserType).id}/>
                     </>
                 )}
             </>
@@ -37,14 +36,23 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
 {
     const id = context.query.id as string;
 
-    const result = await getRequestById(id)
+    // Ping DB zum überprüfen ob die Request existiert,
 
-    // Anfrage an API ob ID existiert, wenn nicht, redirect to home
+    // const result = await checkRequest(id);
 
+    // if(!result.status)
+    // {
+    //     return {
+    //         redirect: {
+    //             destination: '/',
+    //             permanent: false
+    //         }
+    //     }
+    // }
+    
     return {
         props : {
-            id,
-            userId: result.data.user.id
+            id
         }
     }
 }

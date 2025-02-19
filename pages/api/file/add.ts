@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import {IncomingForm} from "formidable";
 import PersistentFile from "formidable/PersistentFile";
 import { FileType } from "@/types/file";
+import { secureCheck } from "@/lib/api";
 
 export const config = {
     api: {
@@ -14,6 +15,14 @@ export const config = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse)
 {
     if (req.method !== 'POST')  res.status(405).json("Method not allowed for File Upload");
+
+    const secure = await secureCheck(req,res)
+
+    if(!secure)
+    {
+        res.status(500).send('Go away!!!')
+        return;
+    }
 
     const data: { files: any, ownerId:any} = await new Promise((resolve, reject) => {
         const form = new IncomingForm();
