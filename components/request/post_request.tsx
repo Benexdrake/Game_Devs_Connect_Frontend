@@ -53,7 +53,7 @@ export default function PostRequest(props:any)
         }
         
         const requestTags:RequestTagsType = {request,tags}
-        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags, session}).then(x => x.data)
+        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
         
         setOpen((prev:boolean) => !prev)
         
