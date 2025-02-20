@@ -7,6 +7,7 @@ import SelectTags from '../select_tags';
 import { TagType } from '@/types/tag';
 import { RequestTagsType } from '@/types/request_tags';
 import { useRouter } from 'next/router';
+import { APIResponse } from '@/types/api_response';
 
 export default function PostRequest(props:any)
 {
@@ -48,16 +49,16 @@ export default function PostRequest(props:any)
             formData.append('file', e.target[2].files[0])
             formData.append('ownerId', (session.user as UserType).id)
 
-            const fileId = await axios.post(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data);
-            request.fileid = fileId;
+            const response = await axios.post<APIResponse>(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data);
+            request.fileid = response.data;
         }
         
         const requestTags:RequestTagsType = {request,tags}
-        const result = await axios.post('http://localhost:3000/api/request/add',{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
+        const result = await axios.post<APIResponse>('http://localhost:3000/api/request/add',{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
         
         setOpen((prev:boolean) => !prev)
         
-        router.reload();
+        router.push('/')
     }
 
     return (

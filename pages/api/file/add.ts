@@ -5,6 +5,7 @@ import {IncomingForm} from "formidable";
 import PersistentFile from "formidable/PersistentFile";
 import { FileType } from "@/types/file";
 import { secureCheck } from "@/lib/api";
+import { APIResponse } from "@/types/api_response";
 
 export const config = {
     api: {
@@ -35,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const f = data.files['file'][0];
 
-    const file:FileType = {id:0, name:f.originalFilename, size:f.size, ownerId:data.ownerId}
+    const file:FileType = {id:0, name:f.originalFilename, size:f.size, ownerId:data.ownerId, created: new Date().toUTCString()};
     
     // Post over Service to API returns id
     const fileResponse = await addFile(file)
@@ -43,14 +44,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // // Upload File to AWS S3 with file and id returns true or false
     const result = await addFileS3(f, fileResponse.data);
 
+
     if(!result)
     {
-        await deleteFile(fileResponse.data)
-        
-        res.status(200).send(0)
+        const response = await deleteFile(fileResponse.data)
+        response.data = 0;
+        response.status = false;
+        response.message = 'Error at Upload from File'
+        res.status(200).json(response)
     }
     // if false, delete file from DB
 
     // // returning id 
-    res.status(200).send(fileResponse.data)
+    res.status(200).json(fileResponse)
 }

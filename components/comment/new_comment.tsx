@@ -6,6 +6,7 @@ import { CommentType } from '@/types/comment';
 import { useSession } from 'next-auth/react';
 import { UserType } from '@/types/user';
 import { FileType } from '@/types/file';
+import { APIResponse } from '@/types/api_response';
 
 export default function NewComment(props:any)
 {
@@ -40,14 +41,16 @@ export default function NewComment(props:any)
             formData.append('file', e.target[1].files[0])
             formData.append('ownerId', `Comment/${(session.user as UserType).id}`)
             
-            const fileId = await axios.post(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
-            comment.fileid = fileId;
+            const response = await axios.post<APIResponse>(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
+            comment.fileid = response.data;
         }
 
+        console.log(comment);
+        
         
         
         // // Senden des Comments an die API
-        const result = await axios.post('http://localhost:3000/api/comment/add', {comment, session}).then(x => x.data)
+        const result = await axios.post<APIResponse>('http://localhost:3000/api/comment/add', comment).then(x => x.data)
         
         router.reload();
     }

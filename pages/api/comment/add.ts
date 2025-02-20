@@ -12,7 +12,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     }
 
-    const {comment} = req.body;
+    const comment = req.body;
     
     const result = await addComment(comment)
 
