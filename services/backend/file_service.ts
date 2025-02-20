@@ -10,6 +10,8 @@ export const getFileIdsByOwnerId = async (ownerId:string) =>
     return await axios.get<APIResponse>(`${url}user/${ownerId}`).then(x => x.data)
 }
 
+// Get FileIds by Request ID
+
 // Get File by Id
 export const getFileById = async (id:number) =>
 {
