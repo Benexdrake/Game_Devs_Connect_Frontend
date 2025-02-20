@@ -4,6 +4,7 @@ import { FileType } from '@/types/file';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import File from '../file/file';
+import { APIResponse } from '@/types/api_response';
 
 export default function Comment(props:any)
 {
@@ -15,17 +16,17 @@ export default function Comment(props:any)
     {
         const getComment = async () =>
         {
-            const result = await axios.get('http://localhost:3000/api/comment/'+id).then(x => x.data);
+            const result = await axios.get<APIResponse>('http://localhost:3000/api/comment/'+id).then(x => x.data);
             
             if(!result.status) return;
 
             setComment(result.data);
 
-            if(!result.data.request) return;
+            if(!result.data) return;
 
-            const fileResult = await axios.get(`http://localhost:3000/api/file/${result.data.request.fileId}`).then(x => x.data)
+            const fileResult = await axios.get<APIResponse>(`http://localhost:3000/api/file/${result.data.fileId}`).then(x => x.data)
             
-            if(fileResult === 0) return;
+            console.log(fileResult.data);
             
             setFile(fileResult.data);
         }
@@ -33,7 +34,7 @@ export default function Comment(props:any)
         getComment();
 
     }, [])
-
+    
     return (
         <div className={styles.main}>
             <p className={styles.message}>
