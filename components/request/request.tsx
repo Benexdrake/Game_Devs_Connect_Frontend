@@ -6,6 +6,7 @@ import { UserType } from '@/types/user';
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import File from '../file/file';
 
 export default function RequestBlock(props:any)
 {
@@ -55,7 +56,7 @@ export default function RequestBlock(props:any)
                                 <div style={{width:'100%', paddingLeft:'8px'}}>
                                 <div style={{display:'flex', justifyContent:'space-between'}}>
                                     <p className={styles.username}>{user?.username}</p>
-                                    {title && (<p>{title}</p>)}
+                                    <p className={styles.date}>{new Date(data?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
                                 </div>
                                 <div style={{textAlign:'center', paddingBottom:'8px'}}>
                                     <p className={styles.title}>{request?.title}</p>
@@ -67,19 +68,14 @@ export default function RequestBlock(props:any)
                                 {tags && tags.map((tag:TagType) => ( <span className={styles.tag}>{tag.name}</span> ))}
                             </div>
                         </Link>
+                            
                         <div className={styles.navbar}>
-                            <p>{new Date(data?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
-                            <Link href={`/request/${request.id}`}>
-                                <div><i className="fa-solid fa-comment"></i> 12</div>
-                            </Link>
+                            
+                            <Link href={`/request/${request.id}`}> <div><i className="fa-solid fa-comment"></i> 12</div> </Link>
                             <div><i className="fa-solid fa-share"></i> 1</div>
                             <div><i className="fa-solid fa-heart"></i> 5</div>
                             <div><i className="fa-solid fa-chart-simple"></i> 100</div>
-                            {file && (
-                                <a href={`https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${file.id}/${file.name}`}>
-                                    <div className={styles.download}><i className="fa-solid fa-cloud-arrow-down"></i> {(file.size / 1024 / 1024).toFixed(2)}MB</div>
-                                </a>
-                            )}
+                            {file && ( <div className={styles.download}> <File file={file} /> </div> )}
                         </div>
                     </>
                 </article>

@@ -15,6 +15,7 @@
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
     /* color: var(--color4); */
+    text-decoration: none;
 }
 
 body {

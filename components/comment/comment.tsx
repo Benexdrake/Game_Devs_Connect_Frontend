@@ -3,6 +3,7 @@ import { CommentType } from "@/types/comment";
 import { FileType } from '@/types/file';
 import axios from "axios";
 import { useEffect, useState } from "react";
+import File from '../file/file';
 
 export default function Comment(props:any)
 {
@@ -38,13 +39,7 @@ export default function Comment(props:any)
             <p className={styles.message}>
                 {comment?.message}
             </p>
-            { file && (
-                <>
-                    <a href={`https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${file.id}/${file.name}`}>
-                        <div className={styles.download}>{file.name} - {(file.size / 1024 / 1024).toFixed(2)}MB</div>
-                    </a>
-                </>
-            )}
+            { file && ( <File file={file}/> )}
         </div>
     )
 }
