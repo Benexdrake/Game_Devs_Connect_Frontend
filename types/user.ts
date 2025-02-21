@@ -11,3 +11,10 @@ export type UserType =
     email:string;
     projectId:string;
 }
+
+export type UserShortType =
+{
+    id:string;
+    username:string;
+    avatar:string;
+}

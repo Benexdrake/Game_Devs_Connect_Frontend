@@ -2,7 +2,7 @@ export type CommentType =
 {
     id:number;
     message:string;
-    fileid:number;
+    fileId:number;
     parentId:number;
     ownerId:string;
     created:string;

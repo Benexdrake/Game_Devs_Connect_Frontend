@@ -15,6 +15,19 @@ export const getRequestById = async (id:string) =>
     return await axios.get<APIResponse>(`${url}${id}`).then(x => x.data)
 }
 
+export const getRequestCheck = async (id:string) =>
+{
+    return await axios.get<APIResponse>(`${url}check/${id}`).then(x => x.data)
+}
+
+export const getFilesByRequestId = async (id:string) =>
+{   
+    console.log(`${url}files/${id}`);
+    
+
+    return await axios.get<APIResponse>(`${url}files/${id}`).then(x => x.data)
+}
+
 export const addRequest = async (request:RequestTagsType) =>
 {   
     return await axios.post<APIResponse>(`${url}add`, request).then(x => x.data)

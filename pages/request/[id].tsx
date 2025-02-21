@@ -1,17 +1,16 @@
 import Comments from "@/components/comment/comments";
 import NewComment from "@/components/comment/new_comment";
+import Files from "@/components/file/files";
 import RequestBlock from "@/components/request/request";
+import { APIResponse } from "@/types/api_response";
 import { UserType } from "@/types/user";
+import axios from "axios";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
 export default function Request(props:any)
 {
-
-    const {id} = props;
-
-    const [status, setStatus] = useState(false)
+    const {id, fileIds} = props;
 
     const {data:session} = useSession();
 
@@ -19,13 +18,12 @@ export default function Request(props:any)
         <>
         {session && (
             <>
-                <RequestBlock id={id} setStatus={setStatus}/>
-                { status && (
-                    <>
-                        <NewComment requestId={id} userId={(session.user as UserType).id}/>
-                        <Comments parentId={id} userId={(session.user as UserType).id}/>
-                    </>
-                )}
+                <RequestBlock id={id}/>
+                <>
+                    <NewComment requestId={id} userId={(session.user as UserType).id}/>
+                    <Files fileIds={fileIds}/>
+                    <Comments parentId={id} userId={(session.user as UserType).id}/>
+                </>
             </>
         )}
         </>
@@ -36,23 +34,30 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
 {
     const id = context.query.id as string;
 
+    const response = await axios<APIResponse>('http://localhost:3000/api/request/files/' + id).then(x => x.data)
+
+    const checkResponse = await axios<APIResponse>('http://localhost:3000/api/request/check/' + id).then(x => x.data)
+
+    const status = checkResponse.status
+    
     // Ping DB zum überprüfen ob die Request existiert,
 
     // const result = await checkRequest(id);
 
-    // if(!result.status)
-    // {
-    //     return {
-    //         redirect: {
-    //             destination: '/',
-    //             permanent: false
-    //         }
-    //     }
-    // }
+    if(!status)
+    {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
     
     return {
         props : {
-            id
+            id,
+            fileIds:response.data,
         }
     }
 }

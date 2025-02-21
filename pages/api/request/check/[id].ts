@@ -1,4 +1,4 @@
-import { getRequestById } from "@/services/backend/request_services";
+import { getRequestCheck } from "@/services/backend/request_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { secureCheck } from "@/lib/api";
 
@@ -14,7 +14,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     } 
 
-    const result = await getRequestById(id as string)
+    const result = await getRequestCheck(id as string)
     
     res.status(200).json(result);
 }

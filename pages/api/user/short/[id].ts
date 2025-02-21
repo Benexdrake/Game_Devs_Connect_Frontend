@@ -1,11 +1,9 @@
-import { getRequestById } from "@/services/backend/request_services";
-import type { NextApiRequest, NextApiResponse } from "next";
 import { secureCheck } from "@/lib/api";
+import { getShortUserById } from "@/services/backend/user_services";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {
-    const id = req.query.id
-
     const secure = await secureCheck(req,res)
 
     if(!secure)
@@ -14,7 +12,9 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     } 
 
-    const result = await getRequestById(id as string)
-    
+    const id = req.query.id
+
+    const result = await getShortUserById(id as string)
+
     res.status(200).json(result);
 }

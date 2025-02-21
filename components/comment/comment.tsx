@@ -10,7 +10,6 @@ export default function Comment(props:any)
 {
     const {id} = props;
     const [comment, setComment] = useState<CommentType>();
-    const [file, setFile] = useState<FileType>();
 
     useEffect(() => 
     {
@@ -21,14 +20,6 @@ export default function Comment(props:any)
             if(!result.status) return;
 
             setComment(result.data);
-
-            if(!result.data) return;
-
-            const fileResult = await axios.get<APIResponse>(`http://localhost:3000/api/file/${result.data.fileId}`).then(x => x.data)
-            
-            console.log(fileResult.data);
-            
-            setFile(fileResult.data);
         }
 
         getComment();
@@ -40,7 +31,9 @@ export default function Comment(props:any)
             <p className={styles.message}>
                 {comment?.message}
             </p>
-            { file && ( <File file={file}/> )}
+            {comment && comment?.fileId !== 0 && (
+                <File fileId={comment?.fileId}/>
+            )}
         </div>
     )
 }

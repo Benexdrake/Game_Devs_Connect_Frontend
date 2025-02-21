@@ -21,7 +21,8 @@ export async function getDiscordUser(token:string)
 
     const user:UserType = {id:d.id, username, avatar, accountType:'discord', banner:"", discordUrl:'', xUrl:'', websiteUrl:'', email:'', projectId:''}
     
-    await addUser(user);
+    const response = await addUser(user);
+    
     const userDB= await getUserById(user.id)
     return userDB.data;
 }

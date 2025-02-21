@@ -1,28 +1,12 @@
-import { FileType } from "@/types/file";
-import { useEffect, useState } from "react";
 import File from "./file";
-import axios from "axios";
 
-export default function Files()
+export default function Files(props:any)
 {
-    // fetch all files by Owner id
-    const [files, setFiles] = useState<FileType[]>();
-
-    useEffect(() =>
-    {
-        const getFiles = async () =>
-        {
-            const result = await axios.get('').then(x => x.data)
-            
-        }
-
-        getFiles();
-    }, [])
-
+    const {fileIds} = props
 
     return (
         <>
-            {files && files.map(file => ( <File file={file} /> ))}
+            
         </>
     )
 }
