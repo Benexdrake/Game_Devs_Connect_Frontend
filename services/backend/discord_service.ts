@@ -10,7 +10,7 @@ export async function getDiscordUser(token:string)
     const d = await axios.get('https://discord.com/api/users/@me', config).then(x => { return x.data})
     
 
-    let avatar = 'discordblue.png'
+    let avatar = '/discordblue.png'
     
     if(d.avatar)
         avatar = `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}`;
@@ -24,5 +24,6 @@ export async function getDiscordUser(token:string)
     const response = await addUser(user);
     
     const userDB= await getUserById(user.id)
+
     return userDB.data;
 }

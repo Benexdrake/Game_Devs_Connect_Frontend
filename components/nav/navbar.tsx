@@ -25,6 +25,8 @@ export default function Navbar(props:any)
             setOpenAvatarOption((prev:boolean) => !prev); 
     }
 
+    
+
     return (
         <div className={styles.main}>
             <div className={styles.logo}><i className="fa-brands fa-fantasy-flight-games"></i></div>

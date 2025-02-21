@@ -1,0 +1,11 @@
+.download {
+    color:var(--color4);
+    text-align: end;
+    width: 100%;
+    text-decoration: none;
+}
+
+.download i {
+    color: var(--color4);
+    padding-right: 8px;
+}

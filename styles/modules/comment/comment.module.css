@@ -1,7 +1,41 @@
 .main {
     background-color: var(--color2);
-    padding: 16px;
+    padding: 8px;
     border: 1px solid var(--color4);
-    border-radius: 8px;
+    /* border-radius: 8px; */
     color: var(--color4);
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 1px solid var(--color4);
+}
+
+.content {
+    background-color: var(--color1);
+    color: var(--color4);
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 8px;
+    white-space: pre-wrap;
+}
+
+.username {
+    color: var(--color4);
+}
+
+.date {
+    color: var(--color4);
+}
+
+.navbar {
+    background-color: var(--color4);
+    display: flex;
+    justify-content: end;
+    padding: 8px 16px;
+    align-items: center;
+    /* height: 40px; */
+    border-bottom: 2px solid var(--color3);
 }

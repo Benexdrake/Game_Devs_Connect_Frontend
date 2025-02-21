@@ -16,5 +16,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
 
     const result = await getShortUserById(id as string)
 
+    if(result.data.avatar === '')
+        result.data.avatar = '/discordblue.png'
+
     res.status(200).json(result);
 }

@@ -6,7 +6,7 @@ import { UserShortType, UserType } from '@/types/user';
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import File from '../file/file';
+import File from '../file/download_file';
 import { APIResponse } from '@/types/api_response';
 
 export default function RequestBlock(props:any)

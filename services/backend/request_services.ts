@@ -22,9 +22,6 @@ export const getRequestCheck = async (id:string) =>
 
 export const getFilesByRequestId = async (id:string) =>
 {   
-    console.log(`${url}files/${id}`);
-    
-
     return await axios.get<APIResponse>(`${url}files/${id}`).then(x => x.data)
 }
 

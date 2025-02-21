@@ -1,6 +1,6 @@
 import Comments from "@/components/comment/comments";
 import NewComment from "@/components/comment/new_comment";
-import Files from "@/components/file/files";
+import FileList from "@/components/file/file_list";
 import RequestBlock from "@/components/request/request";
 import { APIResponse } from "@/types/api_response";
 import { UserType } from "@/types/user";
@@ -21,7 +21,9 @@ export default function Request(props:any)
                 <RequestBlock id={id}/>
                 <>
                     <NewComment requestId={id} userId={(session.user as UserType).id}/>
-                    <Files fileIds={fileIds}/>
+                    {fileIds.length > 0 && (
+                        <FileList fileIds={fileIds}/>
+                    )}
                     <Comments parentId={id} userId={(session.user as UserType).id}/>
                 </>
             </>

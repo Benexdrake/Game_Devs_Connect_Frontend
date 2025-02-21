@@ -1,0 +1,15 @@
+.main {
+    margin-top: 8px;
+    border: 1px solid var(--color4);
+    /* padding: 8px; */
+    background-color: var(--color2);
+    color: var(--color4);
+    border-bottom: 2px solid var(--color3);
+}
+
+.navbar {
+    background-color: var(--color4);
+    color: var(--color1);
+    text-align: center;
+    padding: 8px;
+}

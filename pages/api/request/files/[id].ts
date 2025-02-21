@@ -13,12 +13,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         res.status(500).send('Go away!!!')
         return;
     } 
-
-    // console.log('HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
     
-    // console.log(id);
-    
-
     const result = await getFilesByRequestId(id as string)
     res.status(200).json(result);
 }
