@@ -37,7 +37,6 @@ export default function Comment(props:any)
     return (
         <article>
         <div className={styles.main}>
-            
             <div style={{display:'flex', padding:'16px 16px 8px 16px'}}>
             
                 <img className={styles.avatar} src={user?.avatar} alt="" />
