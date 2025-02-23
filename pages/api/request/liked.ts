@@ -1,11 +1,10 @@
 import { secureCheck } from "@/lib/api";
-import { getRequests } from "@/services/backend/request_services";
+import { addRequest, likedRequest } from "@/services/backend/request_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {
     const secure = await secureCheck(req,res)
-
     
     if(!secure)
     {
@@ -13,6 +12,11 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     }
     
-    const result = await getRequests()
+    const {requestId, userId, liked} = req.body;
+
+    if(!userId || !requestId) return res.status(200).json({message:"", status:false})
+    
+    const result = await likedRequest(requestId, userId, liked)
+
     res.status(200).json(result);
 }

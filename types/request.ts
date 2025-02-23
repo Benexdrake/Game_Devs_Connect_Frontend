@@ -18,4 +18,5 @@ export type RequestBlockType =
     tags:TagType[];
     user:UserShortType;
     count:number
+    likes:number;
 }

@@ -11,35 +11,49 @@ import { APIResponse } from '@/types/api_response';
 
 export default function RequestBlock(props:any)
 {
-    const {id} = props;
+    const {id, userId} = props;
     const [requestBlock, setRequestBlock] = useState<RequestBlockType>();
+    const [like, setLike] = useState(false)
+    const [fakeLike, setFakeLike] = useState(0);
 
     const getData = async () =>
     {
-        const resultRequest = await axios.get<APIResponse>(`http://localhost:3000/api/request/${id}`).then(x => x.data)
+        const response = await axios.get<APIResponse>(`http://localhost:3000/api/request/${id}?userId=${userId}`).then(x => x.data)
         
-        if(!resultRequest.status) return;
-        const r:RequestType = resultRequest.data;
-        
-        // Tags
-        const resultTags = await axios.get<APIResponse>(`http://localhost:3000/api/tag/request/${id}`).then(x => x.data)
-        
-        // User
-        const resultUser = await axios.get<APIResponse>(`http://localhost:3000/api/user/short/${r.ownerId}`).then(x => x.data)
-        if(!resultUser.status) return;
+        if(!response.status) return;
 
-        // comment length
-        const resultCommentsCount = await axios.get<APIResponse>(`http://localhost:3000/api/comment/count/${r.id}`).then(x => x.data)
+        const count = response.data.commentIds;
+        const user = response.data.user;
+        const likes = response.data.likes;
+        const request = response.data.request;
+        const tags = response.data.tags;
+        const liked = response.data.liked;
         
-        setRequestBlock({request:resultRequest.data, tags:resultTags.data, user:resultUser.data, count:resultCommentsCount.data})
+        setRequestBlock({request,tags, user, count, likes})
+        if(liked)
+        setLike(liked)
+    }
+
+    const likedRequest = async () =>
+    {
+        const response = await axios.post<APIResponse>(`http://localhost:3000/api/request/liked`, {requestId:requestBlock?.request.id, userId, liked:!like}).then(x => x.data);
+        
+        setLike(!like);
+        setFakeLike(like? fakeLike -1 : fakeLike+1)
     }
 
     useEffect(() =>
     {
         getData();
     },[])
-    
 
+    const onClickLikeHandler = () =>
+    {
+        // Senden an die DB;
+        
+        likedRequest();
+    }
+    
     return (
         <>
             {requestBlock?.user && requestBlock?.request && (
@@ -66,13 +80,15 @@ export default function RequestBlock(props:any)
                             
                         <div className={styles.navbar}>
 
-                                <Link href={`/request/${requestBlock?.request.id}`}> <div><i className="fa-solid fa-comment"></i>
-                            {requestBlock?.count && (
-                                requestBlock?.count
-                            )}
-                                 </div> </Link>
+                            <Link href={`/request/${requestBlock?.request.id}`}> 
+                                <div><i className="fa-solid fa-comment"></i>
+                                    {requestBlock?.count && (
+                                        requestBlock?.count
+                                    )}
+                                </div>
+                            </Link>
                             <div><i className="fa-solid fa-share"></i> 1</div>
-                            <div><i className="fa-solid fa-heart"></i> 5</div>
+                            <div onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike && fakeLike)}</div>
                             <div><i className="fa-solid fa-chart-simple"></i> 100</div>
                             {requestBlock?.request.fileId !== 0 && ( <div className={styles.download}> <File fileId={requestBlock?.request.fileId} /> </div> )}
                         </div>
