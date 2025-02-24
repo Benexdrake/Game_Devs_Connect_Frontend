@@ -7,7 +7,7 @@ export default function Comments(props:any)
 {
     const {parentId} = props;
     const [commentIds, setCommentIds] = useState<number[]>([])
-
+    
     useEffect(() =>
     {
         const getComments = async () =>
@@ -18,6 +18,7 @@ export default function Comments(props:any)
 
         getComments();
     },[])
+
 
     return (
         <div className={styles.main}>

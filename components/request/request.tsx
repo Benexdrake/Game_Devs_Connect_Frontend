@@ -1,8 +1,6 @@
 import styles from '@/styles/modules/request/request.module.css'
-import { FileType } from '@/types/file';
-import { RequestBlockType, RequestType } from '@/types/request';
+import { RequestBlockType } from '@/types/request';
 import { TagType } from '@/types/tag';
-import { UserShortType, UserType } from '@/types/user';
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -31,7 +29,7 @@ export default function RequestBlock(props:any)
         
         setRequestBlock({request,tags, user, count, likes})
         if(liked)
-        setLike(liked)
+            setLike(liked)
     }
 
     const likedRequest = async () =>

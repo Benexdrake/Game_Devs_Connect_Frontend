@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { CommentType } from '@/types/comment';
 import { useSession } from 'next-auth/react';
 import { UserType } from '@/types/user';
-import { FileType } from '@/types/file';
 import { APIResponse } from '@/types/api_response';
 
 export default function NewComment(props:any)
@@ -49,6 +48,9 @@ export default function NewComment(props:any)
         
         // // Senden des Comments an die API
         const result = await axios.post<APIResponse>('http://localhost:3000/api/comment/add', comment).then(x => x.data)
+
+        // Send ne Notification after comment send and sending notification event
+
         
         router.reload();
     }
