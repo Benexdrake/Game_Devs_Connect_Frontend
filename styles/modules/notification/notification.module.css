@@ -1,0 +1,23 @@
+.main {
+    background-color: var(--color2);
+    border: 1px solid var(--color4);
+    padding: 8px 16px;
+}
+
+.notification {
+    display: flex;
+    color: var(--color4);
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.notification i {
+    font-size: 2rem;
+}
+
+.avatar {
+    height: 50px;
+    border: 1px solid var(--color4);
+    border-radius: 100%;
+}

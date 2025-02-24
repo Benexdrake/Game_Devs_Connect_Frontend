@@ -1,12 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { secureCheck } from "@/lib/api";
 import axios from "axios";
-import { getNotificationById } from "@/services/backend/notification_service";
+import { updateSeenNotification } from "@/services/backend/notification_service";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {
-    if(req.method !== 'GET') return;
-    
     const secure = await secureCheck(req,res)
 
     if(!secure)
@@ -18,7 +16,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     const id = req.query.id;
     if(!id) return res.status(200).json({message:"Missing ID", status:false})
 
-    const response = await getNotificationById(id as string)
+    const response = await updateSeenNotification(id as string);
 
+    
     res.status(200).json(response)
 }

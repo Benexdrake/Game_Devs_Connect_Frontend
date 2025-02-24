@@ -35,6 +35,7 @@ export default function RequestBlock(props:any)
     const likedRequest = async () =>
     {
         const response = await axios.post<APIResponse>(`http://localhost:3000/api/request/liked`, {requestId:requestBlock?.request.id, userId, liked:!like}).then(x => x.data);
+        console.log({requestId:requestBlock?.request.id, userId, liked:!like});
         
         setLike(!like);
         setFakeLike(like? fakeLike -1 : fakeLike+1)
@@ -48,6 +49,7 @@ export default function RequestBlock(props:any)
     const onClickLikeHandler = () =>
     {
         // Senden an die DB;
+        console.log('HALLO');
         
         likedRequest();
     }

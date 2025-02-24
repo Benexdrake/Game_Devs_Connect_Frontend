@@ -1,14 +1,22 @@
 import { UserType } from "@/types/user";
+import Notification from "@/components/notification/notification";
 import axios from "axios";
 import { getSession, useSession } from "next-auth/react";
+
+import styles from '@/styles/modules/notification/notification_page.module.css'
 
 export default function Notifications(props:any)
 {
  const {notificationIds} = props
     return (
-        <div>
-            { notificationIds && notificationIds.map((id:string) => <p>{id}</p>)}
-        </div>
+        <article>
+          <div className={styles.header}>
+            Notification
+          </div>
+          <div className={styles.notifications}>
+            { notificationIds && notificationIds.map((id:string) => <Notification notificationId={id}/>)}
+          </div>
+        </article>
     )
 }
 

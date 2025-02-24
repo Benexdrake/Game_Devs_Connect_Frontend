@@ -6,4 +6,5 @@ export type NotificationType =
     ownerId:string;
     userId:string;
     seen:string;
+    created:string;
 }

@@ -5,7 +5,6 @@ import { UserType } from '@/types/user';
 import { useState } from 'react';
 import PostRequest from '../request/post_request';
 import AvatarOption from './option';
-import event from '@/lib/events'
 
 export default function Navbar(props:any)
 {       
@@ -27,11 +26,6 @@ export default function Navbar(props:any)
         else if(e.target.className.includes('option-background'))
             setOpenAvatarOption((prev:boolean) => !prev); 
     }
-
-    event.on('notification', () =>
-    {
-        setNotification(true);
-    })
 
     return (
         <div className={styles.main}>

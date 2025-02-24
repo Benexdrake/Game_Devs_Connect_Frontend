@@ -18,7 +18,7 @@ export default function Request(props:any)
         <>
         {session && (
             <>
-                <RequestBlock id={id}/>
+                <RequestBlock id={id} userId={(session.user as UserType).id}/>
                 <>
                     <NewComment requestId={id} userId={(session.user as UserType).id}/>
                     {fileIds.length > 0 && (
