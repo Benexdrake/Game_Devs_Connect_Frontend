@@ -12,7 +12,7 @@ export default function Comments(props:any)
     {
         const getComments = async () =>
         {
-            const result = await axios.get('http://localhost:3000/api/comment/?id='+parentId).then(x => x.data)
+            const result = await axios.get(`${process.env.FRONTEND_URL}/api/comment/?id=${parentId}`).then(x => x.data)
             setCommentIds(result.data)
         }
 

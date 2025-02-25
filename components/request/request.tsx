@@ -16,7 +16,7 @@ export default function RequestBlock(props:any)
 
     const getData = async () =>
     {
-        const response = await axios.get<APIResponse>(`http://localhost:3000/api/request/${id}?userId=${userId}`).then(x => x.data)
+        const response = await axios.get<APIResponse>(`${process.env.FRONTEND_URL}/api/request/${id}?userId=${userId}`).then(x => x.data)
         
         if(!response.status) return;
 
@@ -34,7 +34,7 @@ export default function RequestBlock(props:any)
 
     const likedRequest = async () =>
     {
-        const response = await axios.post<APIResponse>(`http://localhost:3000/api/request/liked`, {requestId:requestBlock?.request.id, userId, liked:!like}).then(x => x.data);
+        const response = await axios.post<APIResponse>(`${process.env.FRONTEND_URL}/api/request/liked`, {requestId:requestBlock?.request.id, userId, liked:!like}).then(x => x.data);
         console.log({requestId:requestBlock?.request.id, userId, liked:!like});
         
         setLike(!like);

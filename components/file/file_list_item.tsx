@@ -14,11 +14,11 @@ export default function FileListItem(props:any)
     {
         const getFile = async () =>
         {
-            const result = await axios.get<APIResponse>('http://localhost:3000/api/file/'+fileId).then(x => x.data);
+            const result = await axios.get<APIResponse>(`${process.env.FRONTEND_URL}/api/file/${fileId}`).then(x => x.data);
 
             if(!result.status) return;
             
-            const resultUser = await axios.get<APIResponse>(`http://localhost:3000/api/user/short/${result.data.ownerId}`).then(x => x.data)
+            const resultUser = await axios.get<APIResponse>(`${process.env.FRONTEND_URL}/api/user/short/${result.data.ownerId}`).then(x => x.data)
             if(!resultUser.status) return;
 
             setFile(result.data);

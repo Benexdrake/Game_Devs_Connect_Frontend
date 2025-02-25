@@ -13,10 +13,10 @@ export default function Notification(props:any)
 
     const getNotification = async () =>
     {
-        const response = await axios.get<APIResponse>('http://localhost:3000/api/notification/'+notificationId).then(x => x.data);
+        const response = await axios.get<APIResponse>(`${process.env.FRONTEND_URL}/api/notification/${notificationId}`).then(x => x.data);
         console.log(response);
         if(!response.status) return;
-        const userResponse = await axios.get<APIResponse>('http://localhost:3000/api/user/short/'+ response.data.ownerId).then(x => x.data)
+        const userResponse = await axios.get<APIResponse>(`${process.env.FRONTEND_URL}/api/user/short/${response.data.ownerId}`).then(x => x.data)
         
         setNotification(response.data);
         setUser(userResponse.data);
@@ -26,7 +26,7 @@ export default function Notification(props:any)
     {   
         if(notification && notification.seen === "")
         {
-            const response = await axios.put<APIResponse>('http://localhost:3000/api/notification/seen/'+notificationId).then(x => x.data);
+            const response = await axios.put<APIResponse>(`${process.env.FRONTEND_URL}/api/notification/seen/${notificationId}`).then(x => x.data);
             console.log('sssssssssss',response);
             
         }

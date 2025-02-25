@@ -19,7 +19,7 @@ export default function SelectTags(props:any)
     {
         const getTags = async () =>
         {
-            const t = await axios.get('http://localhost:3000/api/tag').then(x => x.data.data)
+            const t = await axios.get(`${process.env.FRONTEND_URL}/api/tag`).then(x => x.data.data)
             
             setLoadedTags(t);
         }

@@ -18,13 +18,13 @@ export default function Comment(props:any)
     {
         const getComment = async () =>
         {
-            const result = await axios.get<APIResponse>('http://localhost:3000/api/comment/'+id).then(x => x.data);
+            const result = await axios.get<APIResponse>(`${process.env.FRONTEND_URL}/api/comment/${id}`).then(x => x.data);
             
             if(!result.status) return;
 
 
              // User
-            const resultUser = await axios.get<APIResponse>(`http://localhost:3000/api/user/short/${result.data.ownerId}`).then(x => x.data)
+            const resultUser = await axios.get<APIResponse>(`${process.env.FRONTEND_URL}/api/user/short/${result.data.ownerId}`).then(x => x.data)
             if(!resultUser.status) return;
 
             setComment(result.data);
