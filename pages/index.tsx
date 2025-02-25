@@ -30,7 +30,7 @@ export default function Home(props:any)
 
 export async function getServerSideProps()
 {
-  const requestIds = await axios.get(`${process.env.FRONTEND_URL}/api/request`).then(x => x.data);
+  const requestIds = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request`).then(x => x.data);
 
   return {
     props: {

@@ -49,12 +49,12 @@ export default function PostRequest(props:any)
             formData.append('file', e.target[2].files[0])
             formData.append('ownerId', (session.user as UserType).id)
 
-            const response = await axios.post<APIResponse>(`${process.env.FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data);
+            const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data);
             request.fileId = response.data;
         }
         
         const requestTags:RequestTagsType = {request,tags}
-        const result = await axios.post<APIResponse>(`${process.env.FRONTEND_URL}/api/request/add`,{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
+        const result = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/add`,{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
         
         setOpen((prev:boolean) => !prev)
         

@@ -40,14 +40,14 @@ export default function NewComment(props:any)
             formData.append('file', e.target[1].files[0])
             formData.append('ownerId', (session.user as UserType).id)
             
-            const response = await axios.post<APIResponse>(`${process.env.FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
+            const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
             comment.fileId = response.data;
         }
         
         
         
         // // Senden des Comments an die API
-        const result = await axios.post<APIResponse>(`${process.env.FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
+        const result = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
 
         // Send ne Notification after comment send and sending notification event
 

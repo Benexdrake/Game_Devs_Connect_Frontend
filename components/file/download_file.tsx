@@ -13,7 +13,7 @@ export default function DownloadFile(props:any)
     {
         const getFile = async () =>
         {
-            const response = await axios.get(`${process.env.FRONTEND_URL}/api/file/${fileId}`).then(x => x.data)
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/${fileId}`).then(x => x.data)
             
             if(response.data)
                 setFile(response.data)

@@ -36,9 +36,9 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
 {
     const id = context.query.id as string;
 
-    const response = await axios<APIResponse>(`${process.env.FRONTEND_URL}/api/request/files/${id}`).then(x => x.data)
+    const response = await axios<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/files/${id}`).then(x => x.data)
 
-    const checkResponse = await axios<APIResponse>(`${process.env.FRONTEND_URL}/api/request/check/${id}`).then(x => x.data)
+    const checkResponse = await axios<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/check/${id}`).then(x => x.data)
 
     const status = checkResponse.status
     
