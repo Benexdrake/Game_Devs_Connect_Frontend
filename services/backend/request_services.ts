@@ -15,6 +15,11 @@ export const getRequestById = async (id:string) =>
     return await axios.get<APIResponse>(`${url}${id}`).then(x => x.data)
 }
 
+export const getRequestsByUserId = async (userId:string) =>
+{
+    return await axios.get<APIResponse>(`${url}user/${userId}`).then(x => x.data)
+}
+
 export const getFullRequestById = async (id:string, userId:string) =>
 {
     return await axios.get<APIResponse>(`${url}full/${id}?userId=${userId}`).then(x => x.data)

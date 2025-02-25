@@ -36,6 +36,7 @@ export default function Navbar(props:any)
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-magnifying-glass"></i></li></Link>
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-envelope"></i></li></Link>
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-ellipsis"></i></li></Link>
+                    <Link href={`/profile/${user?.id}`}><li className={styles.nav_button}><i className="fa-solid fa-user"></i></li></Link>
                     <li className={styles.nav_button} onClick={() => setOpenNewPost(!openNewPost)}><i className="fa-solid fa-circle-plus"></i></li>
                     { session &&
                     (

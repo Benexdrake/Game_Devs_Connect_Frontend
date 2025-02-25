@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { APIResponse } from '@/types/api_response';
 import { UserShortType } from '@/types/user';
 import DownloadFile from '../file/download_file';
+import Link from 'next/link';
 
 export default function Comment(props:any)
 {
@@ -38,11 +39,14 @@ export default function Comment(props:any)
         <article>
         <div className={styles.main}>
             <div style={{display:'flex', padding:'16px 16px 8px 16px'}}>
-            
+            <Link href={`/profile/${user?.id}`}>
                 <img className={styles.avatar} src={user?.avatar} alt="" />
+            </Link>
                 <div style={{width:'100%', paddingLeft:'8px'}}>
                 <div style={{display:'flex', justifyContent:'space-between'}}>
+                <Link href={`/profile/${user?.id}`}>
                     <p className={styles.username}>{user?.username}</p>
+                </Link>
                     <p className={styles.date}>{new Date(comment?.created as string).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
                 </div>    
                 <div className={styles.content}><p>{comment?.message}</p></div>

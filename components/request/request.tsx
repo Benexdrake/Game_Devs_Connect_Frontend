@@ -61,10 +61,14 @@ export default function RequestBlock(props:any)
                     <>
                         <Link href={`/request/${requestBlock?.request.id}`}>
                             <div style={{display:'flex', padding:'16px 16px 8px 16px'}}>
-                                <img className={styles.avatar} src={requestBlock?.user?.avatar} alt="" />
+                                <Link href={`/profile/${requestBlock.user.id}`}>
+                                    <img className={styles.avatar} src={requestBlock?.user?.avatar} alt="" />
+                                </Link>
                                 <div style={{width:'100%', paddingLeft:'8px'}}>
                                 <div style={{display:'flex', justifyContent:'space-between'}}>
+                                <Link href={`/profile/${requestBlock.user.id}`}>
                                     <p className={styles.username}>{requestBlock?.user?.username}</p>
+                                </Link>
                                     <p className={styles.date}>{new Date(requestBlock?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
                                 </div>
                                 <div style={{textAlign:'center', paddingBottom:'8px'}}>

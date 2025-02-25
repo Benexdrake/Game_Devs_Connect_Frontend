@@ -1,0 +1,74 @@
+.header {
+    background-color: var(--color4);
+    border-bottom: 2px solid var(--color3);
+}
+
+.banner {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.bottom {
+    padding: 0 16px;
+    display: flex;
+    gap:16px;
+}
+
+.avatar {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    min-width: 100px;
+    border: 2px solid var(--color4);
+    border-radius: 100%;
+    background-size: cover;
+    background-position: center;
+    top: -50px
+}
+
+.username {
+    font-size: 2rem;
+}
+
+.edit_button {
+    background-color: var(--color2);
+    padding: 8px 16px;
+    color: var(--color4);
+    border-radius: 8px;
+    border: 2px solid var(--color3);
+    margin-top: 8px;
+}
+
+.list {
+    display: flex;
+    list-style: none;
+    gap: 8px;
+}
+
+.list_item {
+    color: var(--color3);
+    background-color: var(--color2);
+    padding: 8px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+}
+
+.nav {
+    margin: 8px 0;
+    background-color: var(--color2);
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    text-align: center;
+    color: var(--color4);
+}
+
+.nav_item {
+    border: 1px solid var(--color4);
+    padding: 8px 0;
+    color: var(--color4);
+}
+
+.request {
+    margin-bottom: 8px;
+}
