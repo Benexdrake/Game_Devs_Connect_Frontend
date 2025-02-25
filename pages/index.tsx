@@ -16,7 +16,7 @@ export default function Home(props:any)
       (
         <div>
           <div style={{display:'grid', gap:'8px'}}>
-          { requestIds && requestIds.map((r:string) => {return <RequestBlock key={crypto.randomUUID()} id={r} userId={(session.user as UserType).id}/>})}
+          { requestIds && requestIds.map((r:string) => {return <RequestBlock key={'request-'+requestIds} id={r} userId={(session.user as UserType).id}/>})}
           </div>
         </div>
       )
