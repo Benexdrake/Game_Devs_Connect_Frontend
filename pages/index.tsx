@@ -2,7 +2,6 @@ import LoginOutButton from "@/components/login_btn";
 import RequestBlock from "@/components/request/request";
 import { UserType } from "@/types/user";
 import axios from "axios";
-import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
 
 export default function Home(props:any) 
@@ -29,7 +28,7 @@ export default function Home(props:any)
   );
 }
 
-export async function getStaticProps()
+export async function getServerSideProps()
 {
   const requestIds = await axios.get('http://localhost:3000/api/request').then(x => x.data);
 

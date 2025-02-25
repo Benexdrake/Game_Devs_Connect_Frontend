@@ -40,7 +40,7 @@ export default function PostRequest(props:any)
         const created = new Date().toUTCString();
         const ownerId = user.id;
 
-        let request:RequestType = {id:0,title, description, created, ownerId, fileid:0, projectId:''};
+        let request:RequestType = {id:0,title, description, created, ownerId, fileId:0, projectId:''};
 
 
         if(e.target[2].files.length > 0)
@@ -50,7 +50,7 @@ export default function PostRequest(props:any)
             formData.append('ownerId', (session.user as UserType).id)
 
             const response = await axios.post<APIResponse>(`http://localhost:3000/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data);
-            request.fileid = response.data;
+            request.fileId = response.data;
         }
         
         const requestTags:RequestTagsType = {request,tags}

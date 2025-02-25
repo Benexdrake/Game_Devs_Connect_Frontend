@@ -12,7 +12,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     }
 
-    const id =parseInt(req.query.id as string)
+    const id = req.query.id as string
     if(!id) res.status(200).json(0);
 
     const result = await getCommentIds(id);
