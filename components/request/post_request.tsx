@@ -8,12 +8,16 @@ import { TagType } from '@/types/tag';
 import { RequestTagsType } from '@/types/request_tags';
 import { useRouter } from 'next/router';
 import { APIResponse } from '@/types/api_response';
+import { validateFileSize, validateText, validateTextAreaLines, validateTextLength } from '@/lib/validate';
+import { useState } from 'react';
 
 export default function PostRequest(props:any)
 {
     const {data:session} = useSession();
     const router = useRouter();
     const {setOpen} = props;
+
+    const [textHeight, setTextHeight] = useState(35);
 
     
     let tags:TagType[] = []
@@ -35,8 +39,18 @@ export default function PostRequest(props:any)
         
         const title = e.target[0].value;
         const description = e.target[1].value;
-        if(title === '' || description === '') return;
-        
+
+        if(!validateText(title))
+        {
+            alert('Please enter a Title')
+            return;
+        }
+
+        if(!validateText(description))
+        {
+            alert('Please enter a Description')
+            return;
+        }
         const created = new Date().toUTCString();
         const ownerId = user.id;
 
@@ -61,17 +75,56 @@ export default function PostRequest(props:any)
         router.push('/')
     }
 
+    const onChangeTextHandler = (e:any) =>
+    {
+        const lines = e.target.value.split('\n').length
+        
+        if(!validateTextLength(e.target.value, 2000))
+        {
+            e.target.value = e.target.value.slice(0, e.target.value.length - 1);
+            return;
+        }
+
+        if(!validateTextAreaLines(lines, 20))
+        {
+            e.target.value = e.target.value.slice(0, e.target.value.length - 1);
+            return;
+        }
+
+        if(lines == 1)
+            setTextHeight(35);   
+        else
+            setTextHeight(lines * 20 + 8);   
+    }
+
+    const onFileChangeSize = (e:any) =>
+    {
+        if(!validateFileSize(e.target.files[0], 100*1024*1024))
+        {
+            alert('File size is to big, max 100Mb')
+            e.target.value = '';
+        }
+    }
+
+    const onTitleChangeHandler = (e:any) =>
+    {
+        if(!validateTextLength(e.target.value, 30))
+        {
+            e.target.value = e.target.value.slice(0, e.target.value.length - 1);
+        }
+    }
+
     return (
         <div>
         {session && (
             <>
                 <div className={styles.background} onClick={() => setOpen((prev:boolean) => !prev)}></div>
                 <form action="" onSubmit={onSubmitHandler} className={styles.main}>
-                    <input type="text" id="request_title" placeholder='Title' className={styles.title}/>
-                    <textarea id="new_request" className={styles.description}/>
+                    <input type="text" id="request_title" placeholder='Title' className={styles.title} onChange={onTitleChangeHandler}/>
+                    <textarea id="new_request" className={styles.description} style={{height:`${textHeight}px`}} onChange={onChangeTextHandler}/>
                     <div style={{display:'flex', justifyContent:'space-between'}}>
                         <SelectTags setTagsHandler={setTagsHandler}/>
-                        <input type="file" id="request_file" className={styles.file}/>
+                        <input type="file" id="request_file" className={styles.file} onChange={onFileChangeSize}/>
                     </div>
                     <input type="submit" value="Submit" className={styles.submit}/>
                 </form>

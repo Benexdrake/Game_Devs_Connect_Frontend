@@ -6,6 +6,7 @@ import { CommentType } from '@/types/comment';
 import { useSession } from 'next-auth/react';
 import { UserType } from '@/types/user';
 import { APIResponse } from '@/types/api_response';
+import { validateFileSize, validateText, validateTextAreaLines, validateTextLength } from '@/lib/validate';
 
 export default function NewComment(props:any)
 {
@@ -23,7 +24,14 @@ export default function NewComment(props:any)
         e.preventDefault();
 
         if(!session) return;
-       
+
+
+        if(!validateText(e.target[0].value))
+        {
+            alert('Message is to short or missing!')
+            return;
+        }
+
         const comment:CommentType = {
             id:0,
             message:e.target[0].value,
@@ -44,13 +52,10 @@ export default function NewComment(props:any)
             comment.fileId = response.data;
         }
         
-        
-        
         // // Senden des Comments an die API
         const result = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
 
         // Send ne Notification after comment send and sending notification event
-
         
         router.reload();
     }
@@ -58,10 +63,32 @@ export default function NewComment(props:any)
     const onChangeTextHandler = (e:any) =>
     {
         const lines = e.target.value.split('\n').length
+
+        if(!validateTextLength(e.target.value, 2000))
+        {
+            e.target.value = e.target.value.slice(0, e.target.value.length - 1);
+            return;
+        }
+
+        if(!validateTextAreaLines(lines, 20))
+        {
+            e.target.value = e.target.value.slice(0, e.target.value.length - 1);
+            return;
+        }
+
         if(lines == 1)
             setTextHeight(35);   
         else
             setTextHeight(lines * 20 + 8);   
+    }
+
+    const onFileChangeSize = (e:any) =>
+    {
+        if(!validateFileSize(e.target.files[0], 100*1024*1024))
+        {
+            alert('File size is to big, max 100Mb')
+            e.target.value = '';
+        }
     }
 
     return (
@@ -69,7 +96,7 @@ export default function NewComment(props:any)
             <form onSubmit={onSubmitHandler}>
                 <textarea className={styles.message} style={{height:`${textHeight}px`}} onChange={onChangeTextHandler}></textarea>
                 <div style={{display:'flex', justifyContent:'space-between'}}>
-                    <input type="file" name="" id="" />
+                    <input type="file" name="" id="" onChange={onFileChangeSize}/>
                     <input type="submit" value="Submit" />
                 </div>
             </form>
