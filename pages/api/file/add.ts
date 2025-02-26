@@ -27,6 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
     }
 
+    console.log('Files1');
+    
+    
     const data: { files: any, ownerId:any} = await new Promise((resolve, reject) => {
         const form = new IncomingForm();
         form.parse(req, (err: any, fields: any, files: any) => {
@@ -35,13 +38,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             resolve({files, ownerId:fields.ownerId[0]});
         });
     });
-
+    
+    console.log('Files2');
+    
     const f = data.files['file'][0];
-
+    
     const file:FileType = {id:0, name:f.originalFilename, size:f.size, ownerId:data.ownerId, created: new Date().toUTCString()};
     
     // Post over Service to API returns id
     const fileResponse = await addFile(file)
+    console.log('Files3');
 
     // // Upload File to AWS S3 with file and id returns true or false
     const result = await addFileS3(f, fileResponse.data);
