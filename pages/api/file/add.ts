@@ -9,7 +9,9 @@ import { APIResponse } from "@/types/api_response";
 
 export const config = {
     api: {
-        bodyParser: false,
+        bodyParser: {
+            sizeLimit: '200mb'
+        },
     },
 };
 
