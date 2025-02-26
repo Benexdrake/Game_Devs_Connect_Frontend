@@ -67,7 +67,7 @@ export default function PostRequest(props:any)
                 onUploadProgress: (progressEvent) => {
                     if(progressEvent.total)
                     {
-                        const progress = Math.round((progressEvent.loaded / progressEvent.total * 100) / 2);
+                        const progress = Math.round((progressEvent.loaded / (progressEvent.total * 2) * 100));
                         console.log(`Upload Fortschritt: ${progress}%`);
                         // Hier können Sie den Fortschritt in Ihrer UI anzeigen
                     }
