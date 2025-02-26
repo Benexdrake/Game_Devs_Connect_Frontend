@@ -31,11 +31,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     
     const data: { files: any, ownerId:any} = await new Promise((resolve, reject) => {
-        const form = new IncomingForm();
-        form.parse(req, (err: any, fields: any, files: any) => {
-            
-            if (err) reject({err});
-            resolve({files, ownerId:fields.ownerId[0]});
+        const form = new IncomingForm({ 
+            maxFileSize: 200 * 1024 * 1024, // 200MB (Beispielwert)
+            maxFieldsSize: 2 * 1024 * 1024, // 2MB für andere Felder (Beispielwert)
+        });
+    
+        form.on('error', (err) => {
+            console.error("Fehler beim Parsen des Formulars:", err);
+            reject({ err });
+        });
+    
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                console.error("Fehler im form.parse-Callback:", err);
+                return reject({ err }); // Wichtig: Hier die Funktion verlassen!
+            }
+
+            if(fields.ownerId)
+                resolve({ files, ownerId: fields.ownerId[0]});
         });
     });
     
