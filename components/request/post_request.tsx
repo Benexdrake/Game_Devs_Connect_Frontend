@@ -63,7 +63,18 @@ export default function PostRequest(props:any)
             formData.append('file', e.target[2].files[0])
             formData.append('ownerId', (session.user as UserType).id)
 
-            const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data);
+            
+            const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+                onUploadProgress: (progressEvent) => {
+                    if(progressEvent.total)
+                    {
+                        const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                        console.log(`Upload Fortschritt: ${progress}%`);
+                        // Hier können Sie den Fortschritt in Ihrer UI anzeigen
+                    }
+                }
+            }).then(x => x.data);
             request.fileId = response.data;
         }
         
