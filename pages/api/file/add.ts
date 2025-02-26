@@ -45,7 +45,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // // Upload File to AWS S3 with file and id returns true or false
     const result = await addFileS3(f, fileResponse.data);
-
+    console.log(result);
+    
 
     if(!result)
     {

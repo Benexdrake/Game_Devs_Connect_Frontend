@@ -24,6 +24,9 @@ export const addFileS3 = async (file:any, id:number) =>
             Body: fs.createReadStream(file.filepath),
           };
 
+        console.log(s3.listBuckets());
+        
+
         return await new Promise((resolve, reject) =>
         {
             s3.upload(params, (err:any,data:any) =>
