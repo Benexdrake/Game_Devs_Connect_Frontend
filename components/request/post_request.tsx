@@ -61,10 +61,8 @@ export default function PostRequest(props:any)
         {
             const formData = new FormData();
             formData.append('file', e.target[2].files[0])
-            formData.append('ownerId', (session.user as UserType).id)
-
             
-            const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {
+            const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add?ownerId=${(session.user as UserType).id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 onUploadProgress: (progressEvent) => {
                     if(progressEvent.total)

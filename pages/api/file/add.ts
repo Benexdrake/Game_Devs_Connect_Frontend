@@ -24,11 +24,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
     }
 
-    console.log('Files1');
+    const {ownerId} = req.query;
+
+    if(!ownerId)
+        return res.status(200).json('---')
     
     try 
     {
-        const data: { files: any, ownerId:any} = await new Promise((resolve, reject) => {
+        const data: { files: any} = await new Promise((resolve, reject) => {
             const form = new IncomingForm({ 
                 maxFileSize: 200 * 1024 * 1024, // 200MB (Beispielwert)
                 maxFieldsSize: 2 * 1024 * 1024, // 2MB für andere Felder (Beispielwert)
@@ -45,16 +48,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     return reject({ err }); // Wichtig: Hier die Funktion verlassen!
                 }
 
-                if(fields.ownerId)
-                    resolve({ files, ownerId: fields.ownerId[0]});
+                resolve({files});
             });
         });
     
         console.log('Files2');
         
         const f = data.files['file'][0];
-        
-        const file:FileType = {id:0, name:f.originalFilename, size:f.size, ownerId:data.ownerId, created: new Date().toUTCString()};
+
+        const file:FileType = {id:0, name:f.originalFilename, size:f.size, ownerId:ownerId as string, created: new Date().toUTCString()};
         
         // Post over Service to API returns id
         const fileResponse = await addFile(file)
