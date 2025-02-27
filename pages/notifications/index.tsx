@@ -26,7 +26,9 @@ export async function getServerSideProps(context:any)
 
     const user = (session?.user as UserType)
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/notification/user/?i${user.id}`).then(x => x.data);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/notification/user/?id=${user.id}`).then(x => x.data);
+    console.log(user);
+    
     
     return {
       props: {
