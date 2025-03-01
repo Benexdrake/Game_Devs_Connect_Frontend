@@ -2,7 +2,7 @@ import { APIResponse } from "@/types/api_response";
 import { CommentType } from "@/types/comment";
 import axios from "axios";
 
-const url = process.env.url+'/comment/';
+const url = process.env.BACKEND_URL+'/comment/';
 
 export const getCommentIds = async (parentId:string) =>
 {

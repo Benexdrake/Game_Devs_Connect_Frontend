@@ -1,7 +1,7 @@
 import { APIResponse } from "@/types/api_response";
 import axios from "axios";
 
-const url = process.env.url+'/user/';
+const url = process.env.BACKEND_URL+'/user/';
 
 export const getUsers = async () =>
 {

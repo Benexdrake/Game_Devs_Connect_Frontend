@@ -3,7 +3,7 @@ import { RequestType } from "@/types/request";
 import { RequestTagsType } from "@/types/request_tags";
 import axios from "axios";
 
-const url = process.env.url+'/request/';
+const url = process.env.BACKEND_URL+'/request/';
 
 export const getRequests = async () =>
 {

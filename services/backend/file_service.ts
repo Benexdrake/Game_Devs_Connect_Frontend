@@ -2,7 +2,7 @@ import { APIResponse } from "@/types/api_response";
 import { FileType } from "@/types/file";
 import axios from "axios";
 
-const url = process.env.url+'/file/';
+const url = process.env.BACKEND_URL+'/file/';
 
 // Get FileIds By Owner ID
 export const getFileIdsByOwnerId = async (ownerId:string) =>

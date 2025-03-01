@@ -1,7 +1,7 @@
 import { APIResponse } from "@/types/api_response";
 import axios from "axios";
 
-const url = process.env.url+'/notification/';
+const url = process.env.BACKEND_URL+'/notification/';
 
 // Get Notification By Id / notificationId
 export const getNotificationById = async (notificationId:string) =>

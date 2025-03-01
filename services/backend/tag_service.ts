@@ -1,7 +1,7 @@
 import { APIResponse } from "@/types/api_response";
 import axios from "axios";
 
-const url = process.env.url+'/tag/';
+const url = process.env.BACKEND_URL+'/tag/';
 
 export const getTags = async () =>
 {
