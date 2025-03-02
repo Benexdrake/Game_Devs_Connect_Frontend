@@ -24,7 +24,7 @@ export default function Comment(props:any)
 
 
              // User
-            const resultUser = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/user/short/${result.data.ownerId}`).then(x => x.data)
+            const resultUser = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/user/${result.data.ownerId}`).then(x => x.data)
             if(!resultUser.status) return;
 
             setComment(result.data);

@@ -13,11 +13,6 @@ export const getUserById = async (id:string) =>
     return await axios.get<APIResponse>(`${url}${id}`).then(x => x.data)
 }
 
-export const getShortUserById = async (id:string) =>
-{
-    return await axios.get<APIResponse>(`${url}short/${id}`).then(x => x.data)
-}
-
 export const addUser = async (user:any) =>
 {
     return await axios.post<APIResponse>(`${url}add`, user).then(x => x.data)
