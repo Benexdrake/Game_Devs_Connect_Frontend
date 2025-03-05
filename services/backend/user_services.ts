@@ -3,6 +3,8 @@ import axios from "axios";
 
 const url = process.env.BACKEND_URL+'/user/';
 
+
+
 export const getUsers = async () =>
 {
     return await axios.get<APIResponse>(`${url}`).then(x => x.data)

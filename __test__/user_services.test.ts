@@ -1,13 +1,21 @@
-import "@testing-library/jest-dom"
-import * as user_service from '@/services/backend/user_services'
+import {describe, test, expect} from 'vitest';
+import {getUserById, getUsers} from '../services/backend/user_services'
 
 describe("User Service", () =>
 {
-    it("get users", async () =>
+    test("get users status should be true", async () =>
     {
-        const users = await user_service.getUsers();
+        const response = await getUsers();
+        
+        expect(response.status).toBe(true);
+    })
 
-        expect(users).toBe(users)
+    test("get user by id status should be true", async () =>
+    {
+        const response = await getUserById('1075712673804714035');
+
+        expect(response.status).toBe(true);
+        expect(response.data.username).toBe('benexdevtest');
     })
 })
 
