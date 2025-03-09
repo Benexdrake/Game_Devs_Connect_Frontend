@@ -4,17 +4,10 @@ export type UserType =
     username:string;
     avatar:string;
     accountType:string;
-    banner:string;
-    discordUrl:string;
-    xUrl:string;
-    websiteUrl:string;
-    email:string;
-    projectId:string;
-}
-
-export type UserShortType =
-{
-    id:string;
-    username:string;
-    avatar:string;
+    // banner:string;
+    // discordUrl:string;
+    // xUrl:string;
+    // websiteUrl:string;
+    // email:string;
+    // projectId:string;
 }
