@@ -17,7 +17,6 @@ describe("Tag Services", () =>
         const requestId = '1';
 
         const response = await getTagsByRequestId(requestId)
-        console.log(response.data);
         
         expect(response.status).toBe(true);
     })
