@@ -11,5 +11,5 @@ export const secureCheck = async (req: NextApiRequest, res: NextApiResponse) =>
     if(session) return true;
 
     // Should be False, but getServerSession dont work
-    return true;
+    return false;
 }
