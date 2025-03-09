@@ -21,7 +21,7 @@ export const getUnseenNotificationCount = async (userId:string) =>
     return await axios.get<APIResponse>(`${url}unseen/${userId}`).then(x => x.data)
 }
 
-export const updateSeenNotification = async (notificationId:string) =>
-{   
-    return await axios.put<APIResponse>(`${url}?notificationId=${notificationId}`).then(x => x.data)
+export const deleteNotificationById = async (notificationId:string) =>
+{
+    return await axios.delete<APIResponse>(`${url}delete/${notificationId}`).then(x => x.data)
 }

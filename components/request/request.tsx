@@ -47,10 +47,7 @@ export default function RequestBlock(props:any)
     },[])
 
     const onClickLikeHandler = () =>
-    {
-        // Senden an die DB;
-        console.log('HALLO');
-        
+    {   
         likedRequest();
     }
     
