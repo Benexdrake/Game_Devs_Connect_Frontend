@@ -1,4 +1,4 @@
-import { addProject, deleteProject, getProjectById, getProjects, updateProject } from '../services/backend/project_services';
+import { addProject, deleteProject, getProjectById, getProjects, updateProject } from '../../services/backend/project_services';
 import { ProjectType } from '@/types/project';
 import {describe, test, expect} from 'vitest';
 

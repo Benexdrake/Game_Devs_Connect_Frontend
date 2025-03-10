@@ -1,8 +1,8 @@
-import { RequestType } from '../types/request';
-import { addRequest, deleteRequest, getFilesByRequestId, getFullRequestById, getRequestById, getRequestCheck, getRequests, getRequestsByUserId, likedRequest, updateRequest } from '../services/backend/request_services';
+import { RequestType } from '../../types/request';
+import { addRequest, deleteRequest, getFilesByRequestId, getFullRequestById, getRequestById, getRequestCheck, getRequests, getRequestsByUserId, likedRequest, updateRequest } from '../../services/backend/request_services';
 import {describe, test, expect} from 'vitest';
-import { RequestTagsType } from '../types/request_tags';
-import {createDummyUser, deleteDummyUser} from './lib/dummy'
+import { RequestTagsType } from '../../types/request_tags';
+import {createDummyUser, deleteDummyUser} from '../lib/dummy'
 
 const REQUEST_ID = 99999
 

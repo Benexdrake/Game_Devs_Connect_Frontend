@@ -1,6 +1,6 @@
-import { deleteNotificationById, getNotificationById, getNotificationIds, getUnseenNotificationCount } from '../services/backend/notification_service';
+import { deleteNotificationById, getNotificationById, getNotificationIds, getUnseenNotificationCount } from '../../services/backend/notification_service';
 import {describe, test, expect} from 'vitest';
-import { createDummyLike, createDummyRequest, createDummyUser, deleteDummyRequest, deleteDummyUser } from './lib/dummy';
+import { createDummyLike, createDummyRequest, createDummyUser, deleteDummyRequest, deleteDummyUser } from '../lib/dummy';
 
 describe("Notification User", () =>
 {

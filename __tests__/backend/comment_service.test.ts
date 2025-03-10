@@ -1,5 +1,5 @@
-import { addComment, deleteComment, getComment, getCommentCount, getCommentIds, updateComment } from '../services/backend/comment_service';
-import { CommentType } from '../types/comment';
+import { addComment, deleteComment, getComment, getCommentCount, getCommentIds, updateComment } from '../../services/backend/comment_service';
+import { CommentType } from '../../types/comment';
 import {describe, test, expect} from 'vitest';
 
 describe("Comment Service", () =>

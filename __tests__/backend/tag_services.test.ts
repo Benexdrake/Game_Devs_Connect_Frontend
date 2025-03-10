@@ -1,6 +1,6 @@
 import {describe, test, expect} from 'vitest';
-import { TagType } from '../types/tag';
-import { addTag, deleteTag, getTags, getTagsByRequestId, updateTag } from '../services/backend/tag_service';
+import { TagType } from '../../types/tag';
+import { addTag, deleteTag, getTags, getTagsByRequestId, updateTag } from '../../services/backend/tag_service';
 
 describe("Tag Services", () =>
 {

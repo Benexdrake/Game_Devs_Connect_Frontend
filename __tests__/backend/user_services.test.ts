@@ -1,6 +1,6 @@
 import {describe, test, expect} from 'vitest';
-import {addUser, deleteUser, getUserById, getUsers, updateUser} from '../services/backend/user_services'
-import { UserType } from '../types/user';
+import {addUser, deleteUser, getUserById, getUsers, updateUser} from '../../services/backend/user_services'
+import { UserType } from '../../types/user';
 
 describe("User Service", () =>
 {

@@ -1,5 +1,5 @@
-import { addFile, deleteFile, getFileById, getFileIdsByOwnerId, updateFile } from '../services/backend/file_service';
-import { FileType } from '../types/file';
+import { addFile, deleteFile, getFileById, getFileIdsByOwnerId, updateFile } from '../../services/backend/file_service';
+import { FileType } from '../../types/file';
 import {describe, test, expect} from 'vitest';
 
 describe("File Service", () =>
