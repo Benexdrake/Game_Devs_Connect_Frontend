@@ -4,15 +4,15 @@ import { FileType } from '@/types/file';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { APIResponse } from '@/types/api_response';
-import { UserShortType } from '@/types/user';
 import DownloadFile from '../file/download_file';
 import Link from 'next/link';
+import { UserType } from '@/types/user';
 
 export default function Comment(props:any)
 {
     const {id} = props;
     const [comment, setComment] = useState<CommentType>();
-    const [user, setUser] = useState<UserShortType>();
+    const [user, setUser] = useState<UserType>();
 
     useEffect(() => 
     {
