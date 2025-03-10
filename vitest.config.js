@@ -5,6 +5,12 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
-    setupFiles: ['dotenv/config']
+    setupFiles: ['dotenv/config'],
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        singleThread: true,
+      },
+    },
   },
 });

@@ -32,5 +32,5 @@ export const updateFile = async (file:FileType) =>
 // Delete File
 export const deleteFile = async (id:number) =>
 {
-    return await axios.delete<APIResponse>(`${url}${id}`).then(x => x.data)
+    return await axios.delete<APIResponse>(`${url}delete/${id}`).then(x => x.data)
 }
