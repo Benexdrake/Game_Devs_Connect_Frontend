@@ -1,7 +1,7 @@
 import LoginOutButton from "@/components/login_btn";
 import RequestBlock from "@/components/request/request";
+import { getRequests } from "@/services/frontend/request_services";
 import { UserType } from "@/types/user";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 
 export default function Home(props:any) 
@@ -16,7 +16,16 @@ export default function Home(props:any)
       (
         <div>
           <div style={{display:'grid', gap:'8px'}}>
-          { requestIds && requestIds.map((r:string) => {return <RequestBlock key={'request-'+requestIds} id={r} userId={(session.user as UserType).id}/>})}
+            { 
+              requestIds ? requestIds.map((r:string) => 
+                {
+                  return <RequestBlock key={'request-'+requestIds} id={r} userId={(session.user as UserType).id}/>
+                }) 
+                :
+                <div>
+                  <h1>NO REQUESTS!!!</h1>
+                </div>
+            }
           </div>
         </div>
       )
@@ -30,11 +39,12 @@ export default function Home(props:any)
 
 export async function getServerSideProps()
 {
-  const requestIds = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request`).then(x => x.data);
-
+  const response = await getRequests();
+  console.log(response.message);
+  
   return {
     props: {
-      requestIds
+      requestIds: response.data
     }
   }
 }

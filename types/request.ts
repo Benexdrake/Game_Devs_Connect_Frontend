@@ -1,5 +1,5 @@
 import { TagType } from "./tag";
-import { UserShortType } from "./user";
+import { UserType } from "./user";
 
 export type RequestType =
 {
@@ -16,7 +16,7 @@ export type RequestBlockType =
 {
     request:RequestType;
     tags:TagType[];
-    user:UserShortType;
+    user:UserType;
     count:number
     likes:number;
 }

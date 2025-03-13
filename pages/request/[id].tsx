@@ -41,10 +41,6 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
     const checkResponse = await axios<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/check/${id}`).then(x => x.data)
 
     const status = checkResponse.status
-    
-    // Ping DB zum überprüfen ob die Request existiert,
-
-    // const result = await checkRequest(id);
 
     if(!status)
     {

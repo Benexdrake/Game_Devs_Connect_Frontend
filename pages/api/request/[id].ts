@@ -1,7 +1,6 @@
 import { getFullRequestById } from "@/services/backend/request_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { secureCheck } from "@/lib/api";
-import axios from "axios";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {

@@ -22,7 +22,13 @@ export default function Comments(props:any)
 
     return (
         <div className={styles.main}>
-            {commentIds && commentIds.map(x => <Comment id={x}/>)}
+            {commentIds ? 
+                commentIds.map(x => <Comment id={x} key={crypto.randomUUID()}/>)
+                :
+                <div>
+                    
+                </div>
+        }
         </div>
     )
 }

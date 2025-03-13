@@ -37,18 +37,24 @@ export default function Navbar(props:any)
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-envelope"></i></li></Link>
                     <Link href='/'><li className={styles.nav_button}><i className="fa-solid fa-ellipsis"></i></li></Link>
                     <Link href={`/profile/${user?.id}`}><li className={styles.nav_button}><i className="fa-solid fa-user"></i></li></Link>
-                    <li className={styles.nav_button} onClick={() => setOpenNewPost(!openNewPost)}><i className="fa-solid fa-circle-plus"></i></li>
+                    <li>
+                        <button className={styles.nav_button} onClick={() => setOpenNewPost(!openNewPost)}>
+                            <i className="fa-solid fa-circle-plus"></i>
+                        </button>
+                    </li>
                     { session &&
                     (
-                        <li className={styles.nav_button} onClick={() => setOpenAvatarOption(!openAvatarOption)}>
-                            <img className={styles.avatar} src={user.avatar} alt="Avatar"/>
+                        <li>
+                            <button className={styles.nav_button} onClick={() => setOpenAvatarOption(!openAvatarOption)}>
+                                <img className={styles.avatar} src={user.avatar} alt="Avatar"/>
+                            </button>
                         </li>   
                     )}
                 </ul>
                 {openAvatarOption && (
-                    <div className={styles.avatar_option + '  option-background'} onClick={onClickHander}>
+                    <button className={styles.avatar_option + '  option-background'} onClick={onClickHander}>
                         <AvatarOption/>
-                    </div>
+                    </button>
                 )}
                 {openNewPost && (
                     <PostRequest setOpen={setOpenNewPost}/>

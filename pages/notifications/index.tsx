@@ -1,7 +1,7 @@
 import { UserType } from "@/types/user";
 import Notification from "@/components/notification/notification";
 import axios from "axios";
-import { getSession, useSession } from "next-auth/react";
+import { getSession} from "next-auth/react";
 
 import styles from '@/styles/modules/notification/notification_page.module.css'
 
@@ -14,7 +14,11 @@ export default function Notifications(props:any)
             Notification
           </div>
           <div className={styles.notifications}>
-            { notificationIds && notificationIds.map((id:string) => <Notification notificationId={id}/>)}
+            { notificationIds ? 
+              notificationIds.map((id:string) => <Notification key={id} notificationId={id}/>)
+            :
+              <div></div>
+            }
           </div>
         </article>
     )

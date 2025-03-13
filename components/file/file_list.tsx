@@ -8,20 +8,22 @@ export default function FileList(props:any)
 
     const [show, setShow] = useState(false)
     
-    
+    const onKeyDownHandler = (e:any) =>
+    {
+        console.log(e);
+        
+    }
 
     return (
         <div className={styles.main}>
             {
                 show ? (
                     <div>
-                        <div className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)}>
-                            Close
-                        </div>
+                        <button className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)} onKeyDown={onKeyDownHandler}>Close</button>
                     {fileIds.map((id:any) => 
                         (
-                            <div style={{padding:'8px'}}>
-                                <FileListItem fileId={id} />
+                            <div style={{padding:'8px'}} key={crypto.randomUUID()}>
+                                <FileListItem fileId={id}/>
                             </div>
                         )
                     )}
@@ -29,9 +31,7 @@ export default function FileList(props:any)
                 )
                 :
                 (
-                    <div className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)}>
-                        Files
-                    </div>
+                    <button className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)}>Files</button>
                 )
             }
             

@@ -34,8 +34,7 @@ export default function RequestBlock(props:any)
 
     const likedRequest = async () =>
     {
-        const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/liked`, {requestId:requestBlock?.request.id, userId, liked:!like}).then(x => x.data);
-        console.log({requestId:requestBlock?.request.id, userId, liked:!like});
+        await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/liked`, {requestId:requestBlock?.request.id, userId, liked:!like}).then(x => x.data);
         
         setLike(!like);
         setFakeLike(like? fakeLike -1 : fakeLike+1)
@@ -55,7 +54,7 @@ export default function RequestBlock(props:any)
         <>
             {requestBlock?.user && requestBlock?.request && (
                 <article className={styles.main}>
-                    <>
+                    <div>
                         <Link href={`/request/${requestBlock?.request.id}`}>
                             <div style={{display:'flex', padding:'16px 16px 8px 16px'}}>
                                 <Link href={`/profile/${requestBlock.user.id}`}>
@@ -75,7 +74,13 @@ export default function RequestBlock(props:any)
                                 </div>
                             </div>
                             <div className={styles.tags}>
-                                {requestBlock?.tags && requestBlock?.tags.map((tag:TagType) => ( <span className={styles.tag}>{tag.name}</span> ))}
+                                {requestBlock?.tags ? 
+                                    requestBlock?.tags.map((tag:TagType) => ( 
+                                        <span className={styles.tag} key={tag.name}>{tag.name}</span> 
+                                    ))
+                                    :
+                                    <div></div>
+                                }
                             </div>
                         </Link>
                             
@@ -83,17 +88,20 @@ export default function RequestBlock(props:any)
 
                             <Link href={`/request/${requestBlock?.request.id}`}> 
                                 <div><i className="fa-solid fa-comment"></i>
-                                    {requestBlock?.count && (
+                                    {requestBlock?.count ? (
                                         requestBlock?.count
-                                    )}
+                                    )
+                                    :
+                                    <div>0</div>
+                                }
                                 </div>
                             </Link>
                             <div><i className="fa-solid fa-share"></i> 1</div>
-                            <div onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike && fakeLike)}</div>
+                            <button onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</button>
                             <div><i className="fa-solid fa-chart-simple"></i> 100</div>
                             {requestBlock?.request.fileId !== 0 && ( <div className={styles.download}> <File fileId={requestBlock?.request.fileId} /> </div> )}
                         </div>
-                    </>
+                    </div>
                 </article>
             )}
         </>

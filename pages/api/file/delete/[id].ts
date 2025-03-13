@@ -1,4 +1,5 @@
 import { secureCheck } from "@/lib/api";
+import { getFileIdsByOwnerId } from "@/services/backend/file_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> 
@@ -11,8 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
     }
 
-    const id = parseInt(req.query.id as string)
+    const id = req.query.id as string;
 
-
-    
+    const response = await getFileIdsByOwnerId(id)
+    res.status(200).json(response);
 }

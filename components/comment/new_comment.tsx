@@ -53,7 +53,7 @@ export default function NewComment(props:any)
         }
         
         // // Senden des Comments an die API
-        const result = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
+        await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
 
         // Send ne Notification after comment send and sending notification event
         

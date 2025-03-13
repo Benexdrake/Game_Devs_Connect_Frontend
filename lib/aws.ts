@@ -1,7 +1,5 @@
 'use server'
 
-import { NextApiRequest } from "next";
-
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import { FileType } from "@/types/file";

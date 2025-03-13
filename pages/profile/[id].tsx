@@ -4,8 +4,6 @@ import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
 import styles from '@/styles/modules/profile/profile.module.css'
-import { RequestType } from "@/types/request";
-import { ProjectType } from "@/types/project";
 import { getRequestsByUserId } from "@/services/backend/request_services";
 import RequestBlock from "@/components/request/request";
 import Link from "next/link";
@@ -41,9 +39,9 @@ export default function Profile(props:any)
                 <Link href={`${user.id}?tab=projects`}><div className={styles.nav_item} style={{borderBottomColor:tab==='projects'?'var(--color3)':'var(--color4)'}}>Projects</div></Link>
                 <Link href={`${user.id}?tab=likes`}><div className={styles.nav_item} style={{borderBottomColor:tab==='likes'?'var(--color3)':'var(--color4)'}}>Likes</div></Link>
             </nav>
-            {tab && tab === 'requests' && ( data.map((id:number) =>  <div className={styles.request}><RequestBlock id={id} userId={user.id}/></div>))}
-            {tab && tab === 'likes' && ( data.map((id:number) =>  <div className={styles.request}><RequestBlock id={id} userId={user.id}/></div>))}
-            {tab && tab === 'projects' && ( data.map((id:number) =>  <div className={styles.request}><RequestBlock id={id} userId={user.id}/></div>))}
+            {tab && tab === 'requests' && ( data.map((id:number) =>  <div className={styles.request} key={id}><RequestBlock id={id} userId={user.id}/></div>))}
+            {tab && tab === 'likes' && ( data.map((id:number) =>  <div className={styles.request} key={id}><RequestBlock id={id} userId={user.id}/></div>))}
+            {tab && tab === 'projects' && ( data.map((id:number) =>  <div className={styles.request} key={id}><RequestBlock id={id} userId={user.id}/></div>))}
 
         </div>
     )
@@ -67,12 +65,10 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
             break;
         case 'likes':
             // Get all liked Requests
-            const responseLikes = await getRequestsByUserId(id as string)
-            data = responseLikes.data;
+            data = (await getRequestsByUserId(id as string)).data
             break;
         default:
-            const response = await getRequestsByUserId(id as string)
-            data = response.data;
+            data = (await getRequestsByUserId(id as string)).data
             break;
     }
     

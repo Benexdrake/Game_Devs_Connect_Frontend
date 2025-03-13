@@ -1,6 +1,5 @@
 import styles from '@/styles/modules/comment/comment.module.css'
 import { CommentType } from "@/types/comment";
-import { FileType } from '@/types/file';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { APIResponse } from '@/types/api_response';

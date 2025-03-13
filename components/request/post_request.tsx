@@ -76,7 +76,7 @@ export default function PostRequest(props:any)
         }
         
         const requestTags:RequestTagsType = {request,tags}
-        const result = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/add`,{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
+        await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/add`,{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
         
         setOpen((prev:boolean) => !prev)
         
@@ -126,7 +126,7 @@ export default function PostRequest(props:any)
         <div>
         {session && (
             <>
-                <div className={styles.background} onClick={() => setOpen((prev:boolean) => !prev)}></div>
+                <button className={styles.background} onClick={() => setOpen((prev:boolean) => !prev)}></button>
                 <form action="" onSubmit={onSubmitHandler} className={styles.main}>
                     <input type="text" id="request_title" placeholder='Title' className={styles.title} onChange={onTitleChangeHandler}/>
                     <textarea id="new_request" className={styles.description} style={{height:`${textHeight}px`}} onChange={onChangeTextHandler}/>

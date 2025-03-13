@@ -1,7 +1,7 @@
 import styles from '@/styles/modules/notification/notification.module.css'
 import { APIResponse } from '@/types/api_response';
 import { NotificationType } from '@/types/notification';
-import { UserShortType } from '@/types/user';
+import { UserType } from '@/types/user';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -9,7 +9,7 @@ export default function Notification(props:any)
 {
     const {notificationId} = props;
     const [notification, setNotification] = useState<NotificationType>()
-    const [user, setUser] = useState<UserShortType>();
+    const [user, setUser] = useState<UserType>();
 
     const getNotification = async () =>
     {

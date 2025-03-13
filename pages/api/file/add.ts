@@ -2,9 +2,9 @@ import { addFileS3 } from "@/lib/aws";
 import { addFile, deleteFile } from "@/services/backend/file_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 import {IncomingForm} from "formidable";
-import formidable from 'formidable';
 import { FileType } from "@/types/file";
 import { secureCheck } from "@/lib/api";
+import { APIResponse } from "@/types/api_response";
 
 export const config = {
     api: {
@@ -27,25 +27,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const {ownerId} = req.query;
 
     if(!ownerId)
-        return res.status(200).json('---')
+    {
+        const response:APIResponse = {message:'', status:false, data:{}}
+        return res.status(200).json(response)
+    }
     
     try 
     {
         const data: { files: any} = await new Promise((resolve, reject) => {
             const form = new IncomingForm({ 
+                uploadDir:'/tmp/',
+                keepExtensions:false,
                 maxFileSize: 200 * 1024 * 1024, // 200MB (Beispielwert)
                 maxFieldsSize: 2 * 1024 * 1024, // 2MB für andere Felder (Beispielwert)
             });
         
-            form.on('error', (err) => {
+            form.on('error', (err:any) => {
                 console.error("Fehler beim Parsen des Formulars:", err);
-                reject({ err });
+                reject(new Error(err));
             });
         
             form.parse(req, (err, fields, files) => {
                 if (err) {
                     console.error("Fehler im form.parse-Callback:", err);
-                    return reject({ err }); // Wichtig: Hier die Funktion verlassen!
+                    return reject(new Error(err));
                 }
 
                 resolve({files});
@@ -84,4 +89,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     {
         console.error('ERROR',error);
     }
+    const response:APIResponse = {message:'', status:true, data:{}}
+    res.status(200).json(response)
 }

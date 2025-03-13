@@ -14,18 +14,20 @@ export default function Tag(props:any)
     }
 
     return (
-        <li className={styles.item} onClick={() => onSelectHandler()}>
-            <span className={styles.checkbox}>
-                {select ? 
-                (
-                    <i className={"fa-solid fa-check "+ styles.check_icon}></i>
-                )
-                :
-                (
-                    <i className={styles.check_icon}></i>
-                )}
-            </span>
-            <span className={styles.item_text}>{tag.name}</span>
+        <li>
+            <button className={styles.item} onClick={() => onSelectHandler()}>
+                <span className={styles.checkbox}>
+                    {select ? 
+                    (
+                        <i className={"fa-solid fa-check "+ styles.check_icon}></i>
+                    )
+                    :
+                    (
+                        <i className={styles.check_icon}></i>
+                    )}
+                </span>
+                <span className={styles.item_text}>{tag.name}</span>
+            </button>
         </li>
     )
 }

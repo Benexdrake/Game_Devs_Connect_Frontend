@@ -1,4 +1,3 @@
-import { ProjectType } from "@/types/project";
 import { addRequest, deleteRequest, likedRequest } from "../../services/backend/request_services";
 import { addUser, deleteUser } from "../../services/backend/user_services";
 import { UserType } from "../../types/user";

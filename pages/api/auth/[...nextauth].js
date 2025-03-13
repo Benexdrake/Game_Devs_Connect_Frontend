@@ -1,6 +1,5 @@
 import { getDiscordUser } from "@/services/backend/discord_service";
 import NextAuth from "next-auth/next";
-import Providers from 'next-auth/providers/discord'
 import DiscordProvider from "next-auth/providers/discord"
 
 const scopes = ['identify'].join(' ')

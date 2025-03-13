@@ -47,14 +47,18 @@ export default function SelectTags(props:any)
     
     return (
         <>
-            <div className={styles.tags} onClick={() => onSelectOpenTagsClickHandler()}>
+            <button className={styles.tags} onClick={() => onSelectOpenTagsClickHandler()}>
                 <span className={styles.select_btn}>Select Tags</span>
                 <span className={styles.arrow_dwn}>
                     <i className="fa-solid fa-chevron-down"></i>
                 </span>
-            </div>
+            </button>
             <ul className={styles.list_items} style={{display:open?'block':'none'}}>
-                {loadedTags && loadedTags.map((tag:TagType) => <Tag styles={styles} tag={tag} onSelectTagsHandler={onSelectTagsHandler}/>)}
+                {loadedTags ? 
+                    loadedTags.map((tag:TagType) => <Tag styles={styles} key={tag.name+tag.id} tag={tag} onSelectTagsHandler={onSelectTagsHandler}/>)
+                    :
+                    <div></div>
+                }
             </ul>
         </>
     )
