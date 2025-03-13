@@ -1,5 +1,5 @@
 import { secureCheck } from "@/lib/api";
-import { getFileIdsByOwnerId } from "@/services/backend/file_service";
+import { getFileIdsByOwnerId } from "@/services/file_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> 

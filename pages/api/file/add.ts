@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     {
         const data: { files: any} = await new Promise((resolve, reject) => {
             const form = new IncomingForm({ 
-                uploadDir:'/tmp/',
+                uploadDir:process.env.UPLOADDIR,
                 keepExtensions:false,
                 maxFileSize: 200 * 1024 * 1024, // 200MB (Beispielwert)
                 maxFieldsSize: 2 * 1024 * 1024, // 2MB für andere Felder (Beispielwert)
