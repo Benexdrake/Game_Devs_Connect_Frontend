@@ -1,5 +1,5 @@
 import { secureCheck } from "@/lib/api";
-import { getUserById } from "@/services/backend/user_services";
+import { getUserById } from "@/services/user_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)

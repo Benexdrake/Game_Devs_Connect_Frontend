@@ -1,13 +1,14 @@
-import { addProject, deleteProject, getProjectById, getProjects, updateProject } from '../../services/backend/project_services';
+import { addProject, deleteProject, getProjectById, updateProject } from '../../services/project_services';
 import { ProjectType } from '@/types/project';
 import {describe, test, expect} from 'vitest';
 
-describe("Project Service", () =>
+describe.each([{test:'backend', frontend:false, id:'backend_test', ownerId:'dummy1', name:'test1'}, {test:'frontend', frontend:true, id:'frontend_test', ownerId:'dummy2', name:'test2'}])
+("Project Service: $test", ({frontend, id, ownerId, name}) =>
 {
     test('add project', async () =>
     {
-        const project:ProjectType = {id:'dummy', name:'test', ownerId:'dummy'}
-        const response = await addProject(project);
+        const project:ProjectType = {id, name, ownerId}
+        const response = await addProject(project, frontend);
         expect(response.status).toBe(true);
     })
 
@@ -27,20 +28,20 @@ describe("Project Service", () =>
 
     test('get project by id', async () =>
     {
-        const response = await getProjectById('dummy');
+        const response = await getProjectById(id, frontend);
         expect(response.status).toBe(true);
     })
 
     test('update project', async () =>
     {
-        const project:ProjectType = {id:'dummy', name:'test123', ownerId:'dummy'}
-        const response = await updateProject(project);
+        const project:ProjectType = {id, name, ownerId}
+        const response = await updateProject(project, frontend);
         expect(response.status).toBe(true);
     })
 
     test('delete project', async () =>
     {
-        const response = await deleteProject('dummy');
+        const response = await deleteProject(id, frontend);
         expect(response.status).toBe(true);
     })
 })

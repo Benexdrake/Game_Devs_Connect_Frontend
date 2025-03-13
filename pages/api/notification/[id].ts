@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { secureCheck } from "@/lib/api";
-import { getNotificationById } from "@/services/backend/notification_service";
+import { getNotificationById } from "@/services/notification_service";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {

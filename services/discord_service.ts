@@ -1,4 +1,4 @@
-import { UserType } from "@/types/user";
+import { UserType } from "../types/user";
 import axios from "axios";
 import { addUser, getUserById } from "./user_services";
 
@@ -21,9 +21,9 @@ export async function getDiscordUser(token:string)
 
     const user:UserType = {id:d.id, username, avatar, accountType:'discord'}
     
-    await addUser(user);
+    await addUser(false, user);
     
-    const userDB= await getUserById(user.id)
+    const userDB= await getUserById(false, user.id)
 
     return userDB.data;
 }

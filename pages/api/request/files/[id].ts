@@ -1,4 +1,4 @@
-import { getFilesByRequestId } from "@/services/backend/request_services";
+import { getFilesByRequestId } from "@/services/request_services";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { secureCheck } from "@/lib/api";
 
