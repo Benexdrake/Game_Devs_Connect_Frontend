@@ -11,13 +11,9 @@ import { validateFileSize, validateText, validateTextAreaLines, validateTextLeng
 export default function NewComment(props:any)
 {
     const { requestId } = props
-
     const [textHeight, setTextHeight] = useState(35);
-
     const router = useRouter();
-
     const {data:session} = useSession();
-    
 
     const onSubmitHandler = async (e:any) =>
     {
@@ -42,18 +38,25 @@ export default function NewComment(props:any)
             deleted:false
         } 
 
+        // Wenn file größer 0, sende erst an files/add
+        // danach an aws/s3/add
+        // und danach comment/add
+
+
         if(e.target[1].files.length > 0)
         {
-            const formData = new FormData();
-            formData.append('file', e.target[1].files[0])
-            formData.append('ownerId', (session.user as UserType).id)
+            // const formData = new FormData();
+            // formData.append('file', e.target[1].files[0])
+            // formData.append('ownerId', (session.user as UserType).id)
             
-            const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
-            comment.fileId = response.data;
+            
+            // const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
+            // const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
+            // comment.fileId = response.data;
         }
         
         // // Senden des Comments an die API
-        await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
+        // await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
 
         // Send ne Notification after comment send and sending notification event
         

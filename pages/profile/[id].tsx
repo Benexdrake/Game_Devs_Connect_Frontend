@@ -1,10 +1,10 @@
-import { getUserById } from "@/services/backend/user_services";
+import { getUserById } from "@/services/user_services";
 import { UserType } from "@/types/user";
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
 
 import styles from '@/styles/modules/profile/profile.module.css'
-import { getRequestsByUserId } from "@/services/backend/request_services";
+import { getRequestsByUserId } from "@/services/request_services";
 import RequestBlock from "@/components/request/request";
 import Link from "next/link";
 
@@ -60,11 +60,9 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
     switch(tab)
     {
         case 'projects':
-            // Get all Project IDs where User is Owner or part of the Team
             data = [];
             break;
         case 'likes':
-            // Get all liked Requests
             data = (await getRequestsByUserId(id as string)).data
             break;
         default:

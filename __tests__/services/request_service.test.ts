@@ -1,5 +1,5 @@
 import { RequestType } from '../../types/request';
-import { addRequest, deleteRequest, getFilesByRequestId, getFullRequestById, getRequestById, getRequestCheck, getRequests, getRequestsByUserId, likedRequest, updateRequest } from '../../services/request_services';
+import { addRequest, deleteRequest, getFullRequestById, getRequestById, getRequestCheck, getRequests, getRequestsByUserId, likedRequest, updateRequest } from '../../services/request_services';
 import {describe, test, expect} from 'vitest';
 import { RequestTagsType } from '../../types/request_tags';
 
@@ -45,12 +45,6 @@ describe.each([{test:'backend', frontend:false, id:'backend_test', request_id:99
     test("check if request exists", async () => 
     {
         const response = await getRequestCheck(request_id+'', frontend)
-        expect(response.status).toBe(true);
-    })
-
-    test("get files by request id", async () => 
-    {
-        const response = await getFilesByRequestId(request_id+'', frontend)
         expect(response.status).toBe(true);
     })
 

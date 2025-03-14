@@ -29,11 +29,6 @@ export const getRequestCheck = async (id:string, frontend:boolean=false) =>
     return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/request/check/${id}`).then(x => x.data)
 }
 
-export const getFilesByRequestId = async (id:string, frontend:boolean=false) =>
-{   
-    return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/request/files/${id}`).then(x => x.data)
-}
-
 export const addRequest = async (request:RequestTagsType, frontend:boolean=false) =>
 {   
     return await axios.post<APIResponse>(`${getUrlHandler(frontend)}/request/add`, request).then(x => x.data)

@@ -12,9 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
     }
 
-    const file = req.body;
+    const {comment} = req.body;
     
-    const response = await updateFile(file);
+    const response = await updateFile(comment);
 
     res.status(200).json(response)
 }

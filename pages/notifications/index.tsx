@@ -1,9 +1,9 @@
 import { UserType } from "@/types/user";
 import Notification from "@/components/notification/notification";
-import axios from "axios";
 import { getSession} from "next-auth/react";
 
 import styles from '@/styles/modules/notification/notification_page.module.css'
+import { getNotificationIds } from "@/services/notification_service";
 
 export default function Notifications(props:any)
 {
@@ -29,10 +29,8 @@ export async function getServerSideProps(context:any)
     const session = await getSession(context)
 
     const user = (session?.user as UserType)
-
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/notification/user/?id=${user.id}`).then(x => x.data);
-    console.log(user);
-    
+      
+    const response = await getNotificationIds(user.id, true)
     
     return {
       props: {

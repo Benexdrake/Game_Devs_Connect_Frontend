@@ -11,7 +11,7 @@ export const getFileS3 = async () =>
 }
 
 // Add File to S3
-export const addFileS3 = async (file:any, id:number) =>
+export const addFileS3 = async (file:any, id:string) =>
 {
     try {
         const s3 = new AWS.S3();

@@ -1,5 +1,5 @@
 import { secureCheck } from "@/lib/api";
-import { updateFile } from "@/services/file_service";
+import { getFileById } from "@/services/file_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> 
@@ -12,9 +12,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
     }
 
-    const file = req.body;
+    const id = parseInt(req.query.id as string)
     
-    const response = await updateFile(file);
+    if(!id || id == 0) return res.status(200).json({message:"", status:false})
 
-    res.status(200).json(response)
+    const result = await getFileById(id);
+
+    res.status(200).json(result);
+
 }

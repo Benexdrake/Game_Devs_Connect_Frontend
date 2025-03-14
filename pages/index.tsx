@@ -1,6 +1,6 @@
 import LoginOutButton from "@/components/login_btn";
 import RequestBlock from "@/components/request/request";
-import { getRequests } from "@/services/frontend/request_services";
+import { getRequests } from "@/services/request_services";
 import { UserType } from "@/types/user";
 import { useSession } from "next-auth/react";
 
@@ -40,7 +40,6 @@ export default function Home(props:any)
 export async function getServerSideProps()
 {
   const response = await getRequests();
-  console.log(response.message);
   
   return {
     props: {
