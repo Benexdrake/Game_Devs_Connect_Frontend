@@ -3,6 +3,7 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import { FileType } from "@/types/file";
+import { APIResponse } from '@/types/api_response';
 
 // Get File from S3 by ID
 export const getFileS3 = async () =>
@@ -22,9 +23,6 @@ export const addFileS3 = async (file:any, id:string) =>
             Body: fs.createReadStream(file.filepath),
           };
 
-        console.log(s3.listBuckets());
-        
-
         return await new Promise((resolve, reject) =>
         {
             s3.upload(params, (err:any,data:any) =>
@@ -32,16 +30,19 @@ export const addFileS3 = async (file:any, id:string) =>
                 if(err)
                 {
                     console.error('Fehler beim Hochladen in S3:', err);
-                    resolve(false)
+                    const response:APIResponse = {message:err as string, status:false, data:{} }
+                    resolve(response)
                 }
                 console.log('Datei erfolgreich in S3 hochgeladen:', data.Location);
-                resolve(true)
+                const response:APIResponse = {message:'', status:true, data }
+                resolve(response)
             })
         })
     } 
     catch (error: any) 
     {
-        return false;
+        const response:APIResponse = {message:error as string, status:false, data:{} }
+        return response;
     }
 }
 

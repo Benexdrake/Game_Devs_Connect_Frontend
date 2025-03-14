@@ -8,7 +8,7 @@ export const getCommentIds = async (parentId:string, frontend:boolean = false) =
     return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/comment/${parentId}`).then( x => x.data)
 }
 
-export const getComment = async (id:string, frontend:boolean = false) =>
+export const getCommentById = async (id:string, frontend:boolean = false) =>
 {
     return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/comment/id/${id}`).then( x => x.data)
 }

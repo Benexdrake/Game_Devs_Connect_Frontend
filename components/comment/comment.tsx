@@ -1,11 +1,11 @@
 import styles from '@/styles/modules/comment/comment.module.css'
 import { CommentType } from "@/types/comment";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { APIResponse } from '@/types/api_response';
 import DownloadFile from '../file/download_file';
 import Link from 'next/link';
 import { UserType } from '@/types/user';
+import { getCommentById } from '@/services/comment_service';
+import { getUserById } from '@/services/user_services';
 
 export default function Comment(props:any)
 {
@@ -17,21 +17,17 @@ export default function Comment(props:any)
     {
         const getComment = async () =>
         {
-            const result = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/${id}`).then(x => x.data);
-            
-            if(!result.status) return;
+            const response = await getCommentById(id, true)
+            if(!response.status) return;
 
+            const responseUser = await getUserById(response.data.ownerId, true)
+            if(!responseUser.status) return;
 
-             // User
-            const resultUser = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/user/${result.data.ownerId}`).then(x => x.data)
-            if(!resultUser.status) return;
-
-            setComment(result.data);
-            setUser(resultUser.data)
+            setComment(response.data);
+            setUser(responseUser.data)
         }
 
         getComment();
-
     }, [])
     
     return (

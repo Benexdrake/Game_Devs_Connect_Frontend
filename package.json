@@ -13,6 +13,7 @@
     "aws-sdk": "^2.1692.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
+    "formdata-node": "^6.0.3",
     "formidable": "^3.5.2",
     "next": "15.1.6",
     "next-auth": "^4.24.11",

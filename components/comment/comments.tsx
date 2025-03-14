@@ -1,7 +1,7 @@
 import styles from '@/styles/modules/comment/comments.module.css'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Comment from './comment';
+import { getCommentIds } from '@/services/comment_service';
 
 export default function Comments(props:any)
 {
@@ -12,8 +12,8 @@ export default function Comments(props:any)
     {
         const getComments = async () =>
         {
-            const result = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/?id=${parentId}`).then(x => x.data)
-            setCommentIds(result.data)
+            const response = await getCommentIds(parentId,true)
+            setCommentIds(response.data)
         }
 
         getComments();

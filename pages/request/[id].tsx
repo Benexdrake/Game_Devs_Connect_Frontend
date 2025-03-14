@@ -2,7 +2,8 @@ import Comments from "@/components/comment/comments";
 import NewComment from "@/components/comment/new_comment";
 import FileList from "@/components/file/file_list";
 import RequestBlock from "@/components/request/request";
-import { getFilesByRequestId, getRequestCheck } from "@/services/request_services";
+import { getFilesByRequestId } from "@/services/file_service";
+import { getRequestCheck } from "@/services/request_services";
 import { UserType } from "@/types/user";
 import { GetServerSidePropsContext } from "next";
 import { useSession } from "next-auth/react";
@@ -46,8 +47,10 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
             }
         }
     }
-
+    
     const response = await getFilesByRequestId(id)
+    console.log(response);
+    
     
     return {
         props : {

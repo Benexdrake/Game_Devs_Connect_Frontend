@@ -1,5 +1,5 @@
 import { secureCheck } from "@/lib/api";
-import { getComment } from "@/services/comment_service";
+import { getCommentById } from "@/services/comment_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
@@ -17,7 +17,7 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
     if(!id)
         res.status(200).json(0)
 
-    const result = await getComment(id)
+    const result = await getCommentById(id)
 
     res.status(200).json(result);
 }

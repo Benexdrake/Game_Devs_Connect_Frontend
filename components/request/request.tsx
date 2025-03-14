@@ -6,17 +6,18 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import File from '../file/download_file';
 import { APIResponse } from '@/types/api_response';
+import { getFullRequestById, getRequestById } from '@/services/request_services';
 
 export default function RequestBlock(props:any)
 {
     const {id, userId} = props;
     const [requestBlock, setRequestBlock] = useState<RequestBlockType>();
     const [like, setLike] = useState(false)
-    const [fakeLike, setFakeLike] = useState(0);
+    const [fakeLike, setFakeLike] = useState(0);    
 
     const getData = async () =>
     {
-        const response = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/${id}?userId=${userId}`).then(x => x.data)
+        const response = await getFullRequestById(id, userId, true);
         
         if(!response.status) return;
 
@@ -97,7 +98,7 @@ export default function RequestBlock(props:any)
                                 </div>
                             </Link>
                             <div><i className="fa-solid fa-share"></i> 1</div>
-                            <button onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</button>
+                            <div role='button' onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</div>
                             <div><i className="fa-solid fa-chart-simple"></i> 100</div>
                             {requestBlock?.request.fileId !== 0 && ( <div className={styles.download}> <File fileId={requestBlock?.request.fileId} /> </div> )}
                         </div>

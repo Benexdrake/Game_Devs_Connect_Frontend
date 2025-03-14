@@ -1,12 +1,14 @@
 import styles from '@/styles/modules/comment/new_comment.module.css'
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CommentType } from '@/types/comment';
 import { useSession } from 'next-auth/react';
 import { UserType } from '@/types/user';
-import { APIResponse } from '@/types/api_response';
 import { validateFileSize, validateText, validateTextAreaLines, validateTextLength } from '@/lib/validate';
+import { addFileToS3 } from '@/services/s3_service';
+import { addFile, deleteFile } from '@/services/file_service';
+import { FileType } from '@/types/file';
+import { addComment } from '@/services/comment_service';
 
 export default function NewComment(props:any)
 {
@@ -38,26 +40,40 @@ export default function NewComment(props:any)
             deleted:false
         } 
 
+
         // Wenn file größer 0, sende erst an files/add
         // danach an aws/s3/add
         // und danach comment/add
 
 
+
         if(e.target[1].files.length > 0)
         {
-            // const formData = new FormData();
-            // formData.append('file', e.target[1].files[0])
-            // formData.append('ownerId', (session.user as UserType).id)
+            const formData = new FormData();
+            formData.append('file', e.target[1].files[0])
             
+            const file:FileType = {id:0, name:e.target[1].files[0].originalFilename, size:e.target[1].files[0].size, ownerId:comment.ownerId, created:new Date().toUTCString()}
             
-            // const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
-            // const response = await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/add`, formData, {headers: { 'Content-Type': 'multipart/form-data' }}).then(x => x.data)
-            // comment.fileId = response.data;
+            // Add File
+            const responseFile = await addFile(file,true);
+            if(!responseFile.status)
+                return;
+
+            // Add File to S3
+            const responseS3 = await addFileToS3(formData, responseFile.data,true);
+
+            if(!responseS3.status)
+                await deleteFile(responseFile.data,true)
+
+            comment.fileId = responseFile.data;
         }
         
         // // Senden des Comments an die API
-        // await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/comment/add`, comment).then(x => x.data)
+        const response = await addComment(comment,true);
 
+        if(!response.status)
+            console.log(response.message);
+            
         // Send ne Notification after comment send and sending notification event
         
         router.reload();

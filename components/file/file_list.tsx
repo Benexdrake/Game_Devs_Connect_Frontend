@@ -19,7 +19,7 @@ export default function FileList(props:any)
             {
                 show ? (
                     <div>
-                        <button className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)} onKeyDown={onKeyDownHandler}>Close</button>
+                        <div className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)} onKeyDown={onKeyDownHandler}>Close</div>
                     {fileIds.map((id:any) => 
                         (
                             <div style={{padding:'8px'}} key={crypto.randomUUID()}>
@@ -31,7 +31,7 @@ export default function FileList(props:any)
                 )
                 :
                 (
-                    <button className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)}>Files</button>
+                    <div className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)}>Files</div>
                 )
             }
             

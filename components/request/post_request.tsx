@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { APIResponse } from '@/types/api_response';
 import { validateFileSize, validateText, validateTextAreaLines, validateTextLength } from '@/lib/validate';
 import { useState } from 'react';
+import { addRequest } from '@/services/request_services';
 
 export default function PostRequest(props:any)
 {
@@ -76,7 +77,8 @@ export default function PostRequest(props:any)
         }
         
         const requestTags:RequestTagsType = {request,tags}
-        await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/add`,{requestTags, session}).then(x => x.data) // Result sollte API Response sein...
+        await addRequest(requestTags, true);
+        // await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/add`,requestTags).then(x => x.data)
         
         setOpen((prev:boolean) => !prev)
         
@@ -126,7 +128,7 @@ export default function PostRequest(props:any)
         <div>
         {session && (
             <>
-                <button className={styles.background} onClick={() => setOpen((prev:boolean) => !prev)}></button>
+                <div className={styles.background} onClick={() => setOpen((prev:boolean) => !prev)}></div>
                 <form action="" onSubmit={onSubmitHandler} className={styles.main}>
                     <input type="text" id="request_title" placeholder='Title' className={styles.title} onChange={onTitleChangeHandler}/>
                     <textarea id="new_request" className={styles.description} style={{height:`${textHeight}px`}} onChange={onChangeTextHandler}/>

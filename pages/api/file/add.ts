@@ -13,8 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const file = req.body;
-    console.log('FILE:',req.body);
-
+    
     const response = await addFile(file);
 
     res.status(200).json(response);

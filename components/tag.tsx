@@ -15,7 +15,7 @@ export default function Tag(props:any)
 
     return (
         <li>
-            <button className={styles.item} onClick={() => onSelectHandler()}>
+            <div className={styles.item} onClick={() => onSelectHandler()}>
                 <span className={styles.checkbox}>
                     {select ? 
                     (
@@ -27,7 +27,7 @@ export default function Tag(props:any)
                     )}
                 </span>
                 <span className={styles.item_text}>{tag.name}</span>
-            </button>
+            </div>
         </li>
     )
 }

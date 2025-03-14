@@ -23,8 +23,6 @@ export const getFileById = async (id:string, frontend:boolean=false) =>
 // Add File
 export const addFile = async (file:FileType, frontend:boolean=false) =>
 {
-    console.log('>>>>>>>>>>>>>>>>>>>>>>',file);
-    
     return await axios.post<APIResponse>(`${getUrlHandler(frontend)}/file/add`, file).then(x => x.data)
 }
 
