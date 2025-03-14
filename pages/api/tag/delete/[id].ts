@@ -1,5 +1,5 @@
 import { secureCheck } from "@/lib/api";
-import { addComment } from "@/services/comment_service";
+import { deleteTag } from "@/services/tag_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
@@ -12,9 +12,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     }
 
-    const comment = req.body;
-    
-    const result = await addComment(comment)
+    const id = req.query.id as string
 
-    res.status(200).json(result)
+    const result = await deleteTag(id)
+    res.status(200).json(result);
 }

@@ -1,20 +1,20 @@
-import { secureCheck } from "@/lib/api";
-import { addComment } from "@/services/comment_service";
+import { getRequestsByUserId } from "@/services/request_services";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { secureCheck } from "@/lib/api";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
 {
+    const id = req.query.id
+
     const secure = await secureCheck(req,res)
 
     if(!secure)
     {
         res.status(500).send('Go away!!!')
         return;
-    }
+    } 
 
-    const comment = req.body;
+    const result = await getRequestsByUserId(id as string)
     
-    const result = await addComment(comment)
-
-    res.status(200).json(result)
+    res.status(200).json(result);
 }

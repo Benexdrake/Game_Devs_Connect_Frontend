@@ -12,11 +12,11 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     }
     
-    const {requestId, userId, liked} = req.body;
+    const {requestId, userId, liked} = req.query;
 
-    if(!userId || !requestId) return res.status(200).json({message:"", status:false})
+    if(!userId || !requestId) return res.status(200).json({message:"", status:false, data:req.body})
     
-    const result = await likedRequest(requestId, userId, liked)
+    const result = await likedRequest(requestId as string, userId as string, (liked as string) == 'true')
 
     res.status(200).json(result);
 }

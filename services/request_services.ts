@@ -44,7 +44,7 @@ export const updateRequest = async (request:RequestType, frontend:boolean=false)
     return await axios.put<APIResponse>(`${getUrlHandler(frontend)}/request/update`,request).then(x => x.data)
 }
 
-export const likedRequest = async (requestId:number, userId:string, liked:boolean, frontend:boolean=false) =>
+export const likedRequest = async (requestId:string, userId:string, liked:boolean, frontend:boolean=false) =>
 {   
     return await axios.post<APIResponse>(`${getUrlHandler(frontend)}/request/liked?requestId=${requestId}&userId=${userId}&liked=${liked}`,).then(x => x.data)
 }

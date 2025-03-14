@@ -64,7 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const file:FileType = {id:0, name:f.originalFilename, size:f.size, ownerId:ownerId as string, created: new Date().toUTCString()};
         
         // Post over Service to API returns id
-        const fileResponse = await addFile(false,file)
+        const fileResponse = await addFile(file)
         console.log('Files3');
 
         // // Upload File to AWS S3 with file and id returns true or false
@@ -74,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if(!result)
         {
-            const response = await deleteFile(false, fileResponse.data)
+            const response = await deleteFile(fileResponse.data)
             response.data = 0;
             response.status = false;
             response.message = 'Error at Upload from File'

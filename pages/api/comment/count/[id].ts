@@ -1,5 +1,5 @@
 import { secureCheck } from "@/lib/api";
-import { getCommentCount } from "@/services/backend/comment_service";
+import { getCommentCount } from "@/services/comment_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)

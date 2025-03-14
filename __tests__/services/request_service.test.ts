@@ -64,7 +64,11 @@ describe.each([{test:'backend', frontend:false, id:'backend_test', request_id:99
 
     test("liked requests", async () => 
     {
-        const response = await likedRequest(request_id,id, true, frontend)
+        const response = await likedRequest(request_id+'',id, true, frontend)
+
+        console.log(response);
+        
+
         expect(response.status).toBe(true);
     })
 

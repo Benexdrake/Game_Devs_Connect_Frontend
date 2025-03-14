@@ -1,5 +1,5 @@
 import { secureCheck } from "@/lib/api";
-import { getCommentIds } from "@/services/backend/comment_service";
+import { updateTag } from "@/services/tag_service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler( req: NextApiRequest, res: NextApiResponse)
@@ -12,10 +12,8 @@ export default async function handler( req: NextApiRequest, res: NextApiResponse
         return;
     }
 
-    const id = req.query.id as string
-    if(!id) res.status(200).json(0);
+    const tag = req.body;
 
-    const result = await getCommentIds(id);
-
-    res.status(200).json(result)
+    const result = await updateTag(tag)
+    res.status(200).json(result);
 }

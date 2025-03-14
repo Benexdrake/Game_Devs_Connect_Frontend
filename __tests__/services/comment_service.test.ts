@@ -2,7 +2,7 @@ import { addComment, deleteComment, getComment, getCommentCount, getCommentIds, 
 import { CommentType } from '../../types/comment';
 import {describe, test, expect} from 'vitest';
 
-describe.each([{test:'backend', frontend:false, id:'backend_test', commentId:999}, {test:'frontend', frontend:true, id:'frontend_test', commentId:999}])
+describe.each([{test:'backend', frontend:false, id:'backend_test', commentId:999}, {test:'frontend', frontend:true, id:'frontend_test', commentId:888}])
 ("Comment Service: $test", ({frontend, id, commentId}) =>
 {
     test('add comment', async () =>
@@ -16,7 +16,7 @@ describe.each([{test:'backend', frontend:false, id:'backend_test', commentId:999
 
     test('get comment ids', async () =>
     {
-        const response = await getCommentIds('0', frontend);
+        const response = await getCommentIds(commentId+'', frontend);
         
         expect(response.status).toBe(true);
     })
@@ -38,7 +38,7 @@ describe.each([{test:'backend', frontend:false, id:'backend_test', commentId:999
 
     test('update comment', async () =>
     {
-        const comment:CommentType = {id:commentId, message:'HALLO WELT', ownerId:'', fileId:0, parentId:0, created:'', deleted:false}
+        const comment:CommentType = {id:commentId, message:'HALLO WELT', ownerId:'0', fileId:0, parentId:0, created:'0', deleted:false}
 
         const response = await updateComment(comment, frontend);
 
