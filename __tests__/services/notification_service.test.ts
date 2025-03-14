@@ -24,9 +24,6 @@ describe.each([{test:'backend', frontend:false, id:'backend_test', requestId:999
 
         const response = await getNotificationById(`${user2}-${requestId}`, frontend)
 
-        console.log(response);
-        
-
         expect(response.status).toBe(true);
     })
 

@@ -18,7 +18,6 @@ describe.each([{test:'backend', frontend:false, id:'backend_test', request_id:99
         const requestTags:RequestTagsType = {request, tags:[]}
 
         const response = await addRequest(requestTags, frontend)
-        console.log(response.data);
         
         expect(response.status).toBe(true);
     })
