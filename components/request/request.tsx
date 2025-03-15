@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import File from '../file/download_file';
 import { APIResponse } from '@/types/api_response';
-import { getFullRequestById, getRequestById } from '@/services/request_services';
+import { getFullRequestById } from '@/services/request_services';
 
 export default function RequestBlock(props:any)
 {
@@ -86,19 +86,18 @@ export default function RequestBlock(props:any)
                         </Link>
                             
                         <div className={styles.navbar}>
-
                             <Link href={`/request/${requestBlock?.request.id}`}> 
                                 <div><i className="fa-solid fa-comment"></i>
                                     {requestBlock?.count ? (
-                                        requestBlock?.count
+                                        ' '+requestBlock?.count
                                     )
                                     :
-                                    <div>0</div>
+                                    <div> 0</div>
                                 }
                                 </div>
                             </Link>
                             <div><i className="fa-solid fa-share"></i> 1</div>
-                            <div role='button' onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</div>
+                            <div role='button' tabIndex={0} onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</div>
                             <div><i className="fa-solid fa-chart-simple"></i> 100</div>
                             {requestBlock?.request.fileId !== 0 && ( <div className={styles.download}> <File fileId={requestBlock?.request.fileId} /> </div> )}
                         </div>
