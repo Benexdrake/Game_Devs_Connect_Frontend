@@ -29,7 +29,7 @@ export default function Navbar(props:any)
 
     return (
         <div className={styles.main}>
-            <div className={styles.logo}><i className="fa-brands fa-fantasy-flight-games"></i></div>
+            <div className={styles.logo}><i className="fa-solid fa-khanda"></i></div>
                 <ul className={styles.nav_buttons}>
                     <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-house"></i></li></a>
                     <a onClick={() => setNotification(false)} href='/notifications'><li className={styles.nav_button}><i style={{color:notification?'var(--color3)':''}} className="fa-solid fa-bell"></i></li></a>

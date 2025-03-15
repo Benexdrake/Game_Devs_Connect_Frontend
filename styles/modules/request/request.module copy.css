@@ -1,0 +1,67 @@
+.main {
+    width: 100%;
+    background-color: var(--color2);
+    border: 1px solid var(--color4);
+    /* border-radius: 8px; */
+    border-bottom: 2px solid var(--color3);
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 1px solid var(--color4);
+}
+
+.content {
+    background-color: var(--color1);
+    color: var(--color4);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.navbar {
+    background-color: var(--color4);
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 16px;
+    align-items: center;
+    height: 40px;
+}
+
+.navbar i {
+    color: var(--color1);
+    font-size: 1.2rem;
+}
+
+.title {
+    color: var(--color4);
+}
+
+.username {
+    color: var(--color4);
+}
+
+.tags {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 8px;
+}
+
+.tag {
+    padding: 4px;
+    background-color: var(--color4);
+    color: var(--color1);
+    border-radius: 4px;
+}
+
+.download {
+    padding: 8px 16px;
+    background-color: var(--color1);
+    border-radius: 8px;
+}
+
+.date {
+    color: var(--color4);
+}

@@ -55,7 +55,42 @@ export default function RequestBlock(props:any)
         <>
             {requestBlock?.user && requestBlock?.request && (
                 <article className={styles.main}>
-                    <div>
+                    <div className={styles.username}>
+                        {requestBlock.user.username}
+                    </div>
+                    <div className={styles.content}>
+                        <div style={{display:'flex'}}>
+                            <div>
+                                <img className={styles.avatar} src={requestBlock.user.avatar} alt="" />
+                            </div>
+                            <div className={styles.content_text}>
+                            <p className={styles.date}>{new Date(requestBlock?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
+                                {requestBlock.request.description}
+                            </div>
+                        </div>
+                        <div className={styles.tags}>
+                        {requestBlock?.tags ? 
+                                    requestBlock?.tags.map((tag:TagType) => ( 
+                                        <span className={styles.tag} key={tag.name}>{tag.name}</span> 
+                                    ))
+                                    :
+                                    <div></div>
+                                }
+                        </div>
+                        <div className={styles.navbar}>
+                            <Link href={`/request/${requestBlock?.request.id}`}> 
+                                <div style={{color:'var(--color4)'}}><i className="fa-solid fa-comment"></i>
+                                    {requestBlock?.count ? ' '+requestBlock?.count : ' 0'
+                                }
+                                </div>
+                            </Link>
+                        <div role='button' tabIndex={0} onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</div>
+                        </div>
+
+
+                    </div>
+
+                    {/* <div>
                         <Link href={`/request/${requestBlock?.request.id}`}>
                             <div style={{display:'flex', padding:'16px 16px 8px 16px'}}>
                                 <Link href={`/profile/${requestBlock.user.id}`}>
@@ -101,7 +136,7 @@ export default function RequestBlock(props:any)
                             <div><i className="fa-solid fa-chart-simple"></i> 100</div>
                             {requestBlock?.request.fileId !== 0 && ( <div className={styles.download}> <File fileId={requestBlock?.request.fileId} /> </div> )}
                         </div>
-                    </div>
+                    </div> */}
                 </article>
             )}
         </>

@@ -15,7 +15,7 @@ export default function Home(props:any)
       {session ?
       (
         <div>
-          <div style={{display:'grid', gap:'8px'}}>
+          <div style={{display:'grid', gap:'16px'}}>
             { 
               requestIds ? requestIds.map((r:string) => 
                 {
