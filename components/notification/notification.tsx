@@ -1,8 +1,8 @@
+import { getNotificationById, updateSeenNotification } from '@/services/notification_service';
+import { getUserById } from '@/services/user_services';
 import styles from '@/styles/modules/notification/notification.module.css'
-import { APIResponse } from '@/types/api_response';
 import { NotificationType } from '@/types/notification';
 import { UserType } from '@/types/user';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export default function Notification(props:any)
@@ -13,10 +13,10 @@ export default function Notification(props:any)
 
     const getNotification = async () =>
     {
-        const response = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/notification/${notificationId}`).then(x => x.data);
+        const response = await getNotificationById(notificationId, true)
         console.log(response);
         if(!response.status) return;
-        const userResponse = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/user/short/${response.data.ownerId}`).then(x => x.data)
+        const userResponse = await getUserById(response.data.ownerId ,true)
         
         setNotification(response.data);
         setUser(userResponse.data);
@@ -26,9 +26,7 @@ export default function Notification(props:any)
     {   
         if(notification && notification.seen === "")
         {
-            const response = await axios.put<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/notification/seen/${notificationId}`).then(x => x.data);
-            console.log('sssssssssss',response);
-            
+            await updateSeenNotification(notificationId, true)
         }
     }
 

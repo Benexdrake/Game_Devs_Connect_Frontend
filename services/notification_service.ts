@@ -14,6 +14,11 @@ export const getNotificationIds = async (userId:string, frontend:boolean=false) 
     return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/notification/user/${userId}`).then(x => x.data)
 }
 
+export const updateSeenNotification = async (notificationId:string, frontend:boolean=false) =>
+{   
+    return await axios.put<APIResponse>(`${getUrlHandler(frontend)}/notification/seen/${notificationId}`).then(x => x.data)
+}
+
 //Get by Unseen as Count / unseen/userId
 export const getUnseenNotificationCount = async (userId:string, frontend:boolean=false) =>
 {

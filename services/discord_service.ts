@@ -4,26 +4,33 @@ import { addUser, getUserById } from "./user_services";
 
 export async function getDiscordUser(token:string)
 {
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
-    const d = await axios.get('https://discord.com/api/users/@me', config).then(x => { return x.data})
+    try 
+    {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        const d = await axios.get('https://discord.com/api/users/@me', config).then(x => { return x.data})
+        
+        let avatar = '/discordblue.png'
+        
+        if(d.avatar)
+            avatar = `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}`;
+        
+        let username = d.global_name;
+        if(!username)
+            username = d.username;
     
-
-    let avatar = '/discordblue.png'
+        const user:UserType = {id:d.id, username, avatar, accountType:'discord'}
+        
+        await addUser(user);
+        
+        const userDB= await getUserById(user.id)
     
-    if(d.avatar)
-        avatar = `https://cdn.discordapp.com/avatars/${d.id}/${d.avatar}`;
-    
-    let username = d.global_name;
-    if(!username)
-        username = d.username;
-
-    const user:UserType = {id:d.id, username, avatar, accountType:'discord'}
-    
-    await addUser(user);
-    
-    const userDB= await getUserById(user.id)
-
-    return userDB.data;
+        return userDB.data;   
+    } 
+    catch (error) 
+    {
+        console.log(error);
+            
+    }
 }

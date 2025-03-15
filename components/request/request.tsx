@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import File from '../file/download_file';
 import { APIResponse } from '@/types/api_response';
-import { getFullRequestById } from '@/services/request_services';
+import { getFullRequestById, likedRequest } from '@/services/request_services';
 
 export default function RequestBlock(props:any)
 {
@@ -33,9 +33,9 @@ export default function RequestBlock(props:any)
             setLike(liked)
     }
 
-    const likedRequest = async () =>
+    const likedRequestHandler = async () =>
     {
-        await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/liked`, {requestId:requestBlock?.request.id, userId, liked:!like}).then(x => x.data);
+        await likedRequest(requestBlock?.request.id+'', userId, !like, true)
         
         setLike(!like);
         setFakeLike(like? fakeLike -1 : fakeLike+1)
@@ -48,7 +48,7 @@ export default function RequestBlock(props:any)
 
     const onClickLikeHandler = () =>
     {   
-        likedRequest();
+        likedRequestHandler();
     }
     
     return (
