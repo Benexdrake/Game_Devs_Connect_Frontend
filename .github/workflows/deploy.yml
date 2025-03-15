@@ -1,6 +1,6 @@
 name: Main
 on:
-  push:
+  # push:
     # branches: [main]
     # paths-ignore: 
     #   - .github/**
