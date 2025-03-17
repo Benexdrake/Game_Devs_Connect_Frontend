@@ -22,7 +22,7 @@ export default function FileList(props:any)
                         <div className={styles.navbar} onClick={() => setShow((prev:boolean) => !prev)} onKeyDown={onKeyDownHandler}>Close</div>
                     {fileIds.map((id:any) => 
                         (
-                            <div style={{padding:'8px'}} key={crypto.randomUUID()}>
+                            <div style={{padding:'8px'}} key={new Date().toLocaleDateString()}>
                                 <FileListItem fileId={id}/>
                             </div>
                         )

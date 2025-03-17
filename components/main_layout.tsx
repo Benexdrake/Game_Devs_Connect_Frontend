@@ -12,9 +12,11 @@ export default function MainLayout(props:any)
 
     return (
         <div className={styles.main}>
-            <nav className={styles.sidebar}>
-                <Navbar/>
-            </nav>
+            {session && (
+                <nav className={styles.sidebar}>
+                    <Navbar/>
+                </nav>
+            )}
             <main className={styles.child}>
                 { session ? ( <div>{children}</div> ) : ( <LoginOutButton/> )}
             </main>

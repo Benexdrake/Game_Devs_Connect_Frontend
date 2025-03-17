@@ -2,7 +2,21 @@ import { UserType } from "../types/user";
 import axios from "axios";
 import { addUser, getUserById } from "./user_services";
 
-export async function getDiscordUser(token:string)
+export async function getDiscordUser(id:string)
+{
+    try 
+    {        
+        const userDB= await getUserById(id)
+    
+        return userDB.data;   
+    } 
+    catch (error) 
+    {
+        console.log(error);       
+    }
+}
+
+export async function addDiscordUser(token:string)
 {
     try 
     {
@@ -23,14 +37,9 @@ export async function getDiscordUser(token:string)
         const user:UserType = {id:d.id, username, avatar, accountType:'discord'}
         
         await addUser(user);
-        
-        const userDB= await getUserById(user.id)
-    
-        return userDB.data;   
     } 
     catch (error) 
     {
-        console.log(error);
-            
+        console.log(error);  
     }
 }

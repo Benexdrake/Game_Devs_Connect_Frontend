@@ -30,36 +30,35 @@ export default function Navbar(props:any)
     return (
         <div className={styles.main}>
             <div className={styles.logo}><i className="fa-solid fa-khanda"></i></div>
-                <ul className={styles.nav_buttons}>
-                    <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-house"></i></li></a>
-                    <a onClick={() => setNotification(false)} href='/notifications'><li className={styles.nav_button}><i style={{color:notification?'var(--color3)':''}} className="fa-solid fa-bell"></i></li></a>
-                    <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-magnifying-glass"></i></li></a>
-                    <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-envelope"></i></li></a>
-                    <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-ellipsis"></i></li></a>
-                    <a href={`/profile/${user?.id}`}><li className={styles.nav_button}><i className="fa-solid fa-user"></i></li></a>
-                    <li>
-                        <div className={styles.nav_button} onClick={() => setOpenNewPost(!openNewPost)}>
-                            <i className="fa-solid fa-circle-plus"></i>
-                        </div>
-                    </li>
-                    { session &&
-                    (
-                        <li>
-                            <div className={styles.nav_button} onClick={() => setOpenAvatarOption(!openAvatarOption)}>
-                                <img className={styles.avatar} src={user.avatar} alt="Avatar"/>
-                            </div>
-                        </li>   
-                    )}
-                </ul>
-                {openAvatarOption && (
-                    <div className={styles.avatar_option + '  option-background'} onClick={onClickHander}>
-                        <AvatarOption/>
+            <ul className={styles.nav_buttons}>
+                <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-house"></i></li></a>
+                <a onClick={() => setNotification(false)} href='/notifications'><li className={styles.nav_button}><i style={{color:notification?'var(--color3)':''}} className="fa-solid fa-bell"></i></li></a>
+                <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-magnifying-glass"></i></li></a>
+                <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-envelope"></i></li></a>
+                <a href='/'><li className={styles.nav_button}><i className="fa-solid fa-ellipsis"></i></li></a>
+                <a href={`/profile/${user?.id}`}><li className={styles.nav_button}><i className="fa-solid fa-user"></i></li></a>
+                <li>
+                    <div className={styles.nav_button} onClick={() => setOpenNewPost(!openNewPost)}>
+                        <i className="fa-solid fa-circle-plus"></i>
                     </div>
+                </li>
+                { session &&
+                (
+                    <li>
+                        <div className={styles.nav_button} onClick={() => setOpenAvatarOption(!openAvatarOption)}>
+                            <img className={styles.avatar} src={user.avatar} alt="Avatar"/>
+                        </div>
+                    </li>   
                 )}
-                {openNewPost && (
-                    <PostRequest setOpen={setOpenNewPost}/>
-                )}
-
+            </ul>
+            {openAvatarOption && (
+                <div className={styles.avatar_option + '  option-background'} onClick={onClickHander}>
+                    <AvatarOption/>
+                </div>
+            )}
+            {openNewPost && (
+                <PostRequest setOpen={setOpenNewPost}/>
+            )}
         </div>
     )
 }

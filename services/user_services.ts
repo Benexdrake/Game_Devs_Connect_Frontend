@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import { getUrlHandler } from "../lib/api";
 import { APIResponse } from "../types/api_response";
 import { UserType } from "../types/user";
@@ -5,9 +6,7 @@ import axios from "axios";
 
 
 export const getUsers = async (frontend:boolean= false) =>
-{
-    console.log(`${getUrlHandler(frontend)}/user/`);
-    
+{   
     return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/user/`).then(x => x.data)
 }
 

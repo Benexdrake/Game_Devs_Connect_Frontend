@@ -1,10 +1,13 @@
+'use server'
+
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getToken } from "next-auth/jwt";
 import { getServerSession } from "next-auth/next";
 
 export const secureCheck = async (req: NextApiRequest, res: NextApiResponse) =>
 {
-    if(process.env.NODE_ENV === 'development') return true;
+    // if(process.env.NODE_ENV === 'development') return true;
 
     const session = await getServerSession(req,res,authOptions);
 

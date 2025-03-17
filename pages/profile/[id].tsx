@@ -53,7 +53,22 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
     const tab = context.query.tab || 'requests';
 
     const session = await getSession(context);
+    
+    if(!session)
+    {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+    
+    
+    
     const loggedInUser = (session?.user as UserType);
+
+    
 
     let data = null;
 

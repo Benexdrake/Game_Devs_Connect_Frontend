@@ -3,6 +3,7 @@ import { RequestType } from "@/types/request";
 import { RequestTagsType } from "@/types/request_tags";
 import axios from "axios";
 import { getUrlHandler } from "../lib/api";
+import { useSession } from "next-auth/react";
 
 export const getRequests = async (frontend:boolean= false) =>
 {

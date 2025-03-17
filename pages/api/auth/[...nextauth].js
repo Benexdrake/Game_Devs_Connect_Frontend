@@ -1,44 +1,56 @@
-import { getDiscordUser } from "../../../services/discord_service";
+import axios from "axios";
+import { addDiscordUser, getDiscordUser } from "../../../services/discord_service";
 import NextAuth from "next-auth/next";
 import DiscordProvider from "next-auth/providers/discord"
 const scopes = ['identify'].join(' ')
 
-export const authOptions = {
+export const authOptions = 
+{
   providers: [
-    DiscordProvider({ // Use the dedicated Discord provider
-      clientId: process.env.DISCORD_ID, // No need for the +''
-      clientSecret: process.env.DISCORD_SECRET, // No need for the +''
-      authorization: { params: { scope: scopes } }, // Use environment variable for scopes
+    DiscordProvider({
+      clientId: process.env.DISCORD_ID,
+      clientSecret: process.env.DISCORD_SECRET,
+      authorization: { params: { scope: scopes } },
     }),
   ],
   callbacks: {
     async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
-        token.refreshToken = account.refresh_token; // Include refresh token!
-        token.expiresAt = account.expires_at * 1000; // Expiration in milliseconds
+        token.refreshToken = account.refresh_token;
+        token.expiresAt = account.expires_at * 1000;
 
-        // Optional: Include user ID
+        await addDiscordUser(token.accessToken);
+        console.log('ADD User');
+        
         token.id = user?.id;
       }
       return token;
     },
-    async session({ session, token }) {
-      // Fetch user data using the access token (or user ID if available)
+    async session({ session, token }) 
+    {
       try {
-        const user = await getDiscordUser(token.accessToken); // Your function to fetch user data
-        session.user = user; // Update the session with the Discord user object
-        session.accessToken = token.accessToken; // Add the access token to the session
+        const user = await getDiscordUser(token.id);
+        console.log('GET User');
+
+      //   const params = {
+      //     username: "Logger",
+      //     avatar_url: "",
+      //     content: `User ${user.username} logged in!`
+      // }
+
+      //   await axios.post('https://discord.com/api/webhooks/1351116177027633183/5AOB68peP5U0-WENLSDpVY1W5UErUL2uxz_4Oef3iNRt8pEnSnGGXW9Hbch6SmTsDXsU', params)
+        
+        session.user = user;
+        session.accessToken = token.accessToken;
       } catch (error) {
         console.error("Error fetching Discord user:", error);
-        // Handle error, e.g., set session.user to null or a default value
         session.user = null;
       }
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET // VERY IMPORTANT! Set a secret in your environment variables
-  // ... other options if needed (e.g., pages, events)
+  secret: process.env.NEXTAUTH_SECRET
 };
 
 

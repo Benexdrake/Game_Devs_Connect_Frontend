@@ -23,7 +23,7 @@ export default function Comments(props:any)
     return (
         <div className={styles.main}>
             {commentIds ? 
-                commentIds.map(x => <Comment id={x} key={crypto.randomUUID()}/>)
+                commentIds.map(x => <Comment id={x} key={new Date().toLocaleDateString()}/>)
                 :
                 <div>
                     

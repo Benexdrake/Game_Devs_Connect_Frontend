@@ -6,7 +6,7 @@ import { getFilesByRequestId } from "@/services/file_service";
 import { getRequestCheck } from "@/services/request_services";
 import { UserType } from "@/types/user";
 import { GetServerSidePropsContext } from "next";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 export default function Request(props:any)
 {
@@ -34,6 +34,19 @@ export default function Request(props:any)
 
 export async function getServerSideProps(context:GetServerSidePropsContext)
 {
+
+    const session = await getSession(context);
+    if(!session)
+    {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+
     const id = context.query.id as string;
 
     const checkResponse = await getRequestCheck(id)

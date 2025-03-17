@@ -1,11 +1,8 @@
 import styles from '@/styles/modules/request/request.module.css'
 import { RequestBlockType } from '@/types/request';
 import { TagType } from '@/types/tag';
-import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import File from '../file/download_file';
-import { APIResponse } from '@/types/api_response';
 import { getFullRequestById, likedRequest } from '@/services/request_services';
 
 export default function RequestBlock(props:any)
@@ -64,7 +61,10 @@ export default function RequestBlock(props:any)
                                 <img className={styles.avatar} src={requestBlock.user.avatar} alt="" />
                             </div>
                             <div className={styles.content_text}>
-                            <p className={styles.date}>{new Date(requestBlock?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
+                                <div style={{display:'flex', width:'100%', justifyContent:'space-between', marginBottom:'8px'}}>
+                                    <h3 >{requestBlock.request.title}</h3>
+                                    <p className={styles.date}>{new Date(requestBlock?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
+                                </div>
                                 {requestBlock.request.description}
                             </div>
                         </div>
