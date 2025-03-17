@@ -8,7 +8,7 @@ on:
 env:
   NODE_VERSION: 20
   APP_NAME: 'Frontend'
-  DEPLOY_PATH: '/home/ubuntu/Frontend'
+  DEPLOY_PATH: '/home/benexdrake/Frontend'
   PORT: 22
 
 jobs:
