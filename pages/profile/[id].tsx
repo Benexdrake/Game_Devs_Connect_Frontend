@@ -7,6 +7,7 @@ import styles from '@/styles/modules/profile/profile.module.css'
 import { getRequestsByUserId } from "@/services/request_services";
 import RequestBlock from "@/components/request/request";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Profile(props:any)
 {
@@ -14,6 +15,9 @@ export default function Profile(props:any)
 
     return (
         <div>
+            <Head>
+                <title>GDC - Profil</title>
+            </Head>
             <header className={styles.header}>
                 <div className={styles.banner} style={{backgroundImage:`url(${user.banner || "/banner.jpg"})`}}></div>
                 <div className={styles.bottom}>
@@ -58,7 +62,7 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
     {
         return {
             redirect: {
-                destination: '/',
+                destination: '/login',
                 permanent: false
             }
         }

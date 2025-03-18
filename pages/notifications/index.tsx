@@ -4,6 +4,7 @@ import { getSession, useSession} from "next-auth/react";
 
 import styles from '@/styles/modules/notification/notification_page.module.css'
 import { getNotificationIds } from "@/services/notification_service";
+import Head from "next/head";
 
 export default function Notifications(props:any)
 {
@@ -13,6 +14,9 @@ export default function Notifications(props:any)
  const {notificationIds} = props
     return (
         <article>
+          <Head>
+            <title>GDC - Notification</title>
+          </Head>
           {session ? (
             <div>
             <div className={styles.header}>
@@ -44,7 +48,7 @@ export async function getServerSideProps(context:any)
     {
         return {
             redirect: {
-                destination: '/',
+                destination: '/login',
                 permanent: false
             }
         }

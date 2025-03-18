@@ -1,8 +1,9 @@
+import Head from 'next/head'
 import LoginOutButton from "@/components/login_btn";
 import RequestBlock from "@/components/request/request";
 import { getRequests } from "@/services/request_services";
 import { UserType } from "@/types/user";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 export default function Home(props:any) 
 {
@@ -15,6 +16,9 @@ export default function Home(props:any)
       {session ?
       (
         <div>
+          <Head>
+            <title>GDC - Home</title>
+          </Head>
           <div style={{display:'grid', gap:'16px'}}>
             { 
               requestIds ? requestIds.map((r:string) => 
@@ -31,14 +35,27 @@ export default function Home(props:any)
       )
       :
       (
-        <LoginOutButton/>
+        <div>Loading...</div>
       )}
     </>
   );
 }
 
-export async function getServerSideProps()
+export async function getServerSideProps(context:any)
 {
+
+  const session = await getSession(context)
+  
+      if(!session)
+      {
+          return {
+              redirect: {
+                  destination: '/login',
+                  permanent: false
+              }
+          }
+      }
+
   const response = await getRequests();
   
   return {

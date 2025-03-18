@@ -18,7 +18,7 @@ export default function MainLayout(props:any)
                 </nav>
             )}
             <main className={styles.child}>
-                { session ? ( <div>{children}</div> ) : ( <LoginOutButton/> )}
+                <div>{children}</div>
             </main>
             <nav className={styles.sidebar}>
                 <CategoryBar/>

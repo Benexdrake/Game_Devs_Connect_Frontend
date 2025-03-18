@@ -7,6 +7,7 @@ import { getRequestCheck } from "@/services/request_services";
 import { UserType } from "@/types/user";
 import { GetServerSidePropsContext } from "next";
 import { getSession, useSession } from "next-auth/react";
+import Head from "next/head";
 
 export default function Request(props:any)
 {
@@ -18,6 +19,9 @@ export default function Request(props:any)
         <>
         {session && (
             <>
+            <Head>
+                <title>GDC - Request</title>
+            </Head>
                 <RequestBlock id={id} userId={(session.user as UserType).id}/>
                 <>
                     <NewComment requestId={id} userId={(session.user as UserType).id}/>
@@ -40,7 +44,7 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
     {
         return {
             redirect: {
-                destination: '/',
+                destination: '/login',
                 permanent: false
             }
         }
