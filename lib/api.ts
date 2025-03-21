@@ -1,5 +1,6 @@
 'use server'
 
+import { AxiosRequestConfig } from "axios";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
@@ -22,4 +23,15 @@ export const getUrlHandler = (frontend:boolean) =>
     if(frontend)
         return process.env.NEXT_PUBLIC_FRONTEND_URL+'/api';
     return process.env.BACKEND_URL;
+}
+
+export const getAxiosConfig = (token:string) =>
+{
+    const axiosConfig:AxiosRequestConfig = {
+        headers: {
+            "Authorization" : token
+        }
+    }
+
+    return axiosConfig;
 }

@@ -3,9 +3,11 @@ import { CommentType } from "@/types/comment";
 import axios from "axios";
 import { getUrlHandler } from "../lib/api";
 
-export const getCommentIds = async (parentId:string, frontend:boolean = false) =>
+import { getAxiosConfig } from "../lib/api";
+
+export const getCommentIds = async (parentId:string, auth:string ,frontend:boolean = false) =>
 {
-    return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/comment/${parentId}`).then( x => x.data)
+    return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/comment/${parentId}`, getAxiosConfig('')).then( x => x.data)
 }
 
 export const getCommentById = async (id:string, frontend:boolean = false) =>
