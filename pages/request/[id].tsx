@@ -4,6 +4,7 @@ import FileList from "@/components/file/file_list";
 import RequestBlock from "@/components/request/request";
 import { getFilesByRequestId } from "@/services/file_service";
 import { getRequestCheck } from "@/services/request_services";
+import { SessionType } from "@/types/session";
 import { UserType } from "@/types/user";
 import { GetServerSidePropsContext } from "next";
 import { getSession, useSession } from "next-auth/react";
@@ -22,7 +23,7 @@ export default function Request(props:any)
             <Head>
                 <title>GDC - Request</title>
             </Head>
-                <RequestBlock id={id} userId={(session.user as UserType).id}/>
+                <RequestBlock id={id} userId={(session.user as UserType).id} token={(session as SessionType).accessToken}/>
                 <>
                     <NewComment requestId={id} userId={(session.user as UserType).id}/>
                     {fileIds.length > 0 && (
@@ -66,8 +67,6 @@ export async function getServerSideProps(context:GetServerSidePropsContext)
     }
     
     const response = await getFilesByRequestId(id)
-    console.log(response);
-    
     
     return {
         props : {

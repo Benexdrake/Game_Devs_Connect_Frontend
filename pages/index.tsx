@@ -4,12 +4,17 @@ import RequestBlock from "@/components/request/request";
 import { getRequests } from "@/services/request_services";
 import { UserType } from "@/types/user";
 import { getSession, useSession } from "next-auth/react";
+import { AuthType } from '@/types/auth';
+import { getToken } from 'next-auth/jwt';
+import { SessionType } from '@/types/session';
 
 export default function Home(props:any) 
 {
   const {data:session} = useSession();
 
   const {requestIds} = props;
+
+  console.log(session);
 
   return (
     <>
@@ -23,7 +28,7 @@ export default function Home(props:any)
             { 
               requestIds ? requestIds.map((r:string) => 
                 {
-                  return <RequestBlock key={'request-'+requestIds} id={r} userId={(session.user as UserType).id}/>
+                  return <RequestBlock key={'request-'+requestIds} id={r} userId={(session.user as UserType).id} token={(session as SessionType).accessToken}/>
                 }) 
                 :
                 <div>
@@ -43,20 +48,20 @@ export default function Home(props:any)
 
 export async function getServerSideProps(context:any)
 {
-
   const session = await getSession(context)
   
-      if(!session)
-      {
-          return {
-              redirect: {
-                  destination: '/login',
-                  permanent: false
-              }
+  
+  if(!session)
+  {
+      return {
+          redirect: {
+              destination: '/login',
+              permanent: false
           }
       }
-
-  const response = await getRequests();
+  }
+      
+  const response = await getRequests();  
   
   return {
     props: {

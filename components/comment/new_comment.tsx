@@ -9,6 +9,7 @@ import { addFileToS3 } from '@/services/s3_service';
 import { addFile, deleteFile } from '@/services/file_service';
 import { FileType } from '@/types/file';
 import { addComment } from '@/services/comment_service';
+import { SessionType } from '@/types/session';
 
 export default function NewComment(props:any)
 {
@@ -55,21 +56,21 @@ export default function NewComment(props:any)
             const file:FileType = {id:0, name:e.target[1].files[0].originalFilename, size:e.target[1].files[0].size, ownerId:comment.ownerId, created:new Date().toUTCString()}
             
             // Add File
-            const responseFile = await addFile(file,true);
+            const responseFile = await addFile(file,(session as SessionType).accessToken);
             if(!responseFile.status)
                 return;
 
             // Add File to S3
-            const responseS3 = await addFileToS3(formData, responseFile.data,true);
+            const responseS3 = await addFileToS3(formData, responseFile.data, (session as SessionType).accessToken);
 
             if(!responseS3.status)
-                await deleteFile(responseFile.data,true)
+                await deleteFile(responseFile.data, (session as SessionType).accessToken)
 
             comment.fileId = responseFile.data;
         }
         
         // // Senden des Comments an die API
-        const response = await addComment(comment,true);
+        const response = await addComment(comment, (session as SessionType).accessToken);
 
         if(!response.status)
             console.log(response.message);

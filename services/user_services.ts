@@ -1,33 +1,32 @@
-import { useSession } from "next-auth/react";
-import { getUrlHandler } from "../lib/api";
+import { getAxiosConfig } from "../lib/api";
 import { APIResponse } from "../types/api_response";
 import { UserType } from "../types/user";
 import axios from "axios";
 
 
-export const getUsers = async (frontend:boolean= false) =>
+export const getUsers = async () =>
 {   
-    return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/user/`).then(x => x.data)
+    return await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/`).then(x => x.data)
 }
 
-export const getUserById = async (id:string,frontend:boolean= false) =>
+export const getUserById = async (id:string) =>
 {
-    return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/user/${id}`).then(x => x.data)
+    return await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/${id}`).then(x => x.data)
 }
 
-export const addUser = async (user:UserType, frontend:boolean= false) =>
+export const addUser = async (user:UserType, token:string) =>
 {
-    return await axios.post<APIResponse>(`${getUrlHandler(frontend)}/user/add`, user).then(x => x.data)
+    return await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/add`, user, getAxiosConfig(token)).then(x => x.data)
 }
 
-export const updateUser = async (user:UserType, frontend:boolean= false) =>
+export const updateUser = async (user:UserType, token:string) =>
 {
-    return axios.put<APIResponse>(`${getUrlHandler(frontend)}/user/update`, user).then(x => x.data)
+    return axios.put<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/update`, user, getAxiosConfig(token)).then(x => x.data)
 }
 
-export const deleteUser = async (userId:string, frontend:boolean= false) =>
+export const deleteUser = async (userId:string, token:string) =>
 {
-    return axios.delete<APIResponse>(`${getUrlHandler(frontend)}/user/delete/${userId}`).then(x => x.data)
+    return axios.delete<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/delete/${userId}`, getAxiosConfig(token)).then(x => x.data)
 }
 
 

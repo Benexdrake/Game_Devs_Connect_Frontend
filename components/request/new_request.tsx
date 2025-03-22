@@ -11,8 +11,9 @@ import { APIResponse } from '@/types/api_response';
 import { validateFileSize, validateText, validateTextAreaLines, validateTextLength } from '@/lib/validate';
 import { useState } from 'react';
 import { addRequest } from '@/services/request_services';
+import { SessionType } from '@/types/session';
 
-export default function PostRequest(props:any)
+export default function NewRequest(props:any)
 {
     const {data:session} = useSession();
     const router = useRouter();
@@ -77,12 +78,15 @@ export default function PostRequest(props:any)
         }
         
         const requestTags:RequestTagsType = {request,tags}
-        await addRequest(requestTags, true);
-        // await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/request/add`,requestTags).then(x => x.data)
+        await addRequest(requestTags, (session as SessionType).accessToken);
         
         setOpen((prev:boolean) => !prev)
         
-        router.push('/')
+        console.log();
+        if(router.pathname === '/')
+            router.reload();
+        else
+            router.push('/')
     }
 
     const onChangeTextHandler = (e:any) =>

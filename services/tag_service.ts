@@ -1,29 +1,30 @@
 import { APIResponse } from "@/types/api_response";
 import { TagType } from "@/types/tag";
 import axios from "axios";
-import { getUrlHandler } from "../lib/api";
+import { getAxiosConfig } from "../lib/api";
+import { AuthType } from "@/types/auth";
 
-export const getTags = async (frontend:boolean=false) =>
+export const getTags = async () =>
 {
-    return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/tag/`).then(x => x.data);
+    return await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tag/`).then(x => x.data);
 }
 
-export const getTagsByRequestId = async (requestId:string, frontend:boolean=false, ) =>
+export const getTagsByRequestId = async (requestId:string) =>
 {
-    return await axios.get<APIResponse>(`${getUrlHandler(frontend)}/tag/${requestId}`).then(x => x.data);
+    return await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tag/${requestId}`).then(x => x.data);
 }
 
-export const addTag = async (tag:TagType, frontend:boolean=false) =>
+export const addTag = async (tag:TagType, token:string) =>
 {
-    return await axios.post<APIResponse>(`${getUrlHandler(frontend)}/tag/add`, tag).then(x => x.data);
+    return await axios.post<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tag/add`, tag, getAxiosConfig(token)).then(x => x.data);
 }
 
-export const updateTag = async (tag:TagType, frontend:boolean=false) =>
+export const updateTag = async (tag:TagType, token:string) =>
 {
-    return await axios.put<APIResponse>(`${getUrlHandler(frontend)}/tag/update`, tag).then(x => x.data);
+    return await axios.put<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tag/update`, tag, getAxiosConfig(token)).then(x => x.data);
 }
 
-export const deleteTag = async (tagId:string, frontend:boolean=false) =>
+export const deleteTag = async (tagId:string, token:string) =>
 {
-    return await axios.delete<APIResponse>(`${getUrlHandler(frontend)}/tag/delete/${tagId}`).then(x => x.data);
+    return await axios.delete<APIResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/tag/delete/${tagId}`, getAxiosConfig(token)).then(x => x.data);
 }

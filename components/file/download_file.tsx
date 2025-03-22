@@ -1,3 +1,4 @@
+import { getFileById } from '@/services/file_service';
 import styles from '@/styles/modules/file/download_file.module.css'
 import { FileType } from '@/types/file';
 import axios from 'axios';
@@ -11,15 +12,16 @@ export default function DownloadFile(props:any)
 
     useEffect(() =>
     {
-        const getFile = async () =>
+        const getFileFromAPI = async () =>
         {
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/${fileId}`).then(x => x.data)
+
+            const response = await getFileById(fileId);
             
             if(response.data)
                 setFile(response.data)
         }
 
-        getFile();
+        getFileFromAPI();
     },[])
     
     return (

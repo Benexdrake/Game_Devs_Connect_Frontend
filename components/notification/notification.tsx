@@ -7,16 +7,16 @@ import { useEffect, useState } from 'react';
 
 export default function Notification(props:any)
 {
-    const {notificationId} = props;
+    const {notificationId, token} = props;
     const [notification, setNotification] = useState<NotificationType>()
     const [user, setUser] = useState<UserType>();
 
     const getNotification = async () =>
     {
-        const response = await getNotificationById(notificationId, true)
-        console.log(response);
+        const response = await getNotificationById(notificationId)
+        
         if(!response.status) return;
-        const userResponse = await getUserById(response.data.ownerId ,true)
+        const userResponse = await getUserById(response.data.ownerId)
         
         setNotification(response.data);
         setUser(userResponse.data);
@@ -26,7 +26,7 @@ export default function Notification(props:any)
     {   
         if(notification && notification.seen === "")
         {
-            await updateSeenNotification(notificationId, true)
+            await updateSeenNotification(notificationId, token)
         }
     }
 

@@ -5,6 +5,7 @@ import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { getServerSession } from "next-auth/next";
+import { AuthType } from "@/types/auth";
 
 export const secureCheck = async (req: NextApiRequest, res: NextApiResponse) =>
 {
@@ -29,7 +30,7 @@ export const getAxiosConfig = (token:string) =>
 {
     const axiosConfig:AxiosRequestConfig = {
         headers: {
-            "Authorization" : token
+            "APIKey": token
         }
     }
 

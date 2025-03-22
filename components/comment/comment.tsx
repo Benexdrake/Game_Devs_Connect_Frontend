@@ -17,10 +17,10 @@ export default function Comment(props:any)
     {
         const getComment = async () =>
         {
-            const response = await getCommentById(id, true)
+            const response = await getCommentById(id)
             if(!response.status) return;
 
-            const responseUser = await getUserById(response.data.ownerId, true)
+            const responseUser = await getUserById(response.data.ownerId)
             if(!responseUser.status) return;
 
             setComment(response.data);

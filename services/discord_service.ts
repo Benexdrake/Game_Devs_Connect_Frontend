@@ -1,14 +1,15 @@
 import { UserType } from "../types/user";
 import axios from "axios";
 import { addUser, getUserById } from "./user_services";
+import { AuthType } from "@/types/auth";
 
-export async function getDiscordUser(id:string)
+export async function getDiscordUser(token:any)
 {
     try 
-    {        
-        const userDB= await getUserById(id)
+    {  
+        const userDB= await getUserById(token.id)
     
-        return userDB.data;   
+        return userDB.data;
     } 
     catch (error) 
     {
@@ -16,12 +17,12 @@ export async function getDiscordUser(id:string)
     }
 }
 
-export async function addDiscordUser(token:string)
+export async function addDiscordUser(token:any)
 {
     try 
     {
         const config = {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token.accessToken}` }
         };
         const d = await axios.get('https://discord.com/api/users/@me', config).then(x => { return x.data})
         
@@ -36,7 +37,16 @@ export async function addDiscordUser(token:string)
     
         const user:UserType = {id:d.id, username, avatar, accountType:'discord'}
         
-        await addUser(user);
+        const config2 = {
+            headers: { 'APIKey': process.env.NEXTAUTH_SECRET }
+        };
+        
+        const auth:AuthType = {userId:token.sub, token:token.accessToken, expires:token.expiresAt}
+
+        const response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/auth/add', auth, config2).then(x => x.data)
+        console.log(response);
+        
+        await addUser(user, token.accessToken);
     } 
     catch (error) 
     {

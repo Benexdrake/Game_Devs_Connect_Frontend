@@ -1,3 +1,5 @@
+import { getFileById } from "@/services/file_service";
+import { getUserById } from "@/services/user_services";
 import { APIResponse } from "@/types/api_response";
 import { FileType } from "@/types/file";
 import { UserType } from "@/types/user";
@@ -14,11 +16,11 @@ export default function FileListItem(props:any)
     {
         const getFile = async () =>
         {
-            const result = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/file/${fileId}`).then(x => x.data);
+            const result = await getFileById(fileId);
 
             if(!result.status) return;
             
-            const resultUser = await axios.get<APIResponse>(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/user/short/${result.data.ownerId}`).then(x => x.data)
+            const resultUser = await getUserById(result.data.ownerId)
             if(!resultUser.status) return;
 
             setFile(result.data);

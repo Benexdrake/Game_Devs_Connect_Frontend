@@ -3,6 +3,7 @@ import { TagType } from '@/types/tag';
 import { useEffect, useState } from 'react'
 import Tag from './tag';
 import axios from 'axios';
+import { getTags } from '@/services/tag_service';
 
 export default function SelectTags(props:any)
 {
@@ -17,14 +18,13 @@ export default function SelectTags(props:any)
 
     useEffect(() =>
     {
-        const getTags = async () =>
+        const getTagsFromAPI = async () =>
         {
-            const t = await axios.get(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/tag`).then(x => x.data.data)
-            
-            setLoadedTags(t);
+            const t = await getTags();
+            setLoadedTags(t.data);
         }
 
-        getTags();
+        getTagsFromAPI();
 
     },[])
 

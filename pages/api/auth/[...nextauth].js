@@ -20,8 +20,7 @@ export const authOptions =
         token.refreshToken = account.refresh_token;
         token.expiresAt = account.expires_at * 1000;
 
-        await addDiscordUser(token.accessToken);
-        console.log('ADD User');
+        await addDiscordUser(token);
         
         token.id = user?.id;
       }
@@ -30,8 +29,8 @@ export const authOptions =
     async session({ session, token }) 
     {
       try {
-        const user = await getDiscordUser(token.id);
         console.log('GET User');
+        const user = await getDiscordUser(token);
 
       //   const params = {
       //     username: "Logger",

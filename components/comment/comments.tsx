@@ -12,7 +12,7 @@ export default function Comments(props:any)
     {
         const getComments = async () =>
         {
-            const response = await getCommentIds(parentId,true)
+            const response = await getCommentIds(parentId)
             setCommentIds(response.data)
         }
 

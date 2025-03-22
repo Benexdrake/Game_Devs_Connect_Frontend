@@ -7,14 +7,14 @@ import { getFullRequestById, likedRequest } from '@/services/request_services';
 
 export default function RequestBlock(props:any)
 {
-    const {id, userId} = props;
+    const {id, userId, token} = props;
     const [requestBlock, setRequestBlock] = useState<RequestBlockType>();
     const [like, setLike] = useState(false)
     const [fakeLike, setFakeLike] = useState(0);    
 
     const getData = async () =>
     {
-        const response = await getFullRequestById(id, userId, true);
+        const response = await getFullRequestById(id, userId);
         
         if(!response.status) return;
 
@@ -32,7 +32,7 @@ export default function RequestBlock(props:any)
 
     const likedRequestHandler = async () =>
     {
-        await likedRequest(requestBlock?.request.id+'', userId, !like, true)
+        await likedRequest(requestBlock?.request.id+'', userId, !like, token)
         
         setLike(!like);
         setFakeLike(like? fakeLike -1 : fakeLike+1)
@@ -86,57 +86,7 @@ export default function RequestBlock(props:any)
                             </Link>
                         <div role='button' tabIndex={0} onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</div>
                         </div>
-
-
                     </div>
-
-                    {/* <div>
-                        <Link href={`/request/${requestBlock?.request.id}`}>
-                            <div style={{display:'flex', padding:'16px 16px 8px 16px'}}>
-                                <Link href={`/profile/${requestBlock.user.id}`}>
-                                    <img className={styles.avatar} src={requestBlock?.user?.avatar} alt="" />
-                                </Link>
-                                <div style={{width:'100%', paddingLeft:'8px'}}>
-                                <div style={{display:'flex', justifyContent:'space-between'}}>
-                                <Link href={`/profile/${requestBlock.user.id}`}>
-                                    <p className={styles.username}>{requestBlock?.user?.username}</p>
-                                </Link>
-                                    <p className={styles.date}>{new Date(requestBlock?.request?.created).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}</p>
-                                </div>
-                                <div style={{textAlign:'center', paddingBottom:'8px'}}>
-                                    <p className={styles.title}>{requestBlock?.request?.title}</p>
-                                </div>    
-                                <div className={styles.content}><p>{requestBlock?.request?.description}</p></div>
-                                </div>
-                            </div>
-                            <div className={styles.tags}>
-                                {requestBlock?.tags ? 
-                                    requestBlock?.tags.map((tag:TagType) => ( 
-                                        <span className={styles.tag} key={tag.name}>{tag.name}</span> 
-                                    ))
-                                    :
-                                    <div></div>
-                                }
-                            </div>
-                        </Link>
-                            
-                        <div className={styles.navbar}>
-                            <Link href={`/request/${requestBlock?.request.id}`}> 
-                                <div><i className="fa-solid fa-comment"></i>
-                                    {requestBlock?.count ? (
-                                        ' '+requestBlock?.count
-                                    )
-                                    :
-                                    <div> 0</div>
-                                }
-                                </div>
-                            </Link>
-                            <div><i className="fa-solid fa-share"></i> 1</div>
-                            <div role='button' tabIndex={0} onClick={() => onClickLikeHandler()}><i className={`${like? "fa-solid": "fa-regular"} fa-heart`}></i> {requestBlock.likes + (fakeLike)}</div>
-                            <div><i className="fa-solid fa-chart-simple"></i> 100</div>
-                            {requestBlock?.request.fileId !== 0 && ( <div className={styles.download}> <File fileId={requestBlock?.request.fileId} /> </div> )}
-                        </div>
-                    </div> */}
                 </article>
             )}
         </>
